@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1539946400236285590}
   - component: {fileID: 1114392533130711467}
   - component: {fileID: -2467395907051569054}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RunningObstaclesTrack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,8 +96,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 4.8178773, z: 1}
-  m_Center: {x: 0, y: 1.9089386, z: 0}
+  m_Size: {x: 1, y: 0.97631747, z: 0.99999917}
+  m_Center: {x: 0, y: -0.0118410885, z: 0}
 --- !u!114 &1114392533130711467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackType: 6
-  trackSpeed: 0
-  speedReduce: 0
+  sameTypeSpeed: 10
+  wrongTypeSpeed: 5
 --- !u!54 &-2467395907051569054
 Rigidbody:
   m_ObjectHideFlags: 0

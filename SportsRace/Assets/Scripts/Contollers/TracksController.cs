@@ -39,6 +39,11 @@ public class TracksController : MonoBehaviour
         AddUseableTracks();
         GetTracks();
     }
+    private void AddUseableTracks()
+    {
+        for (int i = 0; i < tracks.Count; i++)
+            useableTracks.Add(tracks[i]);
+    }
 
     public void GetTracks()
     {
@@ -55,9 +60,4 @@ public class TracksController : MonoBehaviour
         useableTracks.Clear();
     }
 
-    private void AddUseableTracks()
-    {
-        for (int i = 0; i < tracks.Count; i++)
-            useableTracks.Add(tracks[i]);
-    }
 }

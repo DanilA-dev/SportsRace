@@ -12,9 +12,15 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
 
+    [SerializeField] private PlayerRunner player;
+
     private GameState _currentState;
 
     private event Action<GameState> OnGameStateChanged;
+
+    public static event Action OnMenuEnter;
+    public static event Action OnCoreEnter;
+
 
     #region Properties
 
@@ -27,6 +33,8 @@ public class GameController : MonoBehaviour
             Instance.OnGameStateChanged?.Invoke(value);
         }
     }
+
+    public PlayerRunner Player => player;
 
     #endregion
 
@@ -46,7 +54,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        _currentState = GameState.Menu;
+        CurrentState = GameState.Menu;
     }
 
     public  void SetGameState(GameState newState)
@@ -89,12 +97,16 @@ public class GameController : MonoBehaviour
 
     private void OnCoreState()
     {
-        Debug.Log("Enter Core State");
+        UIController.TurnOnPanel(UIPanelType.Core);
+        player.SetSpeed(5);
+        OnCoreEnter?.Invoke();
     }
 
     private void OnMenuState()
     {
-        Debug.Log("Enter Menu State");
+        player.ResetToStart();
+        OnMenuEnter?.Invoke();
+        UIController.TurnOnPanel(UIPanelType.Menu);
     }
 
     #endregion

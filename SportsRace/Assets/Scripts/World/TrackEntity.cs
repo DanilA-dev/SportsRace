@@ -14,21 +14,29 @@ public enum TrackType
 public class TrackEntity : MonoBehaviour
 {
     [SerializeField] private TrackType trackType;
-    [SerializeField] private float trackSpeed;
-    [SerializeField] private float speedReduce;
+    [SerializeField] private float sameTypeSpeed;
+    [SerializeField] private float wrongTypeSpeed;
 
 
     #region Properties
 
     public TrackType TrackType => trackType;
-    public float SpeedReduce => speedReduce;
-    public float TrackSpeed => trackSpeed;
+    public float WrongTypeSpeed => wrongTypeSpeed;
+    public float SameTypeSpeed => sameTypeSpeed;
 
     #endregion
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //check if player/bot enter and invoke their enter method(animation)
+        if(other.gameObject.CompareTag("Player"))
+        {
+            var p = other.GetComponentInParent<PlayerRunner>();
+
+            if(p != null && p.TrackTypeRunner != trackType)
+                p.CheckTrack();
+
+        }
     }
 }
