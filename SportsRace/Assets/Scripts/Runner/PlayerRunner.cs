@@ -3,15 +3,19 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerRunner : MonoBehaviour, IRunner
 {
     [SerializeField] private MeshRenderer renderMaterial;
+    [SerializeField] private NavMeshAgent agent;
     [SerializeField] private TrackType trackTypeRunner;
     [SerializeField] private float defaultSpeed;
     [SerializeField] private LayerMask whatIsTrack;
 
     public static event Action<float> OnSpeedChange;
+
+    private bool _canMove;
 
     public float DefaultSpeed => defaultSpeed;
     public TrackType TrackTypeRunner => trackTypeRunner;
@@ -20,14 +24,14 @@ public class PlayerRunner : MonoBehaviour, IRunner
     private void Start()
     {
         InitStartType();
+        _canMove = false;
+        agent.enabled = false;
     }
 
     private void Update()
     {
         if (GameController.CurrentState == GameState.Core)
-        {
-            transform.position += transform.forward * defaultSpeed * Time.deltaTime;
-        }
+            Move(transform.forward, defaultSpeed);
     }
 
     public void SwitchRunner(TrackType newType, Material m)
@@ -85,16 +89,36 @@ public class PlayerRunner : MonoBehaviour, IRunner
         SetSpeed(t.WrongTypeSpeed);
         OnSpeedChange?.Invoke(this.defaultSpeed);
         //bad animation
-        //speed reduce
     }
 
-    public void Stop()
+
+    public void FinishStop()
     {
+        _canMove = false;
+        agent.enabled = true;
         defaultSpeed = 0;
     }
 
     public void ResetToStart()
     {
-        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 19.54f);
+    }
+
+    public void Move(Vector3 dir, float speed)
+    {
+        if (!_canMove)
+            return;
+
+        transform.position += dir * speed * Time.deltaTime;
+    }
+
+    public NavMeshAgent GetAgent()
+    {
+        return agent;
+    }
+
+    public Transform GetTransform()
+    {
+        return this.transform;
     }
 }
