@@ -27,16 +27,14 @@ public class TrackEntity : MonoBehaviour
     #endregion
 
 
-    private void OnTriggerStay(Collider other)
+    private void OnCollisionStay(Collision other)
     {
-        //check if player/bot enter and invoke their enter method(animation)
-        if(other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            var p = other.GetComponentInParent<PlayerRunner>();
+            var p = other.gameObject.GetComponent<PlayerRunner>();
 
-            if(p != null && p.TrackTypeRunner != trackType)
+            if (p != null)
                 p.CheckTrack();
-
         }
     }
 }

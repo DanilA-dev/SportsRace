@@ -98,7 +98,7 @@ public class GameController : MonoBehaviour
     private void OnCoreState()
     {
         UIController.TurnOnPanel(UIPanelType.Core);
-        player.SetSpeed(5);
+        player.SetSpeed(player.DefaultSpeed);
         OnCoreEnter?.Invoke();
     }
 

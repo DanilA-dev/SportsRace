@@ -31,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 215.51282}
   m_LocalScale: {x: 11.12428, y: 1, z: 61.60435}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -111,8 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackType: 1
-  sameTypeSpeed: 7
-  wrongTypeSpeed: 3
+  sameTypeSpeed: 150
+  wrongTypeSpeed: 70
 --- !u!54 &1114541515067836607
 Rigidbody:
   m_ObjectHideFlags: 0

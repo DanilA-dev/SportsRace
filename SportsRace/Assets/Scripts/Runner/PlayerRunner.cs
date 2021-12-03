@@ -5,30 +5,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerRunner : MonoBehaviour, IRunner
+public class PlayerRunner : ARunner
 {
     [SerializeField] private MeshRenderer renderMaterial;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private TrackType trackTypeRunner;
-    [SerializeField] private float defaultSpeed;
-    [SerializeField] private LayerMask whatIsTrack;
 
     public static event Action<float> OnSpeedChange;
 
     private bool _canMove;
-
-    public float DefaultSpeed => defaultSpeed;
-    public TrackType TrackTypeRunner => trackTypeRunner;
-
+   
 
     private void Start()
     {
         InitStartType();
-        _canMove = false;
+        _canMove = true;
         agent.enabled = false;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (GameController.CurrentState == GameState.Core)
             Move(transform.forward, defaultSpeed);
@@ -36,7 +29,7 @@ public class PlayerRunner : MonoBehaviour, IRunner
 
     public void SwitchRunner(TrackType newType, Material m)
     {
-        trackTypeRunner = newType;
+        runnerType = newType;
         CheckTrack();
         SetTestMaterial(m);
     }
@@ -46,7 +39,7 @@ public class PlayerRunner : MonoBehaviour, IRunner
         var getTracks = TracksController.Instance.GeneratedTracks.ToList();
         var firtsTrack = getTracks[0];
 
-        trackTypeRunner = firtsTrack.TrackType;
+        runnerType = firtsTrack.TrackType;
         CheckTrack();
     }
 
@@ -63,24 +56,18 @@ public class PlayerRunner : MonoBehaviour, IRunner
 
     public void CheckTrack()
     {
-        //better do with check spehere 
-
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, -transform.up, out hit, whatIsTrack))
+        Collider[] col = Physics.OverlapSphere(transform.position, 3, whatIsTrack);
+        if(col[0].TryGetComponent(out TrackEntity t))
         {
-            if(hit.collider.TryGetComponent(out TrackEntity t))
+            if (t.TrackType == runnerType)
             {
-                if (t.TrackType == trackTypeRunner)
-                {
-                    SetSpeed(t.SameTypeSpeed);
-                    OnSpeedChange?.Invoke(this.defaultSpeed);
-                    Debug.Log("<color=green> Same Type! </color>");
-                }
-                else
-                    Punish(t);
+                SetSpeed(t.SameTypeSpeed);
+                OnSpeedChange?.Invoke(this.defaultSpeed);
+                Debug.Log("<color=green> Same Type! </color>");
             }
+            else
+                Punish(t);
         }
-       
     }
 
     private void Punish(TrackEntity t)
@@ -91,34 +78,31 @@ public class PlayerRunner : MonoBehaviour, IRunner
         //bad animation
     }
 
-
-    public void FinishStop()
+    private void OnDrawGizmos()
     {
-        _canMove = false;
-        agent.enabled = true;
-        defaultSpeed = 0;
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(transform.position, 3);
     }
+
 
     public void ResetToStart()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, 19.54f);
     }
 
-    public void Move(Vector3 dir, float speed)
+    public override void Move(Vector3 dir, float speed)
     {
         if (!_canMove)
             return;
 
-        transform.position += dir * speed * Time.deltaTime;
+        body.velocity = dir * speed * Time.deltaTime;
     }
 
-    public NavMeshAgent GetAgent()
+    public override void FinishStop()
     {
-        return agent;
-    }
-
-    public Transform GetTransform()
-    {
-        return this.transform;
+        _canMove = false;
+        body.isKinematic = true;
+        agent.enabled = true;
+        defaultSpeed = 0;
     }
 }

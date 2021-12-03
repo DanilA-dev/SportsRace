@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class FinishSystem : MonoBehaviour
 {
+    [SerializeField] private int multiplier;
     [Header("Pedestal")]
     [SerializeField] private float speedToPedestal;
-    [SerializeField] private float riseSpeed;
+    [SerializeField] private float pedestalRiseSpeed;
     [SerializeField] private Transform risingPedestal;
     [Header("Move Points")]
+    [SerializeField] private Transform pedestalMovePoint;
+    [SerializeField] private Transform runnerUpPoint;
     [SerializeField] private Transform firstPlacePoint;
     [SerializeField] private Transform secondPlacePoint;
-
+    [SerializeField] private Transform topPlatformPoint;
+    [Space]
     [SerializeField] private bool firstPlaceTaken = false;
     [SerializeField] private bool secondPlaceTaken = false;
 
+    private Vector3 _startRisingPedestalPos;
+
+    private void Start()
+    {
+        _startRisingPedestalPos = risingPedestal.transform.position;
+        risingPedestal.transform.position = _startRisingPedestalPos;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponentInParent<IRunner>() != null)
+        if(other.GetComponent<ARunner>() != null)
         {
-            var r = other.GetComponentInParent<IRunner>();
+            var r = other.GetComponent<ARunner>();
             CheckFirst();
             r.FinishStop();
             StartCoroutine(MoveToPedestal(r, firstPlacePoint.position));
@@ -36,36 +47,65 @@ public class FinishSystem : MonoBehaviour
             firstPlaceTaken = true;
     }
 
-    private IEnumerator MoveToPedestal(IRunner runner, Vector3 dir)
+    private IEnumerator MoveToPedestal(ARunner runner, Vector3 dir)
     {
         var moveTime = 3f;
 
         for (float i = 0; i < moveTime; i+= Time.deltaTime)
         {
-            runner.GetAgent().speed = speedToPedestal;
-            runner.GetAgent().SetDestination(dir);
+            runner.Agent.speed = speedToPedestal;
+            runner.Agent.Warp(dir);
+            //runner.Agent.destination = dir;
             yield return new WaitForEndOfFrame();
         }
+        runner.Agent.ResetPath();
+        runner.Agent.enabled = false;
         Debug.Log("We went to pedestal!");
-        runner.GetAgent().ResetPath();
-        runner.GetAgent().enabled = false;
 
         StartCoroutine(RiseFirstPlace(runner));
     }
 
-    private IEnumerator RiseFirstPlace(IRunner runner)
+    private IEnumerator RiseFirstPlace(ARunner runner)
     {
-        while(!secondPlaceTaken)
+        float xMultiplier = 0f;
+        while (!secondPlaceTaken)
         {
-            Debug.Log("Test");
-            risingPedestal.localScale = new Vector3(risingPedestal.localScale.x,
-                                         Mathf.Lerp(risingPedestal.localScale.y, 35, riseSpeed * Time.deltaTime),
-                                                    risingPedestal.localScale.z);
-            runner.GetTransform().position = new Vector3(runner.GetTransform().position.x,
-                                         Mathf.Lerp(runner.GetTransform().position.y, 35, riseSpeed * Time.deltaTime),
-                                                    runner.GetTransform().position.z);
+            var pedestalT = risingPedestal.transform.position;
+            var runnerT = runner.transform.position;
 
+            risingPedestal.transform.position = Vector3.MoveTowards(pedestalT, pedestalMovePoint.position, pedestalRiseSpeed * Time.deltaTime);
+            runner.transform.position = Vector3.MoveTowards(runnerT, runnerUpPoint.position, pedestalRiseSpeed * Time.deltaTime);
+            xMultiplier += Time.deltaTime;
+            multiplier = Mathf.RoundToInt(xMultiplier);
+            if (risingPedestal.transform.position == pedestalMovePoint.position)
+            {
+                multiplier = 10;
+                StopAllCoroutines();
+                StartCoroutine(TopPlatform(runner));
+            }
             yield return null;
         }
+        PlayerWin();
     }
+
+    private IEnumerator TopPlatform(ARunner runner)
+    {
+        var moveTime = 3f;
+
+        for (float i = 0; i < moveTime; i += Time.deltaTime)
+        {
+            runner.transform.position = Vector3.MoveTowards(runner.transform.position, topPlatformPoint.position,
+                                                            1 * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        PlayerWin();
+       
+    }
+
+    private void PlayerWin()
+    {
+        StopAllCoroutines();
+        GameController.CurrentState = GameState.Win;
+        Debug.Log("PlayerWin");
+    }    
 }
