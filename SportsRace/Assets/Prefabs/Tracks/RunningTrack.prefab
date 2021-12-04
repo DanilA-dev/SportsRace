@@ -11,15 +11,16 @@ GameObject:
   - component: {fileID: 3434693293563014156}
   - component: {fileID: 5796895785263246547}
   - component: {fileID: 2062625746763032995}
-  - component: {fileID: 8783666998927791298}
   - component: {fileID: 7191186014076578815}
   - component: {fileID: -1024108436602608338}
+  - component: {fileID: 7215029669468574200}
+  - component: {fileID: 297060760700228201}
   m_Layer: 3
   m_Name: RunningTrack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &3434693293563014156
 Transform:
@@ -86,19 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8783666998927791298
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6984915264275820940}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.95212185, z: 0.99999917}
-  m_Center: {x: 0, y: -0.023938522, z: 0}
 --- !u!114 &7191186014076578815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,8 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackType: 0
-  sameTypeSpeed: 350
-  wrongTypeSpeed: 200
+  sameTypeSpeed: 15
+  wrongTypeSpeed: 10
 --- !u!54 &-1024108436602608338
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -130,3 +118,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &7215029669468574200
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6984915264275820940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999994, y: 1, z: 1.0013092}
+  m_Center: {x: 0, y: 0, z: 0.00011040787}
+--- !u!65 &297060760700228201
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6984915264275820940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.99999994, y: 1.7829742, z: 0}
+  m_Center: {x: 0, y: 1.1799998, z: -0.5000667}

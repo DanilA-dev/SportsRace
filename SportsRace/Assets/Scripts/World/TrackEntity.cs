@@ -27,14 +27,9 @@ public class TrackEntity : MonoBehaviour
     #endregion
 
 
-    private void OnCollisionStay(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            var p = other.gameObject.GetComponent<PlayerRunner>();
-
-            if (p != null)
-                p.CheckTrack();
-        }
+        if (other.TryGetComponent(out ARunner runner))
+            runner.CheckTrack();
     }
 }

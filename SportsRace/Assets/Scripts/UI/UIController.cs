@@ -29,7 +29,7 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        SpeedChange(GameController.Instance.Player.DefaultSpeed);
+        SpeedChange(GameController.Instance.Runners[0].DefaultSpeed);
     }
     private void SpeedChange(float obj)
     {

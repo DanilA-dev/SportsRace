@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishSystem : MonoBehaviour
+
+public class FinishTrack : MonoBehaviour
 {
-    [SerializeField] private int multiplier;
     [Header("Pedestal")]
     [SerializeField] private float speedToPedestal;
     [SerializeField] private float pedestalRiseSpeed;
@@ -15,11 +15,12 @@ public class FinishSystem : MonoBehaviour
     [SerializeField] private Transform firstPlacePoint;
     [SerializeField] private Transform secondPlacePoint;
     [SerializeField] private Transform topPlatformPoint;
-    [Space]
-    [SerializeField] private bool firstPlaceTaken = false;
-    [SerializeField] private bool secondPlaceTaken = false;
 
     private Vector3 _startRisingPedestalPos;
+
+    private int _coinsMultiplier;
+    private int _positionIndex = 0;
+
 
     private void Start()
     {
@@ -29,46 +30,44 @@ public class FinishSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<ARunner>() != null)
+        if(other.TryGetComponent(out ARunner r))
         {
-            var r = other.GetComponent<ARunner>();
-            CheckFirst();
             r.FinishStop();
-            StartCoroutine(MoveToPedestal(r, firstPlacePoint.position));
+            _positionIndex++;
+            Debug.Log("Finish");
+            r.IsFinished = true;
+
+            r.SetFinishPosition(_positionIndex);
+            StartCoroutine(MoveToPedestal(r, PedestalPos(r.FinishIndex).position));
         }
     }
 
-    private void CheckFirst()
+    private Transform PedestalPos(int pos)
     {
-        if (firstPlaceTaken)
-            secondPlaceTaken = true;
-
-        if (!firstPlaceTaken)
-            firstPlaceTaken = true;
+        return pos == 1 ? firstPlacePoint : secondPlacePoint;
     }
 
     private IEnumerator MoveToPedestal(ARunner runner, Vector3 dir)
     {
         var moveTime = 3f;
-
+        runner.UnFreezeBody(RigidbodyConstraints.FreezeRotationY);
         for (float i = 0; i < moveTime; i+= Time.deltaTime)
         {
-            runner.Agent.speed = speedToPedestal;
-            runner.Agent.Warp(dir);
-            //runner.Agent.destination = dir;
+            runner.transform.position = Vector3.MoveTowards(runner.transform.position,
+                                                            dir, speedToPedestal * Time.deltaTime);
+            Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+            runner.transform.rotation = Quaternion.RotateTowards(runner.transform.rotation, rot, 500 * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        runner.Agent.ResetPath();
-        runner.Agent.enabled = false;
+        
         Debug.Log("We went to pedestal!");
-
         StartCoroutine(RiseFirstPlace(runner));
     }
 
     private IEnumerator RiseFirstPlace(ARunner runner)
     {
         float xMultiplier = 0f;
-        while (!secondPlaceTaken)
+        while (_positionIndex == 1 && runner.IsFinished && runner as PlayerRunner)
         {
             var pedestalT = risingPedestal.transform.position;
             var runnerT = runner.transform.position;
@@ -76,36 +75,49 @@ public class FinishSystem : MonoBehaviour
             risingPedestal.transform.position = Vector3.MoveTowards(pedestalT, pedestalMovePoint.position, pedestalRiseSpeed * Time.deltaTime);
             runner.transform.position = Vector3.MoveTowards(runnerT, runnerUpPoint.position, pedestalRiseSpeed * Time.deltaTime);
             xMultiplier += Time.deltaTime;
-            multiplier = Mathf.RoundToInt(xMultiplier);
-            if (risingPedestal.transform.position == pedestalMovePoint.position)
+            _coinsMultiplier = Mathf.RoundToInt(xMultiplier);
+            if (risingPedestal.transform.position == pedestalMovePoint.position && runner.FinishIndex == 1 && runner as PlayerRunner)
             {
-                multiplier = 10;
+                _coinsMultiplier = 10;
                 StopAllCoroutines();
                 StartCoroutine(TopPlatform(runner));
             }
             yield return null;
         }
-        PlayerWin();
+        CheckPlayerPos(runner);
     }
 
     private IEnumerator TopPlatform(ARunner runner)
     {
         var moveTime = 3f;
-
         for (float i = 0; i < moveTime; i += Time.deltaTime)
         {
             runner.transform.position = Vector3.MoveTowards(runner.transform.position, topPlatformPoint.position,
-                                                            1 * Time.deltaTime);
+                                                           3 * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-        PlayerWin();
-       
+        CheckPlayerPos(runner);
     }
 
-    private void PlayerWin()
+    public void OnRestart()
+    {
+        _positionIndex = 0;
+        _coinsMultiplier = 0;
+        risingPedestal.transform.position = _startRisingPedestalPos;
+    }
+
+    private void CheckPlayerPos(ARunner runner)
     {
         StopAllCoroutines();
-        GameController.CurrentState = GameState.Win;
-        Debug.Log("PlayerWin");
+        if(runner as PlayerRunner && runner.FinishIndex == 1)
+        {
+            Debug.Log("You win!");
+            GameController.CurrentState = GameState.Win;
+        }
+        else
+        {
+            Debug.Log("You lost!");
+            GameController.CurrentState = GameState.Lose;
+        }
     }    
 }

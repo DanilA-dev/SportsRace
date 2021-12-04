@@ -18,7 +18,6 @@ public class PlayerRunner : ARunner
     {
         InitStartType();
         _canMove = true;
-        agent.enabled = false;
     }
 
     private void FixedUpdate()
@@ -48,13 +47,18 @@ public class PlayerRunner : ARunner
         renderMaterial.material = m;
     }
 
+    public override void SetFinishPosition(int index)
+    {
+        _finishIndex = index;
+    }
+
     public void SetSpeed(float speed)
     {
         this.defaultSpeed = speed;
     }
 
 
-    public void CheckTrack()
+    public override void CheckTrack()
     {
         Collider[] col = Physics.OverlapSphere(transform.position, 3, whatIsTrack);
         if(col[0].TryGetComponent(out TrackEntity t))
@@ -78,15 +82,14 @@ public class PlayerRunner : ARunner
         //bad animation
     }
 
-    private void OnDrawGizmos()
+    public override void OnReset()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position, 3);
-    }
-
-
-    public void ResetToStart()
-    {
+        _canMove = true;
+        _isFinished = false;
+        _finishIndex = 0;
+        SetSpeed(defaultSpeed);
+        body.useGravity = true;
+        body.isKinematic = false;
         transform.position = new Vector3(transform.position.x, transform.position.y, 19.54f);
     }
 
@@ -95,14 +98,12 @@ public class PlayerRunner : ARunner
         if (!_canMove)
             return;
 
-        body.velocity = dir * speed * Time.deltaTime;
+        //body.velocity = dir * speed * Time.deltaTime;
+        transform.position += dir * speed * Time.deltaTime;
     }
 
     public override void FinishStop()
     {
         _canMove = false;
-        body.isKinematic = true;
-        agent.enabled = true;
-        defaultSpeed = 0;
     }
 }

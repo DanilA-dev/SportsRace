@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
 
-    [SerializeField] private PlayerRunner player;
+    [SerializeField] private List<ARunner> runners = new List<ARunner>();
 
     private GameState _currentState;
 
@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public PlayerRunner Player => player;
+    public List<ARunner> Runners => runners;
 
     #endregion
 
@@ -87,24 +87,26 @@ public class GameController : MonoBehaviour
 
     private void OnWinState()
     {
-        Debug.Log("Enter Win State");
+        UIController.TurnOnPanel(UIPanelType.Win);
     }
 
     private void OnLoseState()
     {
-        Debug.Log("Enter Lose State");
+        UIController.TurnOnPanel(UIPanelType.Lose);
     }
 
     private void OnCoreState()
     {
         UIController.TurnOnPanel(UIPanelType.Core);
-        player.SetSpeed(player.DefaultSpeed);
+        
         OnCoreEnter?.Invoke();
     }
 
     private void OnMenuState()
     {
-        player.ResetToStart();
+        foreach (var r in runners)
+            r.OnReset();
+
         OnMenuEnter?.Invoke();
         UIController.TurnOnPanel(UIPanelType.Menu);
     }
