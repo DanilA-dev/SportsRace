@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da825396a26c154284b62f9cabae331, type: 3}
+  m_Name: SandJumper
+  m_EditorClassIdentifier: 
+  SameTypeAnimValue: 
+  WrongTypeAnimValue: 
+  Speeds:
+  - type: 0
+    speed: 250
+  - type: 3
+    speed: 300
+  - type: 5
+    speed: 100
+  - type: 2
+    speed: 150
+  - type: 6
+    speed: 250
+  - type: 1
+    speed: 250
+  - type: 4
+    speed: 200

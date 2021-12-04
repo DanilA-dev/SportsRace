@@ -10,14 +10,14 @@ public class SwitchRunnerButton : MonoBehaviour
     [SerializeField] private Button button;
      
 
-    private TrackType _switchType;
+    private SportType _switchType;
     private PlayerRunner _player;
     private Material _testMaterial;
 
-    public TrackType SwitchType { get => _switchType; set => _switchType = value; }
+    public SportType SwitchType { get => _switchType; set => _switchType = value; }
     public Material TestMaterial => _testMaterial;
 
-    public void Init(PlayerRunner player, TrackType newType, Material material)
+    public void Init(PlayerRunner player, SportType newType, Material material)
     {
         _player = player;
         _switchType = newType;

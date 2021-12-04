@@ -3095,6 +3095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d851c40ccaa16564c8a0dbce18cdb793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runnersController: {fileID: 1558769196}
   runners:
   - {fileID: 7681842695509828764}
   - {fileID: 2144528908}
@@ -3418,7 +3419,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191136276}
-  m_LocalRotation: {x: 0.17295597, y: -0.30481786, z: 0.056392603, w: 0.9348755}
+  m_LocalRotation: {x: 0.17295597, y: -0.3048179, z: 0.056392618, w: 0.9348755}
   m_LocalPosition: {x: 12.91, y: 8.01, z: 8.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4204,6 +4205,56 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1558769194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1558769195}
+  - component: {fileID: 1558769196}
+  m_Layer: 0
+  m_Name: RunnersSelectionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1558769195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558769194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1784222209}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1558769196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558769194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347cb3d3c94ec3247bb39b70f56387da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 2144528907}
+  bot: {fileID: 7681842695509828767}
+  runnersPrefabs:
+  - {fileID: 5520561868024378339, guid: 2611a11448555724a9c89ffc5fbdb193, type: 3}
+  - {fileID: 2706112449584146977, guid: b3b7b11657376b244b22e61748d2978f, type: 3}
+  - {fileID: 2809331474711938534, guid: d499c3e28a3bb4f4283e6a047e46a605, type: 3}
 --- !u!1 &1561413311
 GameObject:
   m_ObjectHideFlags: 3
@@ -4524,7 +4575,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.17295597, y: -0.30481786, z: 0.056392603, w: 0.9348755}
+  m_LocalRotation: {x: 0.17295597, y: -0.3048179, z: 0.056392618, w: 0.9348755}
   m_LocalPosition: {x: 12.91, y: 8.01, z: 8.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4903,6 +4954,7 @@ Transform:
   m_Children:
   - {fileID: 1060161227}
   - {fileID: 864054807}
+  - {fileID: 1558769195}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6220,7 +6272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6227505742119988819, guid: 98b3a7b12d01b524eae29a5a7ceb4b11, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98b3a7b12d01b524eae29a5a7ceb4b11, type: 3}
@@ -6235,6 +6287,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e20c22f736f027f4ba16ce18973e5545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7681842695509828767 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6227505742119988818, guid: 98b3a7b12d01b524eae29a5a7ceb4b11, type: 3}
+  m_PrefabInstance: {fileID: 7681842695509828763}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8998773231563241228
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum TrackType
+public enum SportType
 {
     RunningTrack,
     WallObstacleTrack,
@@ -13,14 +13,14 @@ public enum TrackType
 
 public class TrackEntity : MonoBehaviour
 {
-    [SerializeField] private TrackType trackType;
+    [SerializeField] private SportType trackType;
     [SerializeField] private float sameTypeSpeed;
     [SerializeField] private float wrongTypeSpeed;
 
 
     #region Properties
 
-    public TrackType TrackType => trackType;
+    public SportType TrackType => trackType;
     public float WrongTypeSpeed => wrongTypeSpeed;
     public float SameTypeSpeed => sameTypeSpeed;
 

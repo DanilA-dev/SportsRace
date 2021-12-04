@@ -9,16 +9,29 @@ public class PlayerRunner : ARunner
 {
     [SerializeField] private MeshRenderer renderMaterial;
 
-    public static event Action<float> OnSpeedChange;
-
     private bool _canMove;
+
+    public static event Action<float> OnSpeedChange;
    
+    public SportType RunnerType
+    {
+        get => runnerType;
+        set
+        {
+            runnerType = value;
+            ChangeRunner(value);
+        }
+    }
+
 
     private void Start()
     {
         InitStartType();
         _canMove = true;
+        GameController.OnCoreEnter += AddAvaliableRunners;
+
     }
+
 
     private void FixedUpdate()
     {
@@ -26,11 +39,35 @@ public class PlayerRunner : ARunner
             Move(transform.forward, defaultSpeed);
     }
 
-    public void SwitchRunner(TrackType newType, Material m)
+    private void AddAvaliableRunners()
     {
-        runnerType = newType;
+        foreach (Transform t in transform)
+        {
+            if(t.TryGetComponent(out RunnerObject r))
+                _avaliableRunners.Add(r);
+        }
+    }
+    public void SwitchRunner(SportType newType, Material m)
+    {
+        RunnerType = newType;
         CheckTrack();
         SetTestMaterial(m);
+    }
+    private void ChangeRunner(SportType value)
+    {
+        if(_avaliableRunners.Count < 0)
+        {
+            Debug.LogError("No Avaliable runners!!!");
+            return;
+        }
+
+        for (int i = 0; i < _avaliableRunners.Count; i++)
+        {
+            if (_avaliableRunners[i].Type == value)
+                _avaliableRunners[i].gameObject.SetActive(true);
+            else
+                _avaliableRunners[i].gameObject.SetActive(false);
+        }
     }
 
     private void InitStartType()
@@ -38,7 +75,7 @@ public class PlayerRunner : ARunner
         var getTracks = TracksController.Instance.GeneratedTracks.ToList();
         var firtsTrack = getTracks[0];
 
-        runnerType = firtsTrack.TrackType;
+        RunnerType = firtsTrack.TrackType;
         CheckTrack();
     }
 

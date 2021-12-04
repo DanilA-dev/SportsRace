@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
 
+
+    [SerializeField] private RunnersSelectionController runnersController;
     [SerializeField] private List<ARunner> runners = new List<ARunner>();
 
     private GameState _currentState;
@@ -98,7 +100,7 @@ public class GameController : MonoBehaviour
     private void OnCoreState()
     {
         UIController.TurnOnPanel(UIPanelType.Core);
-        
+        runnersController.SetCreatedRunners();
         OnCoreEnter?.Invoke();
     }
 
@@ -107,6 +109,7 @@ public class GameController : MonoBehaviour
         foreach (var r in runners)
             r.OnReset();
 
+        runnersController.ClearCreatedRunners();
         OnMenuEnter?.Invoke();
         UIController.TurnOnPanel(UIPanelType.Menu);
     }

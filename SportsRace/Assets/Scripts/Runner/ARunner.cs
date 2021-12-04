@@ -9,7 +9,7 @@ public abstract class ARunner : MonoBehaviour
     [SerializeField] protected float defaultSpeed;
     [SerializeField] protected Rigidbody body;
     [Header("CurrentType")]
-    [SerializeField] protected TrackType runnerType;
+    [SerializeField] protected SportType runnerType;
     [Space]
     [SerializeField] protected NavMeshAgent agent;
     [Header("Track Check")]
@@ -17,13 +17,14 @@ public abstract class ARunner : MonoBehaviour
 
     protected int _finishIndex;
     protected bool _isFinished;
+    protected List<RunnerObject> _avaliableRunners = new List<RunnerObject>();
+
 
     #region Properties
 
     public Rigidbody Body { get => body; set => body = value; }
     public NavMeshAgent Agent { get => agent; set => agent = value; }
     public float DefaultSpeed => defaultSpeed;
-    public TrackType RunnerType => runnerType;
     public int FinishIndex => _finishIndex;
     public bool IsFinished { get => _isFinished; set => _isFinished = value; }
 
@@ -54,5 +55,14 @@ public abstract class ARunner : MonoBehaviour
         _finishIndex = index;
     }
 
+    public void SetAvaliableRunnerList(List<RunnerObject> newList)
+    {
+        _avaliableRunners = newList;
+    }
+
+    public void ClearRunners()
+    {
+        _avaliableRunners.Clear();
+    }
 
 }
