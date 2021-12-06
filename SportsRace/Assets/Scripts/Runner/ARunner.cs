@@ -11,22 +11,27 @@ public abstract class ARunner : MonoBehaviour
     [Header("CurrentType")]
     [SerializeField] protected SportType runnerType;
     [Space]
-    [SerializeField] protected NavMeshAgent agent;
     [Header("Track Check")]
     [SerializeField] protected LayerMask whatIsTrack;
+    [Space]
+    [SerializeField] protected List<RunnerObject> _avaliableRunners = new List<RunnerObject>();
+
+
+    protected Animator _runnerAnimator;
+    protected RunnerObject _currentRunner;
 
     protected int _finishIndex;
     protected bool _isFinished;
-    protected List<RunnerObject> _avaliableRunners = new List<RunnerObject>();
 
 
     #region Properties
 
     public Rigidbody Body { get => body; set => body = value; }
-    public NavMeshAgent Agent { get => agent; set => agent = value; }
+    public Animator RunnerAnimator { get => _runnerAnimator; set => _runnerAnimator = value; }
     public float DefaultSpeed => defaultSpeed;
     public int FinishIndex => _finishIndex;
     public bool IsFinished { get => _isFinished; set => _isFinished = value; }
+    public SportType Type => runnerType;
 
     #endregion
 
@@ -65,4 +70,8 @@ public abstract class ARunner : MonoBehaviour
         _avaliableRunners.Clear();
     }
 
+    public void Jump(Vector3 dir, float force)
+    {
+        Body.velocity = dir * force;
+    }
 }

@@ -32,7 +32,6 @@ public class FinishTrack : MonoBehaviour
     {
         if(other.TryGetComponent(out ARunner r))
         {
-            r.FinishStop();
             _positionIndex++;
             Debug.Log("Finish");
             r.IsFinished = true;
@@ -49,26 +48,28 @@ public class FinishTrack : MonoBehaviour
 
     private IEnumerator MoveToPedestal(ARunner runner, Vector3 dir)
     {
-        var moveTime = 3f;
+        var moveTime = 2.5f;
         runner.UnFreezeBody(RigidbodyConstraints.FreezeRotationY);
         for (float i = 0; i < moveTime; i+= Time.deltaTime)
         {
-            runner.transform.position = Vector3.MoveTowards(runner.transform.position,
-                                                            dir, speedToPedestal * Time.deltaTime);
+            runner.Move(dir, 150);
             Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
             runner.transform.rotation = Quaternion.RotateTowards(runner.transform.rotation, rot, 500 * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
         
         Debug.Log("We went to pedestal!");
+        runner.Body.isKinematic = true;
+        runner.RunnerAnimator.Play("Idle");
         StartCoroutine(RiseFirstPlace(runner));
     }
 
     private IEnumerator RiseFirstPlace(ARunner runner)
     {
         float xMultiplier = 0f;
-        while (_positionIndex == 1 && runner.IsFinished && runner as PlayerRunner)
+        while (_positionIndex == 1)
         {
+            Debug.Log("rise!");
             var pedestalT = risingPedestal.transform.position;
             var runnerT = runner.transform.position;
 
@@ -84,16 +85,17 @@ public class FinishTrack : MonoBehaviour
             }
             yield return null;
         }
+        Debug.Log("lose??!");
         CheckPlayerPos(runner);
     }
 
     private IEnumerator TopPlatform(ARunner runner)
     {
-        var moveTime = 3f;
+        var moveTime = 2.5f;
+        runner.Body.isKinematic = false;
         for (float i = 0; i < moveTime; i += Time.deltaTime)
         {
-            runner.transform.position = Vector3.MoveTowards(runner.transform.position, topPlatformPoint.position,
-                                                           3 * Time.deltaTime);
+           // runner.Move(Vector3.forward, 200);
             yield return new WaitForEndOfFrame();
         }
         CheckPlayerPos(runner);
@@ -109,7 +111,9 @@ public class FinishTrack : MonoBehaviour
     private void CheckPlayerPos(ARunner runner)
     {
         StopAllCoroutines();
-        if(runner as PlayerRunner && runner.FinishIndex == 1)
+        runner.RunnerAnimator.Play("Idle");
+
+        if (runner as PlayerRunner && runner.FinishIndex == 1)
         {
             Debug.Log("You win!");
             GameController.CurrentState = GameState.Win;

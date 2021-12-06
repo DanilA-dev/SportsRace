@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9da825396a26c154284b62f9cabae331, type: 3}
+  m_Name: ObstacleSprinter
+  m_EditorClassIdentifier: 
+  Speeds:
+  - type: 0
+    speed: 100
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}
+  - type: 3
+    speed: 50
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+  - type: 5
+    speed: 50
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+  - type: 2
+    speed: 100
+    animValue: {fileID: 7400000, guid: 1ecee6fa3f989fc448e598bb7fd2980e, type: 2}
+  - type: 6
+    speed: 200
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}
+  - type: 1
+    speed: 150
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}
+  - type: 4
+    speed: 150
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}

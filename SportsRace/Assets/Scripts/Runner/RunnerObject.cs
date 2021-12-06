@@ -9,4 +9,6 @@ public class RunnerObject : MonoBehaviour
 
     public SportType Type => type;
     public RunnerEntity RunnerData => runnerData;
+
+
 }

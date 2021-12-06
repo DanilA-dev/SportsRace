@@ -14,7 +14,7 @@ public class SwitchButtonInitializer : MonoBehaviour
 
         for (int i = 0; i < switches.Count; i++)
         {
-            switches[i].Init(player, t[i].TrackType, t[i].GetComponent<MeshRenderer>().sharedMaterial);
+            switches[i].Init(player, t[i].TrackType);
         }
     }
 }

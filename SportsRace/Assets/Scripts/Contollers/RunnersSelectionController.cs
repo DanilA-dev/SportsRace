@@ -39,32 +39,32 @@ public class RunnersSelectionController : MonoBehaviour
 
     public void CreateRunners(Transform tParent)
     {
-        for (int i = 0; i < _generatedRunners.Count; i++)
-        {
-            var r = Instantiate(_generatedRunners[i], tParent);
-            r.transform.localPosition = Vector3.zero;
-            r.gameObject.SetActive(false);
-            _createdRunners.Add(r);
-        }
-
-        //takes the summary!!! of both player and bot!!!
-
-       // var gameRunners = GameController.Instance.Runners;
-       // foreach (var r in gameRunners)
-       //     r.SetAvaliableRunnerList(_generatedRunners);
+       // for (int i = 0; i < _generatedRunners.Count; i++)
+       // {
+       //     var r = Instantiate(_generatedRunners[i], tParent);
+       //     r.transform.localPosition = Vector3.zero;
+       //     r.gameObject.SetActive(false);
+       //     _createdRunners.Add(r);
+       // }
+       //
+       // //takes the summary!!! of both player and bot!!!
+       //
+       //  var gameRunners = GameController.Instance.Runners;
+       //  foreach (var r in gameRunners)
+       //      r.SetAvaliableRunnerList(_generatedRunners);
     }
 
 
     public void ClearCreatedRunners()
     {
-        for (int i = 0; i < _createdRunners.Count; i++)
-            Destroy(_createdRunners[i].gameObject);
-
-        _createdRunners.Clear();
-
-        var runners = GameController.Instance.Runners;
-        foreach (var r in runners)
-            r.ClearRunners();
+       // for (int i = 0; i < _createdRunners.Count; i++)
+       //     Destroy(_createdRunners[i].gameObject);
+       //
+       // _createdRunners.Clear();
+       //
+       // var runners = GameController.Instance.Runners;
+       // foreach (var r in runners)
+       //     r.ClearRunners();
     }
 
 }

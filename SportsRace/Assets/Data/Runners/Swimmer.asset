@@ -12,20 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da825396a26c154284b62f9cabae331, type: 3}
   m_Name: Swimmer
   m_EditorClassIdentifier: 
-  SameTypeAnimValue: 
-  WrongTypeAnimValue: 
   Speeds:
   - type: 0
     speed: 100
+    animValue: {fileID: 0}
   - type: 3
-    speed: 100
+    speed: 50
+    animValue: {fileID: 0}
   - type: 5
     speed: 70
+    animValue: {fileID: 0}
   - type: 2
     speed: 400
+    animValue: {fileID: 0}
   - type: 6
     speed: 100
+    animValue: {fileID: 0}
   - type: 1
     speed: 100
+    animValue: {fileID: 0}
   - type: 4
     speed: 100
+    animValue: {fileID: 0}

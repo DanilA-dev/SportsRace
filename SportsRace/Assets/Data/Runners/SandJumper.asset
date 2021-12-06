@@ -12,20 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da825396a26c154284b62f9cabae331, type: 3}
   m_Name: SandJumper
   m_EditorClassIdentifier: 
-  SameTypeAnimValue: 
-  WrongTypeAnimValue: 
   Speeds:
   - type: 0
-    speed: 250
+    speed: 50
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
   - type: 3
-    speed: 300
-  - type: 5
-    speed: 100
-  - type: 2
     speed: 150
+    animValue: {fileID: 7400000, guid: 6b7b2b28d77fd21469f437ee2ed55a19, type: 2}
+  - type: 5
+    speed: 50
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+  - type: 2
+    speed: 100
+    animValue: {fileID: 7400000, guid: 1ecee6fa3f989fc448e598bb7fd2980e, type: 2}
   - type: 6
-    speed: 250
+    speed: 50
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}
   - type: 1
-    speed: 250
+    speed: 150
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}
   - type: 4
-    speed: 200
+    speed: 150
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}

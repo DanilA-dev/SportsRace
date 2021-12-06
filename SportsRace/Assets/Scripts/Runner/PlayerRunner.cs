@@ -3,13 +3,12 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class PlayerRunner : ARunner
 {
-    [SerializeField] private MeshRenderer renderMaterial;
-
+    public  float gravity;
     private bool _canMove;
+    public float force;
 
     public static event Action<float> OnSpeedChange;
    
@@ -23,13 +22,17 @@ public class PlayerRunner : ARunner
         }
     }
 
-
     private void Start()
     {
-        InitStartType();
         _canMove = true;
-        GameController.OnCoreEnter += AddAvaliableRunners;
+        InitStartType();
+        GameController.OnCoreEnter += GameController_OnCoreEnter;
 
+    }
+
+    private void GameController_OnCoreEnter()
+    {
+        CheckTrack();
     }
 
 
@@ -39,20 +42,12 @@ public class PlayerRunner : ARunner
             Move(transform.forward, defaultSpeed);
     }
 
-    private void AddAvaliableRunners()
-    {
-        foreach (Transform t in transform)
-        {
-            if(t.TryGetComponent(out RunnerObject r))
-                _avaliableRunners.Add(r);
-        }
-    }
-    public void SwitchRunner(SportType newType, Material m)
+    public void SwitchRunner(SportType newType)
     {
         RunnerType = newType;
         CheckTrack();
-        SetTestMaterial(m);
     }
+
     private void ChangeRunner(SportType value)
     {
         if(_avaliableRunners.Count < 0)
@@ -64,7 +59,12 @@ public class PlayerRunner : ARunner
         for (int i = 0; i < _avaliableRunners.Count; i++)
         {
             if (_avaliableRunners[i].Type == value)
+            {
                 _avaliableRunners[i].gameObject.SetActive(true);
+                _currentRunner = _avaliableRunners[i];
+                _runnerAnimator = _avaliableRunners[i].GetComponent<Animator>();
+            }
+                
             else
                 _avaliableRunners[i].gameObject.SetActive(false);
         }
@@ -74,15 +74,9 @@ public class PlayerRunner : ARunner
     {
         var getTracks = TracksController.Instance.GeneratedTracks.ToList();
         var firtsTrack = getTracks[0];
-
-        RunnerType = firtsTrack.TrackType;
-        CheckTrack();
+        RunnerType = firtsTrack.TrackType; 
     }
 
-    private void SetTestMaterial(Material m)
-    {
-        renderMaterial.material = m;
-    }
 
     public override void SetFinishPosition(int index)
     {
@@ -97,37 +91,24 @@ public class PlayerRunner : ARunner
 
     public override void CheckTrack()
     {
-        Collider[] col = Physics.OverlapSphere(transform.position, 3, whatIsTrack);
+        Collider[] col = Physics.OverlapSphere(transform.position, 1, whatIsTrack);
         if(col[0].TryGetComponent(out TrackEntity t))
         {
-            if (t.TrackType == runnerType)
-            {
-                SetSpeed(t.SameTypeSpeed);
-                OnSpeedChange?.Invoke(this.defaultSpeed);
-                Debug.Log("<color=green> Same Type! </color>");
-            }
-            else
-                Punish(t);
+            SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+            _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+            OnSpeedChange?.Invoke(this.defaultSpeed);
         }
     }
 
-    private void Punish(TrackEntity t)
-    {
-        Debug.Log("<color=red> Wrong Type! </color>");
-        SetSpeed(t.WrongTypeSpeed);
-        OnSpeedChange?.Invoke(this.defaultSpeed);
-        //bad animation
-    }
 
     public override void OnReset()
     {
         _canMove = true;
         _isFinished = false;
         _finishIndex = 0;
-        SetSpeed(defaultSpeed);
         body.useGravity = true;
         body.isKinematic = false;
-        transform.position = new Vector3(transform.position.x, transform.position.y, 19.54f);
+        SetSpeed(defaultSpeed);
     }
 
     public override void Move(Vector3 dir, float speed)
@@ -135,8 +116,7 @@ public class PlayerRunner : ARunner
         if (!_canMove)
             return;
 
-        //body.velocity = dir * speed * Time.deltaTime;
-        transform.position += dir * speed * Time.deltaTime;
+        body.velocity = dir * speed * Time.deltaTime;
     }
 
     public override void FinishStop()

@@ -100,7 +100,6 @@ public class GameController : MonoBehaviour
     private void OnCoreState()
     {
         UIController.TurnOnPanel(UIPanelType.Core);
-        runnersController.SetCreatedRunners();
         OnCoreEnter?.Invoke();
     }
 
@@ -110,6 +109,7 @@ public class GameController : MonoBehaviour
             r.OnReset();
 
         runnersController.ClearCreatedRunners();
+        runnersController.SetCreatedRunners();
         OnMenuEnter?.Invoke();
         UIController.TurnOnPanel(UIPanelType.Menu);
     }

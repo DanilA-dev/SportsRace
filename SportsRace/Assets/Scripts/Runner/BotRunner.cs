@@ -1,14 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BotRunner : ARunner
 {
     [SerializeField,Range(0,10)] private float switchTime;
-    [SerializeField] private MeshRenderer renderMaterial;
 
     private bool _canMove;
+
+    public SportType RunnerType
+    {
+        get => runnerType;
+        set
+        {
+            runnerType = value;
+            ChangeRunner(value);
+        }
+    }
+
+
+    private void Start()
+    {
+        _canMove = true;
+        InitStartType();
+        GameController.OnCoreEnter += GameController_OnCoreEnter;
+
+    }
+
+    private void GameController_OnCoreEnter()
+    {
+        CheckTrack();
+    }
 
     private void FixedUpdate()
     {
@@ -21,25 +45,52 @@ public class BotRunner : ARunner
         Collider[] col = Physics.OverlapSphere(transform.position, 3, whatIsTrack);
         if (col[0].TryGetComponent(out TrackEntity t))
         {
-            if (t.TrackType == runnerType)
-                SetSpeed(t.SameTypeSpeed);
-            else
+            SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+            _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+
+            if (runnerType != t.TrackType)
                 Punish(t);
         }
     }
 
+    private void ChangeRunner(SportType value)
+    {
+        if (_avaliableRunners.Count < 0)
+        {
+            Debug.LogError("No Avaliable runners!!!");
+            return;
+        }
+
+        for (int i = 0; i < _avaliableRunners.Count; i++)
+        {
+            if (_avaliableRunners[i].Type == value)
+            {
+                _avaliableRunners[i].gameObject.SetActive(true);
+                _currentRunner = _avaliableRunners[i];
+                _runnerAnimator = _avaliableRunners[i].GetComponent<Animator>();
+            }
+
+            else
+                _avaliableRunners[i].gameObject.SetActive(false);
+        }
+    }
+    private void InitStartType()
+    {
+        var getTracks = TracksController.Instance.GeneratedTracks.ToList();
+        var firtsTrack = getTracks[0];
+        RunnerType = firtsTrack.TrackType;
+    }
+
     private void Punish(TrackEntity t)
     {
-        SetSpeed(t.WrongTypeSpeed);
         StartCoroutine(SwitchRunner(t));
     }
 
     private IEnumerator SwitchRunner(TrackEntity t)
     {
         yield return new WaitForSeconds(switchTime);
-        runnerType = t.TrackType;
+        RunnerType = t.TrackType;
         CheckTrack();
-        renderMaterial.material = t.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public override void SetFinishPosition(int index)
@@ -65,7 +116,6 @@ public class BotRunner : ARunner
         SetSpeed(defaultSpeed);
         body.useGravity = true;
         body.isKinematic = false;
-        transform.position = new Vector3(transform.position.x, transform.position.y, 19.54f);
     }
 
     public override void Move(Vector3 dir, float speed)
@@ -73,7 +123,6 @@ public class BotRunner : ARunner
         if (!_canMove)
             return;
 
-        //body.velocity = dir * speed * Time.deltaTime;
-        transform.position += dir * speed * Time.deltaTime;
+        body.velocity = dir * speed * Time.deltaTime;
     }
 }
