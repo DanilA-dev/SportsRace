@@ -23,7 +23,7 @@ public class RunnersSelectionController : MonoBehaviour
 
     public void GenerateRunners()
     {
-        var generatedTracks = TracksController.Instance.GeneratedTracks.ToList();
+        var generatedTracks = TracksController.Instance.LevelTracks.ToList();
 
         for (int i = 0; i < runnersPrefabs.Count; i++)
         {

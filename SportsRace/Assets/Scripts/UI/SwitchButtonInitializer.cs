@@ -10,7 +10,7 @@ public class SwitchButtonInitializer : MonoBehaviour
 
     public void Start()
     {
-        var t = TracksController.Instance.GeneratedTracks.ToList();
+        var t = TracksController.Instance.LevelTracks.ToList();
 
         for (int i = 0; i < switches.Count; i++)
         {

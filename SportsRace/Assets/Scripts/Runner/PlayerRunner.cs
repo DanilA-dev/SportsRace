@@ -72,7 +72,7 @@ public class PlayerRunner : ARunner
 
     private void InitStartType()
     {
-        var getTracks = TracksController.Instance.GeneratedTracks.ToList();
+        var getTracks = TracksController.Instance.LevelTracks.ToList();
         var firtsTrack = getTracks[0];
         RunnerType = firtsTrack.TrackType; 
     }

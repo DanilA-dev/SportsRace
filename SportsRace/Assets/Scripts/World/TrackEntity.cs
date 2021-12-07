@@ -8,15 +8,20 @@ public enum SportType
     SandTrack,
     ClimbingTrack,
     SnowTrack,
-    SprintObstaclesTrack
+    SprintObstaclesTrack,
+    Finish,
+    Start
 }
 
 public class TrackEntity : MonoBehaviour
 {
     [SerializeField] private SportType trackType;
+    [SerializeField] private Transform beginPoint;
+    [SerializeField] private Transform endPoint;
 
     public SportType TrackType => trackType;
-    
+    public Transform BeginPoint => beginPoint;
+    public Transform EndPoint => endPoint;
 
 
     private void OnTriggerStay(Collider other)

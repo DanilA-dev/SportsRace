@@ -8,13 +8,15 @@ public class TracksController : MonoBehaviour
 {
     public static TracksController Instance;
 
+    [SerializeField] private float offset;
     [SerializeField] private int tracksAmount;
-    [SerializeField] private List<TrackEntity> tracks = new List<TrackEntity>();
+    [SerializeField] private TrackEntity startTrack;
+    [SerializeField] private List<TrackEntity> tracksPrefab = new List<TrackEntity>();
 
-    private List<TrackEntity> useableTracks = new List<TrackEntity>();
-    private HashSet<TrackEntity> generatedTracks = new HashSet<TrackEntity>();
+    private HashSet<TrackEntity> levelTracks = new HashSet<TrackEntity>();
+    private List<TrackEntity> createdLevelTrack = new List<TrackEntity>();
+    public HashSet<TrackEntity> LevelTracks => levelTracks;
 
-    public HashSet<TrackEntity> GeneratedTracks => generatedTracks;
 
     private void Awake()
     {
@@ -31,33 +33,54 @@ public class TracksController : MonoBehaviour
 
     private void OnEnable()
     {
-        Generate();
+        createdLevelTrack.Add(startTrack);
+        GetLevelTracks();
     }
 
-    private void Generate()
+    public void GetLevelTracks()
     {
-        AddUseableTracks();
-        GetTracks();
-    }
-    private void AddUseableTracks()
-    {
-        for (int i = 0; i < tracks.Count; i++)
-            useableTracks.Add(tracks[i]);
+        StartCoroutine(SetLevelTracks());
     }
 
-    public void GetTracks()
+    public void DeleteTracks()
+    {
+        levelTracks.Clear();
+    }
+
+    [ContextMenu("Create")]
+    public void CreateTracksPrefabs()
     {
         for (int i = 0; i < tracksAmount; i++)
         {
-            if (useableTracks.Count > 0)
-            {
-               //var randomIndex = Random.Range(0, useableTracks.Count);
-               //var randomTrack = useableTracks[randomIndex];
-                generatedTracks.Add(useableTracks[i]); // later do random
-                Debug.Log($"Track : {useableTracks[i]} is generated");
-            }
+            var createdTrack = Instantiate(levelTracks.ToList()[Random.Range(0, levelTracks.Count)]);
+
+            var trackRotation = Quaternion.Euler(new Vector3(-90, 0, 90));
+            var trackPos = new Vector3(0, 0, (createdLevelTrack[createdLevelTrack.Count - 1].EndPoint.position - createdTrack.BeginPoint.localPosition).z + offset);
+            createdTrack.transform.rotation = trackRotation;
+            createdTrack.transform.position = trackPos;
+
+            createdLevelTrack.Add(createdTrack);
         }
-        useableTracks.Clear();
+
+        for (int i = 0; i < createdLevelTrack.Count; i++)
+        {
+            Debug.Log(createdLevelTrack[i]);
+        }
+    }
+
+    private IEnumerator SetLevelTracks()
+    {
+
+        while(levelTracks.Count != 3)
+        {
+            levelTracks.Add(tracksPrefab[Random.Range(0, tracksPrefab.Count)]);
+            yield return null;
+        }
+
+        for (int i = 0; i < levelTracks.Count; i++)
+        {
+            Debug.Log(levelTracks.ToList()[i] + "is in Level Tracks!!!");
+        }
     }
 
 }
