@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance;
 
-
+    [SerializeField] private UserData data;
     [SerializeField] private RunnersSelectionController runnersController;
     [SerializeField] private List<ARunner> runners = new List<ARunner>();
 
@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour
 
 
     #region Properties
+    public static UserData Data { get => Instance.data; set => Instance.data = value; }
 
     public static GameState CurrentState
     {

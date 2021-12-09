@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerRunner : ARunner
 {
     [SerializeField] private float force;
+    [SerializeField] private float downRay;
 
     private Vector3 moveVector;
 
@@ -85,6 +86,10 @@ public class PlayerRunner : ARunner
         _finishIndex = index;
     }
 
+    public override void SetFinishAnimation()
+    {
+        base.SetFinishAnimation();
+    }
 
     public override void CheckTrack(bool canCheck, float time = 0)
     {
@@ -99,19 +104,38 @@ public class PlayerRunner : ARunner
     {
         yield return new WaitForSeconds(time);
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, whatIsTrack))
-        {
-            if (hit.collider.TryGetComponent(out TrackEntity t))
-            {
-                SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-                OnSpeedChange?.Invoke(this.defaultSpeed);
+        // var collPos = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        //
+        // Collider[] c = Physics.OverlapSphere(collPos, 3, whatIsTrack);
+        // foreach (var coll in c)
+        // {
+        //     if(coll.TryGetComponent(out TrackEntity t))
+        //     {
+        //         SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+        //         OnSpeedChange?.Invoke(this.defaultSpeed);
+        //
+        //         if (state == RunnerState.Default)
+        //             _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+        //     }
+        // }
 
-                if(state == RunnerState.Default)
-                _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-            }
-        }
+
+        var rayPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+       RaycastHit hit;
+       if (Physics.Raycast(rayPos, Vector3.down, out hit, whatIsTrack))
+       {
+           if (hit.collider.TryGetComponent(out TrackEntity t))
+           {
+               SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+               OnSpeedChange?.Invoke(this.defaultSpeed);
+       
+               if(state == RunnerState.Default)
+               _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+           }
+       }
     }
+
+    
 
     public override void OnReset()
     {

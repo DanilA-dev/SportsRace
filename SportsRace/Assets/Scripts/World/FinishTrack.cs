@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 
 public class FinishTrack : MonoBehaviour
 {
     [Header("Pedestal")]
-    [SerializeField] private float speedToPedestal;
+    [SerializeField] private float jumpForce;
     [SerializeField] private float pedestalRiseSpeed;
+    [SerializeField] private Vector3 jumpOffset;
     [SerializeField] private Transform risingPedestal;
     [Header("Move Points")]
     [SerializeField] private Transform pedestalMovePoint;
@@ -16,28 +18,27 @@ public class FinishTrack : MonoBehaviour
     [SerializeField] private Transform secondPlacePoint;
     [SerializeField] private Transform topPlatformPoint;
 
-    private Vector3 _startRisingPedestalPos;
 
     private int _coinsMultiplier;
     private int _positionIndex = 0;
 
 
-    private void Start()
+    private void OnTriggerExit(Collider other)
     {
-        _startRisingPedestalPos = risingPedestal.transform.position;
-        risingPedestal.transform.position = _startRisingPedestalPos;
+        if (other.TryGetComponent(out ARunner r))
+            r.State = RunnerState.Default;
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out ARunner r))
         {
             _positionIndex++;
-            Debug.Log("Finish");
+            r.State = RunnerState.Finish;
+            r.SetFinishPosition(_positionIndex);
+            Debug.Log($"{r.gameObject.name} is Finishend in {r.FinishIndex} place");
             r.IsFinished = true;
 
-            r.SetFinishPosition(_positionIndex);
-            StartCoroutine(MoveToPedestal(r, PedestalPos(r.FinishIndex).position));
+            StartCoroutine(JumpToPedestal(r, PedestalPos(r.FinishIndex).position));
         }
     }
 
@@ -46,22 +47,15 @@ public class FinishTrack : MonoBehaviour
         return pos == 1 ? firstPlacePoint : secondPlacePoint;
     }
 
-    private IEnumerator MoveToPedestal(ARunner runner, Vector3 dir)
+    private IEnumerator JumpToPedestal(ARunner r, Vector3 dir)
     {
-        var moveTime = 2.5f;
-        runner.UnFreezeBody(RigidbodyConstraints.FreezeRotationY);
-        for (float i = 0; i < moveTime; i+= Time.deltaTime)
-        {
-            runner.Move(dir, 150);
-            Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
-            runner.transform.rotation = Quaternion.RotateTowards(runner.transform.rotation, rot, 500 * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        
-        Debug.Log("We went to pedestal!");
-        runner.Body.isKinematic = true;
-        runner.RunnerAnimator.Play("Idle");
-        StartCoroutine(RiseFirstPlace(runner));
+        r.transform.LookAt(dir);
+        r.transform.DOMove(dir, 1);
+        yield return new WaitForSeconds(1);
+        r.SetFinishAnimation();
+        r.Body.isKinematic = true;
+        r.transform.DORotate(new Vector3(0, -180, 0),1);
+        StartCoroutine(RiseFirstPlace(r));
     }
 
     private IEnumerator RiseFirstPlace(ARunner runner)
@@ -69,7 +63,6 @@ public class FinishTrack : MonoBehaviour
         float xMultiplier = 0f;
         while (_positionIndex == 1)
         {
-            Debug.Log("rise!");
             var pedestalT = risingPedestal.transform.position;
             var runnerT = runner.transform.position;
 
@@ -81,7 +74,7 @@ public class FinishTrack : MonoBehaviour
             {
                 _coinsMultiplier = 10;
                 StopAllCoroutines();
-                StartCoroutine(TopPlatform(runner));
+                TopPlatform(runner);
             }
             yield return null;
         }
@@ -89,38 +82,42 @@ public class FinishTrack : MonoBehaviour
         CheckPlayerPos(runner);
     }
 
-    private IEnumerator TopPlatform(ARunner runner)
+    private void TopPlatform(ARunner runner)
     {
-        var moveTime = 2.5f;
-        runner.Body.isKinematic = false;
-        for (float i = 0; i < moveTime; i += Time.deltaTime)
-        {
-           // runner.Move(Vector3.forward, 200);
-            yield return new WaitForEndOfFrame();
-        }
-        CheckPlayerPos(runner);
+        runner.RunnerAnimator.Play("Normal Sprint");
+        var seq = DOTween.Sequence();
+        seq.Append(runner.transform.DOMove(topPlatformPoint.position, 1.3f));
+        seq.Join(runner.transform.DORotate(new Vector3(0, topPlatformPoint.position.y, 0), 1));
+        seq.OnComplete(() =>OnPlayerWin(runner));
+
+    }
+
+    private void OnPlayerWin(ARunner runner)
+    {
+        runner.RunnerAnimator.Play("Victory");
+        GameController.CurrentState = GameState.Win;
+        GameController.Data.WinsToNextLeague++;
     }
 
     public void OnRestart()
     {
         _positionIndex = 0;
         _coinsMultiplier = 0;
-        risingPedestal.transform.position = _startRisingPedestalPos;
+       // risingPedestal.transform.position = _startRisingPedestalPos;
     }
 
     private void CheckPlayerPos(ARunner runner)
     {
         StopAllCoroutines();
-        runner.RunnerAnimator.Play("Idle");
+        runner.SetFinishAnimation();
 
         if (runner as PlayerRunner && runner.FinishIndex == 1)
-        {
-            Debug.Log("You win!");
-            GameController.CurrentState = GameState.Win;
-        }
+            OnPlayerWin(runner);
         else
         {
-            Debug.Log("You lost!");
+            if (runner as PlayerRunner)
+                runner.RunnerAnimator.Play("Defeated");
+
             GameController.CurrentState = GameState.Lose;
         }
     }    

@@ -54,20 +54,35 @@ public class BotRunner : ARunner
     {
         yield return new WaitForSeconds(time);
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, whatIsTrack))
-        {
-            if (hit.collider.TryGetComponent(out TrackEntity t))
-            {
-                SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-
-                if (state == RunnerState.Default)
-                    _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-
-                if (runnerType != t.TrackType)
-                    Punish(t);
-            }
-        }
+      // Collider[] c = Physics.OverlapSphere(transform.position, 2, whatIsTrack);
+      // foreach (var coll in c)
+      // {
+      //     if (coll.TryGetComponent(out TrackEntity t))
+      //     {
+      //         SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+      //
+      //         if (state == RunnerState.Default)
+      //             _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+      //
+      //         if (runnerType != t.TrackType)
+      //             Punish(t);
+      //     }
+      // }
+       var rayPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+       RaycastHit hit;
+       if (Physics.Raycast(rayPos, Vector3.down, out hit, whatIsTrack))
+       {
+           if (hit.collider.TryGetComponent(out TrackEntity t))
+           {
+               SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+       
+               if (state == RunnerState.Default)
+                   _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+       
+               if (runnerType != t.TrackType)
+                   Punish(t);
+           }
+       }
     }
 
     protected override void ChangeRunner(SportType value)
@@ -119,6 +134,11 @@ public class BotRunner : ARunner
     public override void FinishStop()
     {
         _canMove = false;
+    }
+
+    public override void SetFinishAnimation()
+    {
+        base.SetFinishAnimation();
     }
 
     public override void OnReset()

@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public enum RunnerState
 {
-    Default, Climb, ClimbTop, Fall, StandUp, Swim, JumpObstacle, JumpSand, Hit, Finish
+    Default, Climb, ClimbTop, Fall, StandUp, Swim, JumpObstacle, JumpSand, HitWeak, HitHard, Stunned, Finish
 }
 
 public abstract class ARunner : MonoBehaviour
@@ -32,7 +32,7 @@ public abstract class ARunner : MonoBehaviour
     protected Animator _runnerAnimator;
     protected RunnerObject _currentRunner;
 
-    protected int _finishIndex;
+    protected  int _finishIndex;
     protected bool _isFinished;
     protected bool _canMove;
 
@@ -64,7 +64,7 @@ public abstract class ARunner : MonoBehaviour
     public Animator RunnerAnimator { get => _runnerAnimator; set => _runnerAnimator = value; }
     public float DefaultSpeed => defaultSpeed;
     public float Gravity { get => gravity; set => gravity = value; }
-    public int FinishIndex => _finishIndex;
+    public virtual int FinishIndex => _finishIndex;
     public bool IsFinished { get => _isFinished; set => _isFinished = value; }
     public SportType Type => runnerType;
 
@@ -110,13 +110,19 @@ public abstract class ARunner : MonoBehaviour
     {
         SetAvaliableRunnerList();
     }
+    protected virtual void ChangeRunner(SportType value) { }
+
+    public virtual void SetFinishAnimation()
+    {
+        if (_finishIndex > 1)
+            _runnerAnimator.Play("Defeated");
+        else if (_finishIndex == 1)
+            _runnerAnimator.Play("Victory");
+    }    
 
     #endregion
 
-    protected virtual void ChangeRunner(SportType value)
-    {
-        
-    }
+    
     private void OnEnable()
     {
         OnStateChange += SetState;
@@ -164,8 +170,14 @@ public abstract class ARunner : MonoBehaviour
             case RunnerState.JumpSand:
                 OnJumpSandState();
                 break;
-            case RunnerState.Hit:
-                OnHitState();
+            case RunnerState.HitWeak:
+                OnHitWeakState();
+                break;
+            case RunnerState.HitHard:
+                StartCoroutine(OnHitHardState());
+                break;
+            case RunnerState.Stunned:
+                StartCoroutine(OnStunnedState());
                 break;
             case RunnerState.Finish:
                 OnFinishState();
@@ -176,26 +188,51 @@ public abstract class ARunner : MonoBehaviour
         }
     }
 
+
+
     #region State Methods
+    private IEnumerator OnStunnedState()
+    {
+        _runnerAnimator.Play("Obstacle jump");
+        _canMove = false;
+        yield return new WaitForSeconds(0.8f);
+        _canMove = true;
+        defaultSpeed = 30;
+        _runnerAnimator.Play("After obstacle break");
+        yield return new WaitForSeconds(2);
+        State = RunnerState.Default;
+    }
 
     private void OnFinishState()
     {
-        throw new NotImplementedException();
+        UnFreezeBody(RigidbodyConstraints.FreezePositionX);
+        _canMove = false;
+        _runnerAnimator.Play("Obstacle jump");
     }
 
-    private void OnHitState()
+    private IEnumerator OnHitHardState()
     {
-        throw new NotImplementedException();
+        _runnerAnimator.Play("Boxer Punch");
+        yield return new WaitForSeconds(1f);
+        State = RunnerState.Default;
+    }
+    private void OnHitWeakState()
+    {
+        _runnerAnimator.Play("Weak Punch");
     }
 
     private void OnJumpSandState()
     {
-        throw new NotImplementedException();
+        _canMove = false;
+        _runnerAnimator.Play("Sand Jump");
+
     }
 
     private void OnJumpObstacleState()
     {
-        throw new NotImplementedException();
+        _runnerAnimator.Play("Obstacle jump");
+        _canMove = false;
+        gravity = 8;
     }
 
     private void OnSwimState()
@@ -250,11 +287,11 @@ public abstract class ARunner : MonoBehaviour
 
     private void OnDefaultState()
     {
+        CheckTrack(true);
         _canMove = true;
         gravity = 8;
         body.isKinematic = false;
         Move(Vector3.forward, defaultSpeed);
-        CheckTrack(true);
     }
 
 
@@ -281,6 +318,6 @@ public abstract class ARunner : MonoBehaviour
 
     public void Jump(Vector3 dir, float force)
     {
-        Body.velocity = dir * force;
+        body.velocity = dir * force;
     }
 }
