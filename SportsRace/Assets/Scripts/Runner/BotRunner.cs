@@ -8,21 +8,13 @@ public class BotRunner : ARunner
 {
     [SerializeField,Range(0,10)] private float switchTime;
 
-    private bool _canMove;
 
-    public SportType RunnerType
+    private Vector3 moveVector;
+
+
+    protected override void Start()
     {
-        get => runnerType;
-        set
-        {
-            runnerType = value;
-            ChangeRunner(value);
-        }
-    }
-
-
-    private void Start()
-    {
+        base.Start();
         _canMove = true;
         InitStartType();
         GameController.OnCoreEnter += GameController_OnCoreEnter;
@@ -31,29 +23,53 @@ public class BotRunner : ARunner
 
     private void GameController_OnCoreEnter()
     {
-        CheckTrack();
+        CheckTrack(true);
     }
 
     private void FixedUpdate()
     {
         if (GameController.CurrentState == GameState.Core)
-            Move(transform.forward, defaultSpeed);
-    }
-
-    public override void CheckTrack()
-    {
-        Collider[] col = Physics.OverlapSphere(transform.position, 3, whatIsTrack);
-        if (col[0].TryGetComponent(out TrackEntity t))
         {
-            SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-            _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-
-            if (runnerType != t.TrackType)
-                Punish(t);
+            Move(moveVector, defaultSpeed);
+            ApplyGravity();
         }
     }
 
-    private void ChangeRunner(SportType value)
+    private void ApplyGravity()
+    {
+        var velocityY = -gravity * Time.deltaTime;
+        moveVector = new Vector3(0, velocityY, 1);
+    }
+
+    public override void CheckTrack(bool canCheck, float time = 0)
+    {
+        if (canCheck)
+        {
+            StartCoroutine(TrackChecking(time));
+        }
+    }
+
+    private IEnumerator TrackChecking(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, whatIsTrack))
+        {
+            if (hit.collider.TryGetComponent(out TrackEntity t))
+            {
+                SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+
+                if (state == RunnerState.Default)
+                    _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+
+                if (runnerType != t.TrackType)
+                    Punish(t);
+            }
+        }
+    }
+
+    protected override void ChangeRunner(SportType value)
     {
         if (_avaliableRunners.Count < 0)
         {
@@ -90,7 +106,7 @@ public class BotRunner : ARunner
     {
         yield return new WaitForSeconds(switchTime);
         RunnerType = t.TrackType;
-        CheckTrack();
+        CheckTrack(true);
     }
 
     public override void SetFinishPosition(int index)
@@ -98,10 +114,6 @@ public class BotRunner : ARunner
         _finishIndex = index;
     }
 
-    public void SetSpeed(float speed)
-    {
-        defaultSpeed = speed;
-    }
 
     public override void FinishStop()
     {

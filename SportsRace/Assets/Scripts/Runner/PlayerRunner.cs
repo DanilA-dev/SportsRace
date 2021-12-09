@@ -6,24 +6,16 @@ using UnityEngine;
 
 public class PlayerRunner : ARunner
 {
-    public  float gravity;
-    private bool _canMove;
-    public float force;
+    [SerializeField] private float force;
+
+    private Vector3 moveVector;
 
     public static event Action<float> OnSpeedChange;
    
-    public SportType RunnerType
-    {
-        get => runnerType;
-        set
-        {
-            runnerType = value;
-            ChangeRunner(value);
-        }
-    }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _canMove = true;
         InitStartType();
         GameController.OnCoreEnter += GameController_OnCoreEnter;
@@ -32,23 +24,32 @@ public class PlayerRunner : ARunner
 
     private void GameController_OnCoreEnter()
     {
-        CheckTrack();
+        CheckTrack(true);
     }
 
 
     private void FixedUpdate()
     {
         if (GameController.CurrentState == GameState.Core)
-            Move(transform.forward, defaultSpeed);
+        {
+            Move(moveVector, defaultSpeed);
+            ApplyGravity();
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        var velocityY = -gravity * Time.deltaTime;
+        moveVector = new Vector3(0, velocityY, 1);
     }
 
     public void SwitchRunner(SportType newType)
     {
         RunnerType = newType;
-        CheckTrack();
+        CheckTrack(true);
     }
 
-    private void ChangeRunner(SportType value)
+    protected override void ChangeRunner(SportType value)
     {
         if(_avaliableRunners.Count < 0)
         {
@@ -83,23 +84,33 @@ public class PlayerRunner : ARunner
         _finishIndex = index;
     }
 
-    public void SetSpeed(float speed)
+
+    public override void CheckTrack(bool canCheck, float time = 0)
     {
-        this.defaultSpeed = speed;
+       if(canCheck)
+       {
+            StartCoroutine(TrackChecking(time));
+       }
+      
     }
 
-
-    public override void CheckTrack()
+    private IEnumerator TrackChecking(float time)
     {
-        Collider[] col = Physics.OverlapSphere(transform.position, 1, whatIsTrack);
-        if(col[0].TryGetComponent(out TrackEntity t))
+        yield return new WaitForSeconds(time);
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, whatIsTrack))
         {
-            SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-            _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-            OnSpeedChange?.Invoke(this.defaultSpeed);
+            if (hit.collider.TryGetComponent(out TrackEntity t))
+            {
+                SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+                OnSpeedChange?.Invoke(this.defaultSpeed);
+
+                if(state == RunnerState.Default)
+                _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+            }
         }
     }
-
 
     public override void OnReset()
     {

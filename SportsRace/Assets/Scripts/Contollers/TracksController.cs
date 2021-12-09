@@ -8,6 +8,7 @@ public class TracksController : MonoBehaviour
 {
     public static TracksController Instance;
 
+    [SerializeField] private bool allowCreate;
     [SerializeField] private int tracksAmount;
     [SerializeField] private TrackEntity startTrack;
     [SerializeField] private TrackEntity finishTrack;
@@ -20,8 +21,7 @@ public class TracksController : MonoBehaviour
     private List<int> trackIndexList = new List<int>();
 
     private int lastIndexFromThree;
-    private int randomIndex;
-    bool firstIteration;
+
     public HashSet<TrackEntity> LevelTracks => levelTracks;
 
 
@@ -37,12 +37,14 @@ public class TracksController : MonoBehaviour
 
         #endregion
 
-    }
-
-    private void OnEnable()
-    {
         createdLevelTrack.Add(startTrack);
         GetLevelTracks();
+    }
+
+    private void Start()
+    {
+        if(allowCreate)
+        Invoke("CreateTrack", 0.15f);
     }
 
     public void GetLevelTracks()
@@ -56,12 +58,10 @@ public class TracksController : MonoBehaviour
     }
 
     [ContextMenu("Create")]
-    public void CreateTracksPrefabs()
+    public void CreateTrack()
     {
         for (int i = 0; i < tracksAmount; i++)
         {
-            firstIteration = i == 0;
-            
             var createdTrack = Instantiate(levelTracks.ToList()[RandomGeneratedIndex()]);
 
             var trackRotation = Quaternion.Euler(new Vector3(-90, 0, 90));
@@ -76,14 +76,11 @@ public class TracksController : MonoBehaviour
                 lastIndexFromThree = trackIndexList[trackIndexList.Count - 1];
                 trackIndexList.Clear();
             }
-
-
         }
         var finish = Instantiate(finishTrack);
         finish.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
         finish.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTrack[createdLevelTrack.Count - 1]
                                               .EndPoint.position - finishTrack.BeginPoint.localPosition).z + finishOffset.z);
-
     }
 
     private int RandomGeneratedIndex()
@@ -97,7 +94,6 @@ public class TracksController : MonoBehaviour
             num = RandomGeneratedIndex();
         else
             trackIndexList.Add(num);
-
 
         return num;
     }

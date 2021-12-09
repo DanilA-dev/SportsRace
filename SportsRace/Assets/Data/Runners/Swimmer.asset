@@ -15,22 +15,25 @@ MonoBehaviour:
   Speeds:
   - type: 0
     speed: 100
-    animValue: {fileID: 0}
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
   - type: 3
     speed: 50
-    animValue: {fileID: 0}
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
   - type: 5
     speed: 70
-    animValue: {fileID: 0}
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
   - type: 2
     speed: 400
-    animValue: {fileID: 0}
+    animValue: {fileID: 7400000, guid: 1ecee6fa3f989fc448e598bb7fd2980e, type: 2}
   - type: 6
     speed: 100
-    animValue: {fileID: 0}
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
   - type: 1
     speed: 100
-    animValue: {fileID: 0}
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
   - type: 4
     speed: 100
-    animValue: {fileID: 0}
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+  - type: 8
+    speed: 150
+    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}

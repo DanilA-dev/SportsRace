@@ -19,6 +19,7 @@ public class TrackEntity : MonoBehaviour
     [SerializeField] private Transform beginPoint;
     [SerializeField] private Transform endPoint;
 
+
     public SportType TrackType => trackType;
     public Transform BeginPoint => beginPoint;
     public Transform EndPoint => endPoint;
@@ -29,7 +30,9 @@ public class TrackEntity : MonoBehaviour
         if(GameController.CurrentState == GameState.Core)
         {
             if (other.TryGetComponent(out ARunner runner))
-                runner.CheckTrack();
+                runner.CheckTrack(true);
         }
     }
+
+    
 }

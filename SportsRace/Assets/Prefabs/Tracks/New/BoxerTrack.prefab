@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 6951900944619604603}
   - component: {fileID: 8959574542640772052}
   - component: {fileID: 6652431900429407453}
+  - component: {fileID: 5774203912887790567}
   m_Layer: 0
   m_Name: BoxerTrack
   m_TagString: Untagged
@@ -155,6 +156,19 @@ MonoBehaviour:
   trackType: 1
   beginPoint: {fileID: 8746075088668580793}
   endPoint: {fileID: 7013659760532369380}
+--- !u!65 &5774203912887790567
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8292261940640114810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.19303323, y: 0.062326927, z: 0.008041932}
+  m_Center: {x: -2.559798e-14, y: -0.07188337, z: 0.04176445}
 --- !u!1 &8602504937798357826
 GameObject:
   m_ObjectHideFlags: 0

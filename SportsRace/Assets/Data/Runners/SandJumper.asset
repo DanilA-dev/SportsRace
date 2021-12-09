@@ -34,3 +34,6 @@ MonoBehaviour:
   - type: 4
     speed: 150
     animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}
+  - type: 8
+    speed: 150
+    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}

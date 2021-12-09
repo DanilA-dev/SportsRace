@@ -16,12 +16,12 @@ public class RunnersSelectionController : MonoBehaviour
 
     public void SetCreatedRunners()
     {
-        GenerateRunners();
+        GetTrackRunners();
         CreateRunners(player);
-       // CreateRunners(bot); //CHECK LINE 49!
+        CreateRunners(bot); 
     }
 
-    public void GenerateRunners()
+    public void GetTrackRunners()
     {
         var generatedTracks = TracksController.Instance.LevelTracks.ToList();
 
@@ -33,38 +33,35 @@ public class RunnersSelectionController : MonoBehaviour
                     _generatedRunners.Add(runnersPrefabs[i]);
             }
         }
-
-        
     }
 
     public void CreateRunners(Transform tParent)
     {
-       // for (int i = 0; i < _generatedRunners.Count; i++)
-       // {
-       //     var r = Instantiate(_generatedRunners[i], tParent);
-       //     r.transform.localPosition = Vector3.zero;
-       //     r.gameObject.SetActive(false);
-       //     _createdRunners.Add(r);
-       // }
-       //
-       // //takes the summary!!! of both player and bot!!!
-       //
-       //  var gameRunners = GameController.Instance.Runners;
-       //  foreach (var r in gameRunners)
-       //      r.SetAvaliableRunnerList(_generatedRunners);
+        for (int i = 0; i < runnersPrefabs.Count; i++)
+        {
+            var r = Instantiate(runnersPrefabs[i], tParent);
+            r.transform.localPosition = Vector3.zero;
+            r.gameObject.SetActive(false);
+        }
     }
-
 
     public void ClearCreatedRunners()
     {
-       // for (int i = 0; i < _createdRunners.Count; i++)
-       //     Destroy(_createdRunners[i].gameObject);
-       //
-       // _createdRunners.Clear();
-       //
-       // var runners = GameController.Instance.Runners;
-       // foreach (var r in runners)
-       //     r.ClearRunners();
+        _createdRunners.Clear();
+        ClearRunner(player);
+        ClearRunner(bot);
+    }
+
+    private void ClearRunner(Transform transform)
+    {
+        foreach (Transform t in transform)
+        {
+            if (t.TryGetComponent(out RunnerObject r))
+                Destroy(r.gameObject);
+        }
+
+        foreach (var r in GameController.Instance.Runners)
+            r.ClearRunners();
     }
 
 }
