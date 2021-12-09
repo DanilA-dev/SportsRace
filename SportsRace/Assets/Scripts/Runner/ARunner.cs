@@ -26,7 +26,7 @@ public abstract class ARunner : MonoBehaviour
     [SerializeField] protected List<RunnerObject> _avaliableRunners = new List<RunnerObject>();
 
     private event Action<RunnerState> OnStateChange;
-    public static event Action<SportType, ARunner> OnRunnerChanged;
+    public event Action<SportType, ARunner> OnRunnerChanged;
 
 
     protected Animator _runnerAnimator;
@@ -50,7 +50,7 @@ public abstract class ARunner : MonoBehaviour
     }
 
 
-    public RunnerState State
+    public virtual RunnerState State
     {
         get => state;
         set
@@ -150,7 +150,7 @@ public abstract class ARunner : MonoBehaviour
                 StartCoroutine(OnClimbTopState());
                 break;
             case RunnerState.Fall:
-                OnFallState();
+                StartCoroutine(OnFallState());
                 break;
             case RunnerState.StandUp:
                 StartCoroutine(OnStandUpState());
@@ -216,12 +216,15 @@ public abstract class ARunner : MonoBehaviour
         State = RunnerState.Default;
     }
 
-    private void OnFallState()
+    private IEnumerator OnFallState()
     {
         body.isKinematic = false;
+        _canMove = false;
         CheckTrack(false);
         gravity = 10;
         _runnerAnimator.Play("Wall Dump");
+        yield return new WaitForSeconds(3);
+        State = RunnerState.StandUp;
     }
 
     private IEnumerator OnClimbTopState()
@@ -234,7 +237,6 @@ public abstract class ARunner : MonoBehaviour
         yield return new WaitForSeconds(1);
         State = RunnerState.Default;
         gravity = 20;
-       
     }
 
     private void OnClimbState()
@@ -259,15 +261,14 @@ public abstract class ARunner : MonoBehaviour
     #endregion
 
     [ContextMenu("Throw Up")]
-    public void ThrowUp()
+    public virtual void ThrowUp()
     {
         body.velocity = Vector3.up * 5;
     }
 
     [ContextMenu("Throw Back")]
-    public void ThrowAway(Vector3 dir)
+    public virtual void ThrowAway(Vector3 dir)
     {
-        var t = new Vector3(0, 0, Vector3.Angle(Vector3.back, Vector3.up));
         body.velocity = dir;
     }
 

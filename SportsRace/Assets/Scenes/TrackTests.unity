@@ -1625,6 +1625,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 958d46502d091f9418b3814f1ef9699e, type: 3}
+--- !u!114 &530875860 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+  m_PrefabInstance: {fileID: 1129704820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0035aff44ba5c9409cb521f63d41a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &591847710
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1696,6 +1707,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4467ce6b05a23c4fb5622fe2e9ea0ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &620525972 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+  m_PrefabInstance: {fileID: 1129704820}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0035aff44ba5c9409cb521f63d41a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &632123178
@@ -3236,6 +3258,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: climbTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: climbSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 620525972}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ColliderReEnable
+      objectReference: {fileID: 0}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WallEvent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 373148275, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 474475134963202766, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
       propertyPath: m_Name
       value: ClimbTrack
@@ -3283,6 +3341,42 @@ PrefabInstance:
     - target: {fileID: 4705370242639560785, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: climbTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: climbSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 530875860}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ColliderReEnable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WallEvent, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130635453786241862, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
+      propertyPath: OnSwitchRunner.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1f94f63f43c4a541a7c5efb645230d2, type: 3}
@@ -5965,7 +6059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: switchTime
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: _avaliableRunners.Array.size

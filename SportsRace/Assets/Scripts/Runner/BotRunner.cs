@@ -11,6 +11,7 @@ public class BotRunner : ARunner
 
     private Vector3 moveVector;
 
+    public override RunnerState State { get => base.State; set => base.State = value; }
 
     protected override void Start()
     {

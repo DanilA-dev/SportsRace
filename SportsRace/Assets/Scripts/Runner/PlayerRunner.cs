@@ -11,7 +11,8 @@ public class PlayerRunner : ARunner
     private Vector3 moveVector;
 
     public static event Action<float> OnSpeedChange;
-   
+
+    public override RunnerState State { get => base.State; set => base.State = value; }
 
     protected override void Start()
     {
