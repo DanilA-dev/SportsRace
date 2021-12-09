@@ -46,17 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e20c22f736f027f4ba16ce18973e5545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: 8
   defaultSpeed: 200
   body: {fileID: 8315555140351003961}
   runnerType: 4
+  state: 0
   whatIsTrack:
     serializedVersion: 2
     m_Bits: 8
-  _avaliableRunners:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _avaliableRunners: []
   switchTime: 1
 --- !u!54 &8315555140351003961
 Rigidbody:
@@ -81,10 +79,10 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1005510613302382111}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5698c855511654b4e8afb5ffd75063ca, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}

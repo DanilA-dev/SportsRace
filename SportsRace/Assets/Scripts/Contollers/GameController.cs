@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum GameState
 {
-    None, Menu, Core, Win, Lose
+    None, Menu, Core, Win, Lose, Finish
 }
 
 public class GameController : MonoBehaviour
@@ -83,7 +83,17 @@ public class GameController : MonoBehaviour
             case GameState.Win:
                 OnWinState();
                 break;
+
+            case GameState.Finish:
+                OnFinishState();
+                break;
+
         }
+    }
+
+    private void OnFinishState()
+    {
+        UIController.TurnOffPanel(UIPanelType.Core);
     }
 
     #region GameState Methods

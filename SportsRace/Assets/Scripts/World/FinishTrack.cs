@@ -22,12 +22,7 @@ public class FinishTrack : MonoBehaviour
     private int _coinsMultiplier;
     private int _positionIndex = 0;
 
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent(out ARunner r))
-            r.State = RunnerState.Default;
-    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out ARunner r))
@@ -36,8 +31,6 @@ public class FinishTrack : MonoBehaviour
             r.State = RunnerState.Finish;
             r.SetFinishPosition(_positionIndex);
             Debug.Log($"{r.gameObject.name} is Finishend in {r.FinishIndex} place");
-            r.IsFinished = true;
-
             StartCoroutine(JumpToPedestal(r, PedestalPos(r.FinishIndex).position));
         }
     }

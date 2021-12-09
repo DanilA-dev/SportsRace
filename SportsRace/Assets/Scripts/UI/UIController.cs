@@ -48,6 +48,15 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public static void TurnOffPanel(UIPanelType type)
+    {
+        for (int i = 0; i < Instance.panels.Count; i++)
+        {
+            if (Instance.panels[i].Type == type)
+                Instance.panels[i].Toogle(false);
+        }
+    }
+
     public void OnClickToCore()
     {
         GameController.CurrentState = GameState.Core;

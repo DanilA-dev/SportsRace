@@ -89,6 +89,7 @@ public class PlayerRunner : ARunner
     public override void SetFinishAnimation()
     {
         base.SetFinishAnimation();
+        GameController.CurrentState = GameState.Finish;
     }
 
     public override void CheckTrack(bool canCheck, float time = 0)
