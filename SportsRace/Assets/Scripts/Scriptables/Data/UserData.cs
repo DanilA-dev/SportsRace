@@ -6,5 +6,6 @@ public class UserData : ScriptableObject
 {
     public LeagueRank Rank;
     public int Coins;
+    public int Cups;
     public int WinsToNextLeague;
 }

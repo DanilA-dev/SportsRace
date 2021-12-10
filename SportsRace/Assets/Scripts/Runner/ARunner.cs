@@ -1,17 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AI;
 
 public enum RunnerState
 {
-    Default, Climb, ClimbTop, Fall, StandUp, Swim, JumpObstacle, JumpSand, HitWeak, HitHard, Stunned, Finish
+    Default, Climb, ClimbTop, Fall, StandUp, Swim,
+    JumpObstacle, JumpSand, HitWeak, HitHard, Stunned, Finish,
 }
 
 public abstract class ARunner : MonoBehaviour
 {
+
+    [SerializeField]private Transform start;
     [Header("Body and speed")]
     [SerializeField] protected float gravity;
     [SerializeField] protected float defaultSpeed;
@@ -108,7 +111,7 @@ public abstract class ARunner : MonoBehaviour
 
     protected virtual void Start()
     {
-        SetAvaliableRunnerList();
+       // SetAvaliableRunnerList();
     }
     protected virtual void ChangeRunner(SportType value) { }
 
@@ -118,7 +121,12 @@ public abstract class ARunner : MonoBehaviour
             _runnerAnimator.Play("Defeated");
         else if (_finishIndex == 1)
             _runnerAnimator.Play("Victory");
-    }    
+    }
+    
+    public virtual void ThrowAway(Vector3 dir)
+    {
+        body.velocity = dir;
+    }
 
     #endregion
 
@@ -133,14 +141,6 @@ public abstract class ARunner : MonoBehaviour
         OnStateChange -= SetState;
     }
 
-    protected void SetAvaliableRunnerList()
-    {
-        foreach (Transform t in transform)
-        {
-            if (t.TryGetComponent(out RunnerObject r))
-                _avaliableRunners.Add(r);
-        }
-    }
 
     public void SetState(RunnerState newState)
     {
@@ -297,27 +297,47 @@ public abstract class ARunner : MonoBehaviour
 
     #endregion
 
-    [ContextMenu("Throw Up")]
-    public virtual void ThrowUp()
+    public void SetAvaliableRunnerList()
     {
-        body.velocity = Vector3.up * 5;
+        foreach (Transform t in transform)
+        {
+            if (t.TryGetComponent(out RunnerObject r))
+                _avaliableRunners.Add(r);
+        }
+        InitStartType();
     }
 
-    [ContextMenu("Throw Back")]
-    public virtual void ThrowAway(Vector3 dir)
+    public void InitStartType()
     {
-        body.velocity = dir;
+        var getTracks = TracksController.Instance.LevelTracks.ToList();
+        var firtsTrack = getTracks[0];
+        RunnerType = firtsTrack.TrackType;
     }
 
-    
+    public void OnMenu()
+    {
+        _canMove = true;
+        _isFinished = false;
+        _finishIndex = 0;
+        body.useGravity = true;
+        body.isKinematic = false;
+        transform.position = start.position;
+    }
+
+    public void OnStart()
+    {
+        State = RunnerState.Default;
+    }
+
+
+    public void Jump(Vector3 dir, float force)
+    {
+        body.velocity = dir * force;
+    }
 
     public void ClearRunners()
     {
         _avaliableRunners.Clear();
     }
 
-    public void Jump(Vector3 dir, float force)
-    {
-        body.velocity = dir * force;
-    }
 }

@@ -17,7 +17,6 @@ public class BotRunner : ARunner
     {
         base.Start();
         _canMove = true;
-        InitStartType();
         GameController.OnCoreEnter += GameController_OnCoreEnter;
 
     }
@@ -106,12 +105,7 @@ public class BotRunner : ARunner
                 _avaliableRunners[i].gameObject.SetActive(false);
         }
     }
-    private void InitStartType()
-    {
-        var getTracks = TracksController.Instance.LevelTracks.ToList();
-        var firtsTrack = getTracks[0];
-        RunnerType = firtsTrack.TrackType;
-    }
+
 
     private void Punish(TrackEntity t)
     {

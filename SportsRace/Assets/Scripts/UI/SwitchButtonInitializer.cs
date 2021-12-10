@@ -8,7 +8,7 @@ public class SwitchButtonInitializer : MonoBehaviour
     [SerializeField] private PlayerRunner player;
     [SerializeField] private List<SwitchRunnerButton> switches = new List<SwitchRunnerButton>();
 
-    public void Start()
+    public void SetSwtichButtons()
     {
         var t = TracksController.Instance.LevelTracks.ToList();
 

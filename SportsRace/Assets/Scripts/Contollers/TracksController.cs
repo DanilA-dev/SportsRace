@@ -3,24 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Threading.Tasks;
 
 public class TracksController : MonoBehaviour
 {
     public static TracksController Instance;
 
-    [SerializeField] private bool allowCreate;
     [SerializeField] private int tracksAmount;
-    [SerializeField] private TrackEntity startTrack;
-    [SerializeField] private TrackEntity finishTrack;
+    [SerializeField] private TrackEntity finishPrefab;
     [SerializeField] private float offset;
     [SerializeField] private Vector3 finishOffset;
     [SerializeField] private List<TrackEntity> tracksPrefab = new List<TrackEntity>();
+    [SerializeField] private List<TrackEntity> createdLevelTrack = new List<TrackEntity>();
 
     private HashSet<TrackEntity> levelTracks = new HashSet<TrackEntity>();
-    private List<TrackEntity> createdLevelTrack = new List<TrackEntity>();
     private List<int> trackIndexList = new List<int>();
 
-    private int lastIndexFromThree;
+    private int _lastIndexFromThree;
+    private TrackEntity _finishTrack;
 
     public HashSet<TrackEntity> LevelTracks => levelTracks;
 
@@ -36,30 +36,15 @@ public class TracksController : MonoBehaviour
             Destroy(Instance.gameObject);
 
         #endregion
-
-        createdLevelTrack.Add(startTrack);
-        GetLevelTracks();
     }
 
-    private void Start()
-    {
-        if(allowCreate)
-        Invoke("CreateTrack", 0.15f);
-    }
 
-    public void GetLevelTracks()
+    public async Task CreateTrack()
     {
-        StartCoroutine(SetLevelTracks());
-    }
+        Clear();
+        await SetLevelTracks();
 
-    public void DeleteTracks()
-    {
-        levelTracks.Clear();
-    }
 
-    [ContextMenu("Create")]
-    public void CreateTrack()
-    {
         for (int i = 0; i < tracksAmount; i++)
         {
             var createdTrack = Instantiate(levelTracks.ToList()[RandomGeneratedIndex()]);
@@ -73,21 +58,21 @@ public class TracksController : MonoBehaviour
 
             if (trackIndexList.Count == levelTracks.Count)
             {
-                lastIndexFromThree = trackIndexList[trackIndexList.Count - 1];
+                _lastIndexFromThree = trackIndexList[trackIndexList.Count - 1];
                 trackIndexList.Clear();
             }
         }
-        var finish = Instantiate(finishTrack);
-        finish.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
-        finish.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTrack[createdLevelTrack.Count - 1]
-                                              .EndPoint.position - finishTrack.BeginPoint.localPosition).z + finishOffset.z);
+        _finishTrack = Instantiate(finishPrefab);
+        _finishTrack.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
+        _finishTrack.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTrack[createdLevelTrack.Count - 1]
+                                              .EndPoint.position - finishPrefab.BeginPoint.localPosition).z + finishOffset.z);
     }
 
     private int RandomGeneratedIndex()
     {
         int num = Random.Range(0, levelTracks.Count);
 
-        if(num == lastIndexFromThree)
+        if(num == _lastIndexFromThree)
             num = Random.Range(0, levelTracks.Count);
 
         if (trackIndexList.Contains(num))
@@ -98,20 +83,34 @@ public class TracksController : MonoBehaviour
         return num;
     }
 
-    private IEnumerator SetLevelTracks()
+    private void Clear()
     {
+        levelTracks.Clear();
+        trackIndexList.Clear();
+        _lastIndexFromThree = 0;
+        _finishTrack = null;
 
+        if(_finishTrack != null)
+            Destroy(_finishTrack.gameObject);
+
+        for (int i = 1; i < createdLevelTrack.Count; i++)
+        {
+            Destroy(createdLevelTrack[i].gameObject);
+            createdLevelTrack.Remove(createdLevelTrack[i]);
+        }
+    }
+
+
+    private async Task SetLevelTracks()
+    {
         while(levelTracks.Count != 3)
         {
             levelTracks.Add(tracksPrefab[Random.Range(0, tracksPrefab.Count)]);
-            yield return null;
+            await Task.Yield();
         }
-
 
         for (int i = 0; i < levelTracks.Count; i++)
-        {
             Debug.Log(levelTracks.ToList()[i] + "is in Level Tracks!!!");
-        }
     }
 
 }

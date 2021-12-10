@@ -19,9 +19,7 @@ public class PlayerRunner : ARunner
     {
         base.Start();
         _canMove = true;
-        InitStartType();
         GameController.OnCoreEnter += GameController_OnCoreEnter;
-
     }
 
     private void GameController_OnCoreEnter()
@@ -73,12 +71,7 @@ public class PlayerRunner : ARunner
         }
     }
 
-    private void InitStartType()
-    {
-        var getTracks = TracksController.Instance.LevelTracks.ToList();
-        var firtsTrack = getTracks[0];
-        RunnerType = firtsTrack.TrackType; 
-    }
+    
 
 
     public override void SetFinishPosition(int index)

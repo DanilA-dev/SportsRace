@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,14 +14,16 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private UserData data;
     [SerializeField] private RunnersSelectionController runnersController;
+    [SerializeField] private SwitchButtonInitializer switchButtonsController;
     [SerializeField] private List<ARunner> runners = new List<ARunner>();
 
+    private int _sessionScore;
     private GameState _currentState;
-
-    private event Action<GameState> OnGameStateChanged;
 
     public static event Action OnMenuEnter;
     public static event Action OnCoreEnter;
+    public static event Action<int> OnSessionScoreChange;
+    private event Action<GameState> OnGameStateChanged;
 
 
     #region Properties
@@ -55,7 +57,7 @@ public class GameController : MonoBehaviour
         OnGameStateChanged += SetGameState;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         CurrentState = GameState.Menu;
     }
@@ -91,12 +93,12 @@ public class GameController : MonoBehaviour
         }
     }
 
+    #region GameState Methods
+
     private void OnFinishState()
     {
         UIController.TurnOffPanel(UIPanelType.Core);
     }
-
-    #region GameState Methods
 
     private void OnWinState()
     {
@@ -112,18 +114,36 @@ public class GameController : MonoBehaviour
     {
         UIController.TurnOnPanel(UIPanelType.Core);
         OnCoreEnter?.Invoke();
+
+        foreach (var r in runners)
+            r.OnStart();
     }
 
-    private void OnMenuState()
+    private async void OnMenuState()
     {
-        foreach (var r in runners)
-            r.OnReset();
+       await TracksController.Instance.CreateTrack();
 
         runnersController.ClearCreatedRunners();
-        runnersController.SetCreatedRunners();
+        runnersController.SetCreatedRunners(); // сделать рестарт не через выход в меню а не рестарт сцены(щас ошибка)
         OnMenuEnter?.Invoke();
         UIController.TurnOnPanel(UIPanelType.Menu);
+        SaveController.SaveData();
+        switchButtonsController.SetSwtichButtons();
+
+        foreach (var r in runners)
+        {
+            r.SetAvaliableRunnerList();
+            r.OnMenu();
+        }    
     }
 
     #endregion
+
+
+    public static void GetSessionScore(int value)
+    {
+        Instance._sessionScore += value;
+        OnSessionScoreChange?.Invoke(Instance._sessionScore);
+    }
+    
 }
