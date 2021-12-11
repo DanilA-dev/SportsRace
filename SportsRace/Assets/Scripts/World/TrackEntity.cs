@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum SportType
@@ -18,6 +19,7 @@ public class TrackEntity : MonoBehaviour
     [SerializeField] private SportType trackType;
     [SerializeField] private Transform beginPoint;
     [SerializeField] private Transform endPoint;
+    [SerializeField] private List<ATrackEvent> trackEvents = new List<ATrackEvent>();
 
 
     public SportType TrackType => trackType;
@@ -32,6 +34,12 @@ public class TrackEntity : MonoBehaviour
             if (other.TryGetComponent(out ARunner runner))
                 runner.CheckTrack(true);
         }
+    }
+
+    public void UnsubscribeFromEvents()
+    {
+        foreach (var t in trackEvents)
+            t.Unsubscribe();
     }
     
 }

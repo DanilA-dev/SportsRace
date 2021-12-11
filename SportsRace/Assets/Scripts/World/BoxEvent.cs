@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BoxEvent : MonoBehaviour
+public class BoxEvent : ATrackEvent
 {
     [SerializeField] private SportType type;
     [SerializeField] private float destroyForce;
@@ -13,6 +13,7 @@ public class BoxEvent : MonoBehaviour
     [SerializeField] private UnityEvent OnSwitchRunner;
 
     private Collider _coll;
+    private ARunner _currentRunner;
     private bool _propDestroyed;
 
     private void Awake()
@@ -32,7 +33,8 @@ public class BoxEvent : MonoBehaviour
     {
         if (other.TryGetComponent(out ARunner r))
         {
-            r.OnRunnerChanged += OnRunnerChange;
+            _currentRunner = r;
+            _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
 
@@ -52,7 +54,7 @@ public class BoxEvent : MonoBehaviour
             {
                 r.State = RunnerState.HitHard;
                 _propDestroyed = true;
-                StartCoroutine(DestroyBoxProp(1));
+                StartCoroutine(DestroyBoxProp(0.6f));
             }
         }
         else
@@ -83,5 +85,16 @@ public class BoxEvent : MonoBehaviour
     public void ColliderReEnable()
     {
         StartCoroutine(ReEnableTrigger());
+    }
+
+
+    public override void Unsubscribe()
+    {
+        if (_currentRunner != null)
+        {
+            _currentRunner.OnRunnerChanged -= OnRunnerChange;
+        }
+
+        StopAllCoroutines();
     }
 }

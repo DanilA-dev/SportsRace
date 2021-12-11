@@ -11,6 +11,7 @@ public class PlayerRunner : ARunner
 
     private Vector3 moveVector;
 
+
     public static event Action<float> OnSpeedChange;
 
     public override RunnerState State { get => base.State; set => base.State = value; }
@@ -19,7 +20,6 @@ public class PlayerRunner : ARunner
     {
         base.Start();
         _canMove = true;
-        GameController.OnCoreEnter += GameController_OnCoreEnter;
     }
 
     private void GameController_OnCoreEnter()
@@ -61,18 +61,15 @@ public class PlayerRunner : ARunner
         {
             if (_avaliableRunners[i].Type == value)
             {
-                _avaliableRunners[i].gameObject.SetActive(true);
-                _currentRunner = _avaliableRunners[i];
-                _runnerAnimator = _avaliableRunners[i].GetComponent<Animator>();
+                CurrentRunner = _avaliableRunners[i];
+                CurrentRunner.gameObject.SetActive(true);
+                RunnerAnimator = CurrentRunner.GetComponent<Animator>();
             }
                 
             else
                 _avaliableRunners[i].gameObject.SetActive(false);
         }
     }
-
-    
-
 
     public override void SetFinishPosition(int index)
     {
@@ -114,27 +111,19 @@ public class PlayerRunner : ARunner
         // }
 
 
-        var rayPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+       var rayPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
        RaycastHit hit;
        if (Physics.Raycast(rayPos, Vector3.down, out hit, whatIsTrack))
        {
            if (hit.collider.TryGetComponent(out TrackEntity t))
            {
-               SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-               OnSpeedChange?.Invoke(this.defaultSpeed);
-       
-               if(state == RunnerState.Default)
-               _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+                SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+                OnSpeedChange?.Invoke(this.defaultSpeed);
+
+                if (state == RunnerState.Default)
+                    _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
            }
        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.TryGetComponent(out TrackEntity t))
-        {
-            Debug.Log(t.name);
-        }
     }
 
 

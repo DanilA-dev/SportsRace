@@ -284,7 +284,6 @@ GameObject:
   - component: {fileID: 1344525983867907800}
   - component: {fileID: 8124610012160188803}
   - component: {fileID: 7058479710756667410}
-  - component: {fileID: 1230874609}
   m_Layer: 0
   m_Name: WaterTrack
   m_TagString: Untagged
@@ -401,6 +400,8 @@ MonoBehaviour:
   trackType: 2
   beginPoint: {fileID: 8936183901071776235}
   endPoint: {fileID: 2200034322870696052}
+  trackEvents:
+  - {fileID: 1611479000}
 --- !u!65 &7058479710756667410
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -414,21 +415,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.16932735, y: 0.06182209, z: 0.005233155}
   m_Center: {x: 0.000016231537, y: -0.07213583, z: 0.03739633}
---- !u!114 &1230874609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7564834229865269780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15975f5c9506e6544bd304741cc4a282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnSwitchRunner:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1001 &324423078534446877
 PrefabInstance:
   m_ObjectHideFlags: 0

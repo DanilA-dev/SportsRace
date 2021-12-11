@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public enum RunnerState
 {
@@ -63,8 +65,9 @@ public abstract class ARunner : MonoBehaviour
         }
     }
 
+    public virtual RunnerObject CurrentRunner { get => _currentRunner; set => _currentRunner = value; }
     public Rigidbody Body { get => body; set => body = value; }
-    public Animator RunnerAnimator { get => _runnerAnimator; set => _runnerAnimator = value; }
+    public virtual Animator RunnerAnimator { get => _runnerAnimator; set => _runnerAnimator = value; }
     public float DefaultSpeed => defaultSpeed;
     public float Gravity { get => gravity; set => gravity = value; }
     public virtual int FinishIndex => _finishIndex;
@@ -138,6 +141,7 @@ public abstract class ARunner : MonoBehaviour
     {
         OnStateChange += SetState;
     }
+
 
     private void OnDisable()
     {
@@ -319,12 +323,16 @@ public abstract class ARunner : MonoBehaviour
 
     public void OnMenu()
     {
+        StopAllCoroutines();
         _canMove = true;
         _isFinished = false;
         _finishIndex = 0;
         body.useGravity = true;
         body.isKinematic = false;
         transform.position = start.position;
+
+        if (RunnerAnimator != null)
+            RunnerAnimator.Play("Idle");
     }
 
     public void OnStart()

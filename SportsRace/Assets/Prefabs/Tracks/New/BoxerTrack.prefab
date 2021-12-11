@@ -924,6 +924,11 @@ MonoBehaviour:
   trackType: 1
   beginPoint: {fileID: 8746075088668580793}
   endPoint: {fileID: 7013659760532369380}
+  trackEvents:
+  - {fileID: 569421018}
+  - {fileID: 1378176916}
+  - {fileID: 2103906751}
+  - {fileID: 86593741}
 --- !u!65 &5774203912887790567
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour
                 break;
 
             case GameState.Menu:
-                OnMenuState();
+                StartCoroutine(OnMenuState());
                 break;
 
             case GameState.Core:
@@ -120,15 +120,16 @@ public class GameController : MonoBehaviour
             r.OnStart();
     }
 
-    private async void OnMenuState()
+    private IEnumerator OnMenuState()
     {
+        yield return StartCoroutine(runnersController.ClearCreatedRunners());
+        yield return StartCoroutine(TracksController.Instance.CreateTrack());
+
+        Time.timeScale = 1;
         _sessionScore = 0;
         RankController.Instance.CheckRank();
 
-       await TracksController.Instance.CreateTrack();
-
-        runnersController.ClearCreatedRunners();
-        runnersController.SetCreatedRunners(); // сделать рестарт не через выход в меню а не рестарт сцены(щас ошибка)
+        runnersController.SetCreatedRunners(); 
         OnMenuEnter?.Invoke();
         UIController.TurnOnPanel(UIPanelType.Menu);
         SaveController.SaveData();
@@ -138,6 +139,7 @@ public class GameController : MonoBehaviour
         {
             r.SetAvaliableRunnerList();
             r.OnMenu();
+            yield return null;
         }    
     }
 

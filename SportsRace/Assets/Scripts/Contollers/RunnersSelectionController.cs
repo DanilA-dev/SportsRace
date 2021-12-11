@@ -45,8 +45,9 @@ public class RunnersSelectionController : MonoBehaviour
         }
     }
 
-    public void ClearCreatedRunners()
+    public IEnumerator ClearCreatedRunners()
     {
+        yield return new WaitForEndOfFrame();
         _createdRunners.Clear();
         ClearRunner(player);
         ClearRunner(bot);

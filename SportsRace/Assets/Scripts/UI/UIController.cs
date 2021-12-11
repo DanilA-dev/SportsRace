@@ -77,7 +77,7 @@ public class UIController : MonoBehaviour
     public void OnUnPause()
     {
         Time.timeScale = 1;
-        TurnOffPanel(UIPanelType.Pause);
+        TurnOnPanel(UIPanelType.Core);
     }
 
     public void ResetLevel()

@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Events;
 
-public class FinishTrack : MonoBehaviour
+public class FinishTrack : ATrackEvent
 {
     [Header("Pedestal")]
     [SerializeField] private float jumpForce;
@@ -137,5 +137,10 @@ public class FinishTrack : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         _isColliding = false;
+    }
+
+    public override void Unsubscribe()
+    {
+        StopAllCoroutines();
     }
 }

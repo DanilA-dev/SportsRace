@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ObstacleTrackEvent : MonoBehaviour
+public class ObstacleTrackEvent : ATrackEvent
 {
     [SerializeField] private SportType type;
     [SerializeField] private Transform jumpPoint;
@@ -15,6 +15,7 @@ public class ObstacleTrackEvent : MonoBehaviour
     [SerializeField] private UnityEvent OnSwitchRunner;
 
     private Collider _coll;
+    private ARunner _currentRunner;
     private bool _isJumped;
 
     private void Awake()
@@ -26,7 +27,8 @@ public class ObstacleTrackEvent : MonoBehaviour
     {
         if (other.TryGetComponent(out ARunner r))
         {
-            r.OnRunnerChanged += OnRunnerChange;
+            _currentRunner = r;
+            _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
 
@@ -101,4 +103,14 @@ public class ObstacleTrackEvent : MonoBehaviour
         StartCoroutine(ReEnableTrigger());
     }
 
+
+    public override void Unsubscribe()
+    {
+        if (_currentRunner != null)
+        {
+            _currentRunner.OnRunnerChanged -= OnRunnerChange;
+        }
+
+        StopAllCoroutines();
+    }
 }

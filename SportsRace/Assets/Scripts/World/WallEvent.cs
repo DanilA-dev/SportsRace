@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
 
-public class WallEvent : MonoBehaviour
+public class WallEvent : ATrackEvent
 {
     [SerializeField] private float climbTime;
     [SerializeField] private float climbSpeed;
@@ -15,9 +15,10 @@ public class WallEvent : MonoBehaviour
 
     [SerializeField] private UnityEvent OnSwitchRunner;
 
-    private Sequence seq;
     private Collider _coll;
     private bool _isRunnerUp;
+
+    private ARunner _currentRunner;
 
     private void Awake()
     {
@@ -37,7 +38,8 @@ public class WallEvent : MonoBehaviour
     {
         if (other.TryGetComponent(out ARunner r))
         {
-            r.OnRunnerChanged += OnRunnerChange;
+            _currentRunner = r;
+            _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
 
@@ -45,7 +47,6 @@ public class WallEvent : MonoBehaviour
     {
         if(other.TryGetComponent(out ARunner r))
         {
-           
             CheckType(r);
         }
     }
@@ -120,5 +121,15 @@ public class WallEvent : MonoBehaviour
         yield return new WaitForSeconds(1);
         _coll.enabled = true;
         r.State = RunnerState.StandUp;
+    }
+
+    public override void Unsubscribe()
+    {
+        if (_currentRunner != null)
+        {
+            _currentRunner.OnRunnerChanged -= OnRunnerChange;
+        }
+
+        StopAllCoroutines();
     }
 }

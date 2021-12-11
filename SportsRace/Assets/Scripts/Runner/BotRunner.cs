@@ -17,8 +17,6 @@ public class BotRunner : ARunner
     {
         base.Start();
         _canMove = true;
-        GameController.OnCoreEnter += GameController_OnCoreEnter;
-
     }
 
     private void GameController_OnCoreEnter()
@@ -73,13 +71,13 @@ public class BotRunner : ARunner
        {
            if (hit.collider.TryGetComponent(out TrackEntity t))
            {
-               SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-       
-               if (state == RunnerState.Default)
-                   _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-       
-               if (runnerType != t.TrackType)
-                   Punish(t);
+                SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
+
+                if (state == RunnerState.Default)
+                    _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
+
+                if (runnerType != t.TrackType)
+                    Punish(t);
            }
        }
     }
@@ -96,9 +94,9 @@ public class BotRunner : ARunner
         {
             if (_avaliableRunners[i].Type == value)
             {
-                _avaliableRunners[i].gameObject.SetActive(true);
-                _currentRunner = _avaliableRunners[i];
-                _runnerAnimator = _avaliableRunners[i].GetComponent<Animator>();
+                CurrentRunner = _avaliableRunners[i];
+                RunnerAnimator = CurrentRunner.GetComponent<Animator>();
+                CurrentRunner.gameObject.SetActive(true);
             }
 
             else

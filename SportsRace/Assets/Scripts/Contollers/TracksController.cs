@@ -37,13 +37,15 @@ public class TracksController : MonoBehaviour
             Destroy(Instance.gameObject);
 
         #endregion
+
     }
 
 
-    public async Task CreateTrack()
+    public IEnumerator CreateTrack()
     {
-        await Clear();
-        await SetLevelTracks();
+        yield return StartCoroutine(Clear());
+        yield return StartCoroutine(SetLevelTracks());
+        yield return new WaitForEndOfFrame();
 
 
         for (int i = 0; i < tracksAmount; i++)
@@ -84,7 +86,7 @@ public class TracksController : MonoBehaviour
         return num;
     }
 
-    private async Task Clear()
+    private IEnumerator Clear()
     {
         levelTracks.Clear();
         trackIndexList.Clear();
@@ -93,23 +95,33 @@ public class TracksController : MonoBehaviour
         if(_finishTrack != null)
             Destroy(_finishTrack.gameObject);
 
-        foreach (var t in createdLevelTrack)
+        yield return StartCoroutine(TracksUnsubscribe());
+
+        for (int i = 1; i < createdLevelTrack.Count; i++)
         {
-            Destroy(t);
-            await Task.Yield();
+            Destroy(createdLevelTrack[i].gameObject);
+            yield return null;
         }
         createdLevelTrack.Clear();
+        createdLevelTrack.Add(startTrack);
     }
 
+    private IEnumerator TracksUnsubscribe()
+    {
+        for (int i = 0; i < createdLevelTrack.Count; i++)
+        {
+            createdLevelTrack[i].UnsubscribeFromEvents();
+            yield return null;
+        }
+    }
 
-    private async Task SetLevelTracks()
+    private IEnumerator SetLevelTracks()
     {
         while(levelTracks.Count != 3)
         {
             levelTracks.Add(tracksPrefab[Random.Range(0, tracksPrefab.Count)]);
-            await Task.Yield();
+            yield return null;
         }
-        createdLevelTrack.Add(startTrack);
 
         for (int i = 0; i < levelTracks.Count; i++)
             Debug.Log(levelTracks.ToList()[i] + "is in Level Tracks!!!");

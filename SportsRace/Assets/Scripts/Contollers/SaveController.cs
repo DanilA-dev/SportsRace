@@ -32,6 +32,7 @@ public class SaveController : MonoBehaviour
         data.Coins = PlayerPrefs.GetInt("Coins");
         data.Cups = PlayerPrefs.GetInt("Cups");
         data.Rank = (LeagueRank)PlayerPrefs.GetInt("Rank");
+        data.WinsToNextRank = PlayerPrefs.GetInt("Wins");
     }
 
     public static void SaveData()
@@ -39,5 +40,6 @@ public class SaveController : MonoBehaviour
         PlayerPrefs.SetInt("Coins", Instance.data.Coins);
         PlayerPrefs.SetInt("Cups", Instance.data.Cups);
         PlayerPrefs.SetInt("Rank", (int)Instance.data.Rank);
+        PlayerPrefs.SetInt("Wins", Instance.data.WinsToNextRank);
     }
 }

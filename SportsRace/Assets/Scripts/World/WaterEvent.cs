@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class WaterEvent : MonoBehaviour
+public class WaterEvent : ATrackEvent
 {
     [SerializeField] private UnityEvent OnSwitchRunner;
 
     private Collider _coll;
+    private ARunner _currentRunner;
 
     private bool _isRunnerOut;
 
@@ -31,7 +32,8 @@ public class WaterEvent : MonoBehaviour
     {
         if (other.TryGetComponent(out ARunner r))
         {
-            r.OnRunnerChanged += OnRunnerChange;
+            _currentRunner = r;
+            _currentRunner.OnRunnerChanged += OnRunnerChange;
             r.State = RunnerState.Swim;
         }
     }
@@ -53,5 +55,14 @@ public class WaterEvent : MonoBehaviour
 
         r.State = RunnerState.Swim;
         OnSwitchRunner?.Invoke();
+    }
+
+    public override void Unsubscribe()
+    {
+        StopAllCoroutines();
+        if (_currentRunner != null)
+        {
+            _currentRunner.OnRunnerChanged -= OnRunnerChange;
+        }
     }
 }

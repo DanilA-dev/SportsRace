@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SandEvent : MonoBehaviour
+public class SandEvent : ATrackEvent
 {
     [SerializeField] private SportType type;
     [SerializeField] private float jumpForce;
@@ -14,6 +14,7 @@ public class SandEvent : MonoBehaviour
     [SerializeField] private UnityEvent OnSwitchRunner;
 
     private Collider _coll;
+    private ARunner _currentRunner;
     private bool _isRunnerLeave;
 
     private void Awake()
@@ -33,7 +34,8 @@ public class SandEvent : MonoBehaviour
     {
         if (other.TryGetComponent(out ARunner r))
         {
-            r.OnRunnerChanged += OnRunnerChange;
+            _currentRunner = r;
+            _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
 
@@ -100,7 +102,7 @@ public class SandEvent : MonoBehaviour
 
     private void OnRunnerChange(SportType newType, ARunner r)
     {
-        StopAllCoroutines();
+       // StopAllCoroutines();
         r.StopAllCoroutines();
         r.State = RunnerState.Default;
         OnSwitchRunner?.Invoke();
@@ -111,4 +113,13 @@ public class SandEvent : MonoBehaviour
         StartCoroutine(ReEnableTrigger());
     }
 
+    public override void Unsubscribe()
+    {
+        if (_currentRunner != null)
+        {
+            _currentRunner.OnRunnerChanged -= OnRunnerChange;
+            Debug.Log($"Event {this.name} is unsubed!");
+        }
+        StopAllCoroutines();
+    }
 }
