@@ -68,7 +68,7 @@ public abstract class ARunner : MonoBehaviour
     public float DefaultSpeed => defaultSpeed;
     public float Gravity { get => gravity; set => gravity = value; }
     public virtual int FinishIndex => _finishIndex;
-    public bool IsFinished { get => _isFinished; set => _isFinished = value; }
+    public virtual bool IsFinished { get => _isFinished; set => _isFinished = value; }
     public SportType Type => runnerType;
 
     #endregion
@@ -100,6 +100,9 @@ public abstract class ARunner : MonoBehaviour
     
     public virtual void SetFinishPosition(int index)
     {
+        if (_isFinished)
+            return;
+
         _finishIndex = index;
     }
     

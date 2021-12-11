@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 
 public enum UIPanelType
 {
-    None, Menu, Core, Settings, Store, Rewards, Win, Lose
+    None, Menu, Core, Settings, Store, Rewards, Win, Lose, Pause
 }
 
 public class UIController : MonoBehaviour
 {
     public static UIController Instance;
 
-    [SerializeField] private TMP_Text playerSpeedText;
+
+    [SerializeField] private TMP_Text sessionCoins;
     [SerializeField] private List<UIPanel> panels = new List<UIPanel>();
 
     public void Awake()
@@ -28,14 +29,6 @@ public class UIController : MonoBehaviour
         #endregion
     }
 
-    private void Start()
-    {
-        SpeedChange(GameController.Instance.Runners[0].DefaultSpeed);
-    }
-    private void SpeedChange(float obj)
-    {
-        playerSpeedText.SetText("Speed : " + obj);
-    }
 
     public static void TurnOnPanel(UIPanelType type)
     {
@@ -60,13 +53,31 @@ public class UIController : MonoBehaviour
     public void OnClickToCore()
     {
         GameController.CurrentState = GameState.Core;
-        PlayerRunner.OnSpeedChange += SpeedChange;
+        sessionCoins.text = "";
+        GameController.OnSessionScoreChange += UpdateSessionScore;
     }
 
     public void OnClickToMenu()
     {
         GameController.CurrentState = GameState.Menu;
-        PlayerRunner.OnSpeedChange -= SpeedChange;
+        GameController.OnSessionScoreChange -= UpdateSessionScore;
+    }
+
+    private void UpdateSessionScore(int amount)
+    {
+        sessionCoins.SetText(amount.ToString());
+    }
+
+    public void OnPause()
+    {
+        Time.timeScale = 0;
+        TurnOnPanel(UIPanelType.Pause);
+    }
+
+    public void OnUnPause()
+    {
+        Time.timeScale = 1;
+        TurnOffPanel(UIPanelType.Pause);
     }
 
     public void ResetLevel()

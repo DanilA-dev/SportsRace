@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
 
     #region Properties
     public static UserData Data { get => Instance.data; set => Instance.data = value; }
+    public static int SessionScore { get => Instance._sessionScore; set => Instance._sessionScore = value; }
 
     public static GameState CurrentState
     {
@@ -89,9 +90,9 @@ public class GameController : MonoBehaviour
             case GameState.Finish:
                 OnFinishState();
                 break;
-
         }
     }
+
 
     #region GameState Methods
 
@@ -121,6 +122,9 @@ public class GameController : MonoBehaviour
 
     private async void OnMenuState()
     {
+        _sessionScore = 0;
+        RankController.Instance.CheckRank();
+
        await TracksController.Instance.CreateTrack();
 
         runnersController.ClearCreatedRunners();

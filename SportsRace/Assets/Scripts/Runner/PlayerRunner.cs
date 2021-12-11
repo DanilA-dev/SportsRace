@@ -129,7 +129,14 @@ public class PlayerRunner : ARunner
        }
     }
 
-    
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.TryGetComponent(out TrackEntity t))
+        {
+            Debug.Log(t.name);
+        }
+    }
+
 
     public override void OnReset()
     {

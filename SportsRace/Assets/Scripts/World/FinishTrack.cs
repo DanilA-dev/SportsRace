@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using UnityEngine.Events;
 
 public class FinishTrack : MonoBehaviour
 {
@@ -18,19 +18,28 @@ public class FinishTrack : MonoBehaviour
     [SerializeField] private Transform secondPlacePoint;
     [SerializeField] private Transform topPlatformPoint;
 
+    [SerializeField] private UnityEvent Onx10Platform;
+
 
     private int _coinsMultiplier;
     private int _positionIndex = 0;
-
+    private bool _isColliding;
     
     private void OnTriggerEnter(Collider other)
     {
+        if (_isColliding)
+            return;
+
+        _isColliding = true;
+
         if(other.TryGetComponent(out ARunner r))
         {
             _positionIndex++;
-            r.State = RunnerState.Finish;
             r.SetFinishPosition(_positionIndex);
+            r.IsFinished = true;
+            r.State = RunnerState.Finish;
             Debug.Log($"{r.gameObject.name} is Finishend in {r.FinishIndex} place");
+            StartCoroutine(ResetColliding());
             StartCoroutine(JumpToPedestal(r, PedestalPos(r.FinishIndex).position));
         }
     }
@@ -87,9 +96,13 @@ public class FinishTrack : MonoBehaviour
 
     private void OnPlayerWin(ARunner runner)
     {
+        var totalPoints = _coinsMultiplier * GameController.SessionScore;
+        Debug.Log(totalPoints);
+        GameController.Data.Coins += totalPoints;
         runner.RunnerAnimator.Play("Victory");
         GameController.CurrentState = GameState.Win;
-        GameController.Data.WinsToNextLeague++;
+        GameController.Data.WinsToNextRank++;
+        SaveController.SaveData();
     }
 
     public void OnRestart()
@@ -103,15 +116,26 @@ public class FinishTrack : MonoBehaviour
     {
         StopAllCoroutines();
         runner.SetFinishAnimation();
+        
 
         if (runner as PlayerRunner && runner.FinishIndex == 1)
+        {
             OnPlayerWin(runner);
+        }
         else
         {
             if (runner as PlayerRunner)
                 runner.RunnerAnimator.Play("Defeated");
 
+            GameController.Data.Coins += GameController.SessionScore;
+            SaveController.SaveData();
             GameController.CurrentState = GameState.Lose;
         }
-    }    
+    } 
+    
+    private IEnumerator ResetColliding()
+    {
+        yield return new WaitForEndOfFrame();
+        _isColliding = false;
+    }
 }

@@ -33,6 +33,5 @@ public class TrackEntity : MonoBehaviour
                 runner.CheckTrack(true);
         }
     }
-
     
 }

@@ -10,6 +10,7 @@ public class TracksController : MonoBehaviour
     public static TracksController Instance;
 
     [SerializeField] private int tracksAmount;
+    [SerializeField] private TrackEntity startTrack;
     [SerializeField] private TrackEntity finishPrefab;
     [SerializeField] private float offset;
     [SerializeField] private Vector3 finishOffset;
@@ -41,7 +42,7 @@ public class TracksController : MonoBehaviour
 
     public async Task CreateTrack()
     {
-        Clear();
+        await Clear();
         await SetLevelTracks();
 
 
@@ -83,21 +84,21 @@ public class TracksController : MonoBehaviour
         return num;
     }
 
-    private void Clear()
+    private async Task Clear()
     {
         levelTracks.Clear();
         trackIndexList.Clear();
         _lastIndexFromThree = 0;
-        _finishTrack = null;
 
         if(_finishTrack != null)
             Destroy(_finishTrack.gameObject);
 
-        for (int i = 1; i < createdLevelTrack.Count; i++)
+        foreach (var t in createdLevelTrack)
         {
-            Destroy(createdLevelTrack[i].gameObject);
-            createdLevelTrack.Remove(createdLevelTrack[i]);
+            Destroy(t);
+            await Task.Yield();
         }
+        createdLevelTrack.Clear();
     }
 
 
@@ -108,6 +109,7 @@ public class TracksController : MonoBehaviour
             levelTracks.Add(tracksPrefab[Random.Range(0, tracksPrefab.Count)]);
             await Task.Yield();
         }
+        createdLevelTrack.Add(startTrack);
 
         for (int i = 0; i < levelTracks.Count; i++)
             Debug.Log(levelTracks.ToList()[i] + "is in Level Tracks!!!");
