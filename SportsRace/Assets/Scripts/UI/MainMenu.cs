@@ -9,6 +9,17 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        GameController.OnMenuEnter += UpdateCoins;
+        metaCoins.SetText(GameController.Data.Coins.ToString());
+    }
+
+    private void OnDestroy()
+    {
+        GameController.OnMenuEnter -= UpdateCoins;
+    }
+
+    private void UpdateCoins()
+    {
         metaCoins.SetText(GameController.Data.Coins.ToString());
     }
 }

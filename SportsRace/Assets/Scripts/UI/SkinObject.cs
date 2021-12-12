@@ -97,7 +97,7 @@ public class SkinObject : MonoBehaviour, IPointerDownHandler
         if (_skinData.State == SkinState.Bought)
             EquipSkin();
 
-        if (_userData.Coins >= _skinData.Price && _skinData.State != SkinState.Bought)
+        if (_userData.Coins >= _skinData.Price && _skinData.State == SkinState.NotBought)
             BuySkin();
     }
 

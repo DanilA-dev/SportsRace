@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
 
     private int _sessionScore;
     private GameState _currentState;
+    private bool _gameFirstEnter;
 
     public static event Action OnMenuEnter;
     public static event Action OnCoreEnter;
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour
 
 
     #region Properties
+    public static bool GameFirstEnter { get => Instance._gameFirstEnter; set => Instance._gameFirstEnter = value; }
     public static UserData Data { get => Instance.data; set => Instance.data = value; }
     public static int SessionScore { get => Instance._sessionScore; set => Instance._sessionScore = value; }
 
@@ -60,8 +62,18 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
+        _gameFirstEnter = true;
         CurrentState = GameState.Menu;
+        
+        if(!PlayerPrefs.HasKey("FirstStart"))
+        {
+            _gameFirstEnter = true;
+            PlayerPrefs.SetInt("FirstStart", _gameFirstEnter ? 1 : 0);
+        }
+        else
+            _gameFirstEnter = (PlayerPrefs.GetInt("FirstStart") != 0);
     }
+
 
     public  void SetGameState(GameState newState)
     {

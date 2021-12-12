@@ -15,4 +15,30 @@ public class SkinsContainerData : ScriptableObject
 
         return runnerSkin;
     }
+
+    public List<SkinEntityData> GetDefaultSkins()
+    {
+        return Skins.Where(s => s.Type == SkinType.Default).ToList();
+    }
+
+    public List<SkinEntityData> GetNewSkins()
+    {
+        return Skins.Where(s => s.Type != SkinType.Default).ToList();
+    }
+
+    public List<SkinEntityData> GetEquippedSkins()
+    {
+        return Skins.Where(s => s.State == SkinState.Equipped).ToList();
+    }
+
+    public void ClearData()
+    {
+        for (int i = 0; i < Skins.Count; i++)
+        {
+            if (Skins[i].Type == SkinType.Default)
+                Skins[i].State = SkinState.Equipped;
+            else
+                Skins[i].State = SkinState.NotBought;
+        }
+    }
 }

@@ -39,7 +39,7 @@ public class RunnersSelectionController : MonoBehaviour
     {
         for (int i = 0; i < runnersPrefabs.Count; i++)
         {
-            var r = Instantiate(runnersPrefabs[i], player);
+            var r = Instantiate(skinsData.GetEquippedSkins()[i].corePrefab, player);
             r.transform.localPosition = Vector3.zero;
             r.gameObject.SetActive(false);
         }
@@ -52,15 +52,6 @@ public class RunnersSelectionController : MonoBehaviour
         }
     }
 
-    private bool IsThereANewSkins()
-    {
-        return skinsData.Skins.Any(s => s.State == SkinState.Equipped);
-    }
-
-    private RunnerObject RunnerPrefab(SportType type, RunnerObject defaulRunner)
-    {
-       return IsThereANewSkins() ? skinsData.GetSkinRunner(type) : defaulRunner;
-    }
 
     public IEnumerator ClearCreatedRunners()
     {

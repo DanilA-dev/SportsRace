@@ -6653,12 +6653,12 @@ MonoBehaviour:
   bot: {fileID: 7668183923648492992}
   runnersPrefabs:
   - {fileID: 8004784690809395381, guid: db3b91af99017634bac1f006095ac1bc, type: 3}
-  - {fileID: 6892129116076982989, guid: 4c87a6eba3dee444a99f2dc149eef256, type: 3}
-  - {fileID: 8832944902992030180, guid: 71e2e552a240a1d449218943322a7ba6, type: 3}
-  - {fileID: 1133811175653721294, guid: 1bcf3f2fd26ecd94793cec1960a85f2f, type: 3}
-  - {fileID: 2696111013048542434, guid: 45280d00fa7a5e34a9753a42d2a927d1, type: 3}
   - {fileID: 4991199105707571921, guid: 884e5cd94d7d65e40a6a4f024ab6e30f, type: 3}
+  - {fileID: 4718440687561442609, guid: e22013246b1e9d34dae0bff248d70e33, type: 3}
+  - {fileID: 8405654128017224049, guid: cdd84ade4bcfb814c8c151e383e1cfb7, type: 3}
+  - {fileID: 5396658353945300434, guid: 08cde4505c215544b96c5d501219e9ff, type: 3}
   - {fileID: 231172805923488245, guid: d6bc27eb836c9364a9ec2c3bd98e833b, type: 3}
+  - {fileID: 6199691961612704046, guid: 1c59f2fcd894e5849993e0cad6b448e0, type: 3}
 --- !u!1 &1561413311
 GameObject:
   m_ObjectHideFlags: 3
@@ -8790,6 +8790,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2144528910, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: m_Constraints
+      value: 114
+      objectReference: {fileID: 0}
     - target: {fileID: 2144528911, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: m_Radius
       value: 0.4

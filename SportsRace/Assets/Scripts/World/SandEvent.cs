@@ -31,13 +31,12 @@ public class SandEvent : ATrackEvent
         _coll.enabled = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         if (other.TryGetComponent(out ARunner r))
         {
-            _currentRunner = r;
             _subbed = true;
-            _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
 
@@ -102,7 +101,7 @@ public class SandEvent : ATrackEvent
             StartCoroutine(Jumping(r));
     }
 
-    private void OnRunnerChange(SportType newType, ARunner r)
+    public override void OnRunnerChanged(SportType newType, ARunner r)
     {
         if (!_subbed)
             return;
@@ -120,11 +119,8 @@ public class SandEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        base.Unsubscribe();
         StopAllCoroutines();
         _subbed = false;
-        if (_currentRunner != null)
-        {
-            _currentRunner.OnRunnerChanged -= OnRunnerChange;
-        }
     }
 }

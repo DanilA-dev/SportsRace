@@ -29,13 +29,12 @@ public class WaterEvent : ATrackEvent
         yield return new WaitForSeconds(0.1f);
         _coll.enabled = true;
     }
-    private void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         if (other.TryGetComponent(out ARunner r))
         {
-            _currentRunner = r;
             _subbed = true;
-            _currentRunner.OnRunnerChanged += OnRunnerChange;
             r.State = RunnerState.Swim;
         }
     }
@@ -45,12 +44,12 @@ public class WaterEvent : ATrackEvent
         _isRunnerOut = true;
         if (other.TryGetComponent(out ARunner r))
         {
-            r.OnRunnerChanged -= OnRunnerChange;
+            r.OnRunnerChanged -= OnRunnerChanged;
             r.State = RunnerState.Default;
         }
     }
 
-    private void OnRunnerChange(SportType arg1, ARunner r)
+    public override void OnRunnerChanged(SportType arg1, ARunner r)
     {
         if (!_subbed)
             return;
@@ -64,12 +63,10 @@ public class WaterEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        base.Unsubscribe();
         StopAllCoroutines();
         _subbed = false;
-        if (_currentRunner != null)
-        {
-            _currentRunner.OnRunnerChanged -= OnRunnerChange;
-            _currentRunner.State = RunnerState.Default;
-        }
+        if (Runner != null)
+            Runner.State = RunnerState.Default;
     }
 }

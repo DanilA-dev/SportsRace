@@ -21,7 +21,7 @@ MonoBehaviour:
     animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
   - type: 5
     speed: 200
-    animValue: {fileID: 7400000, guid: 165a31d16929d8d4f825868f0b162bf9, type: 2}
+    animValue: {fileID: 7400000, guid: cbae14a2101a8334699b4adbba007a1e, type: 2}
   - type: 2
     speed: 50
     animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}

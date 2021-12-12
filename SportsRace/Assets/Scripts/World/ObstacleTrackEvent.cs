@@ -24,13 +24,12 @@ public class ObstacleTrackEvent : ATrackEvent
         _coll = GetComponent<Collider>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         if (other.TryGetComponent(out ARunner r))
         {
-            _currentRunner = r;
             _subbed = true;
-            _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
 
@@ -85,7 +84,7 @@ public class ObstacleTrackEvent : ATrackEvent
         r.State = RunnerState.Default;
     }
 
-    private void OnRunnerChange(SportType arg1, ARunner r)
+    public override void OnRunnerChanged(SportType arg1, ARunner r)
     {
         if (!_subbed)
             return;
@@ -111,11 +110,8 @@ public class ObstacleTrackEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        base.Unsubscribe();
         StopAllCoroutines();
         _subbed = false;
-        if (_currentRunner != null)
-        {
-            _currentRunner.OnRunnerChanged -= OnRunnerChange;
-        }
     }
 }

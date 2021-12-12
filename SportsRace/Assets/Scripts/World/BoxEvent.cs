@@ -30,13 +30,13 @@ public class BoxEvent : ATrackEvent
         _coll.enabled = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         if (other.TryGetComponent(out ARunner r))
         {
-            _currentRunner = r;
             _subbed = true;
-            _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
 
@@ -74,9 +74,10 @@ public class BoxEvent : ATrackEvent
             r.isKinematic = false;
             r.AddForce(forceToPoint.localPosition * destroyForce,ForceMode.Impulse);
         }
+        Unsubscribe();
     }
 
-    private void OnRunnerChange(SportType arg1, ARunner r)
+    public override void OnRunnerChanged(SportType arg1, ARunner r)
     {
         if (!_subbed)
             return;
@@ -95,11 +96,8 @@ public class BoxEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        base.Unsubscribe();
         StopAllCoroutines();
         _subbed = true;
-        if (_currentRunner != null)
-        {
-            _currentRunner.OnRunnerChanged -= OnRunnerChange;
-        }
     }
 }

@@ -37,6 +37,7 @@ public abstract class ARunner : MonoBehaviour
     protected Animator _runnerAnimator;
     protected RunnerObject _currentRunner;
 
+    protected RigidbodyConstraints defaultDodyConstrain;
     protected  int _finishIndex;
     protected bool _isFinished;
     protected bool _canMove;
@@ -93,7 +94,7 @@ public abstract class ARunner : MonoBehaviour
 
     public virtual void FreezeBody(RigidbodyConstraints constrain)
     {
-        body.constraints = constrain;
+        body.constraints = ~constrain;
     }
 
     public virtual void UnFreezeBody(RigidbodyConstraints constrain)
@@ -117,7 +118,8 @@ public abstract class ARunner : MonoBehaviour
 
     protected virtual void Start()
     {
-       // SetAvaliableRunnerList();
+        // SetAvaliableRunnerList();
+        defaultDodyConstrain = body.constraints;
     }
     protected virtual void ChangeRunner(SportType value) { }
 
@@ -332,12 +334,15 @@ public abstract class ARunner : MonoBehaviour
     public void OnMenu()
     {
         StopAllCoroutines();
+        body.constraints = defaultDodyConstrain;
         _canMove = false;
         _isFinished = false;
         _finishIndex = 0;
         body.useGravity = true;
         body.isKinematic = false;
+        body.velocity = Vector3.zero;
         transform.position = start.position;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
     public void OnStart()

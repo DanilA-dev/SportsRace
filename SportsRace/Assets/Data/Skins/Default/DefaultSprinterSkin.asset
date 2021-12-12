@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e204b8e96812449b35e2cae0f09c2e, type: 3}
+  m_Name: DefaultSprinterSkin
+  m_EditorClassIdentifier: 
+  State: 2
+  Type: 0
+  SportType: 0
+  Price: 0
+  skinPrefab: {fileID: 0}
+  corePrefab: {fileID: 231172805923488245, guid: d6bc27eb836c9364a9ec2c3bd98e833b, type: 3}

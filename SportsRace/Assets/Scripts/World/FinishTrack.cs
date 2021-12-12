@@ -25,13 +25,8 @@ public class FinishTrack : ATrackEvent
     private int _positionIndex = 0;
     private bool _isColliding;
     
-    private void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
-        if (_isColliding)
-            return;
-
-        _isColliding = true;
-
         if(other.TryGetComponent(out ARunner r))
         {
             _positionIndex++;
@@ -39,7 +34,6 @@ public class FinishTrack : ATrackEvent
             r.IsFinished = true;
             r.State = RunnerState.Finish;
             Debug.Log($"{r.gameObject.name} is Finishend in {r.FinishIndex} place");
-            StartCoroutine(ResetColliding());
             StartCoroutine(JumpToPedestal(r, PedestalPos(r.FinishIndex).position));
         }
     }
@@ -105,12 +99,6 @@ public class FinishTrack : ATrackEvent
         SaveController.SaveData();
     }
 
-    public void OnRestart()
-    {
-        _positionIndex = 0;
-        _coinsMultiplier = 0;
-       // risingPedestal.transform.position = _startRisingPedestalPos;
-    }
 
     private void CheckPlayerPos(ARunner runner)
     {
@@ -133,14 +121,11 @@ public class FinishTrack : ATrackEvent
         }
     } 
     
-    private IEnumerator ResetColliding()
-    {
-        yield return new WaitForEndOfFrame();
-        _isColliding = false;
-    }
 
     public override void Unsubscribe()
     {
+        _positionIndex = 0;
+        _coinsMultiplier = 0;
         StopAllCoroutines();
     }
 }

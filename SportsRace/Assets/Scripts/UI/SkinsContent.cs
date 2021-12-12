@@ -33,10 +33,10 @@ public class SkinsContent : MonoBehaviour
 
     private void CreateSkins()
     {
-        for (int i = 0; i < skinContainer.Skins.Count; i++)
+        for (int i = 0; i < skinContainer.GetNewSkins().Count; i++)
         {
             var createdSkin = Instantiate(skinPrefab, this.transform);
-            createdSkin.Init(skinContainer.Skins[i], userData, this);
+            createdSkin.Init(skinContainer.GetNewSkins()[i], userData, this);
             createdSkins.Add(createdSkin);
         }
     }
