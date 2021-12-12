@@ -17,6 +17,7 @@ public class ObstacleTrackEvent : ATrackEvent
     private Collider _coll;
     private ARunner _currentRunner;
     private bool _isJumped;
+    private bool _subbed;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class ObstacleTrackEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _currentRunner = r;
+            _subbed = true;
             _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
@@ -85,6 +87,9 @@ public class ObstacleTrackEvent : ATrackEvent
 
     private void OnRunnerChange(SportType arg1, ARunner r)
     {
+        if (!_subbed)
+            return;
+
         StopAllCoroutines();
         r.StopAllCoroutines();
         r.State = RunnerState.Default;
@@ -106,11 +111,11 @@ public class ObstacleTrackEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        StopAllCoroutines();
+        _subbed = false;
         if (_currentRunner != null)
         {
             _currentRunner.OnRunnerChanged -= OnRunnerChange;
         }
-
-        StopAllCoroutines();
     }
 }

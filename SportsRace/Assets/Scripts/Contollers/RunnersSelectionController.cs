@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class RunnersSelectionController : MonoBehaviour
 {
+    [SerializeField] private SkinsContainerData skinsData;
     [SerializeField] private Transform player;
     [SerializeField] private Transform bot;
 
@@ -17,8 +18,7 @@ public class RunnersSelectionController : MonoBehaviour
     public void SetCreatedRunners()
     {
         GetTrackRunners();
-        CreateRunners(player);
-        CreateRunners(bot); 
+        CreateRunners();
     }
 
     public void GetTrackRunners()
@@ -35,14 +35,31 @@ public class RunnersSelectionController : MonoBehaviour
         }
     }
 
-    public void CreateRunners(Transform tParent)
+    public void CreateRunners()
     {
         for (int i = 0; i < runnersPrefabs.Count; i++)
         {
-            var r = Instantiate(runnersPrefabs[i], tParent);
+            var r = Instantiate(runnersPrefabs[i], player);
             r.transform.localPosition = Vector3.zero;
             r.gameObject.SetActive(false);
         }
+
+        for (int i = 0; i < runnersPrefabs.Count; i++)
+        {
+            var r = Instantiate(runnersPrefabs[i], bot);
+            r.transform.localPosition = Vector3.zero;
+            r.gameObject.SetActive(false);
+        }
+    }
+
+    private bool IsThereANewSkins()
+    {
+        return skinsData.Skins.Any(s => s.State == SkinState.Equipped);
+    }
+
+    private RunnerObject RunnerPrefab(SportType type, RunnerObject defaulRunner)
+    {
+       return IsThereANewSkins() ? skinsData.GetSkinRunner(type) : defaulRunner;
     }
 
     public IEnumerator ClearCreatedRunners()

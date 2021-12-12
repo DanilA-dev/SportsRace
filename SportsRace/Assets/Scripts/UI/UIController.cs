@@ -68,6 +68,11 @@ public class UIController : MonoBehaviour
         sessionCoins.SetText(amount.ToString());
     }
 
+    public void OnStore()
+    {
+        TurnOnPanel(UIPanelType.Store);
+    }
+
     public void OnPause()
     {
         Time.timeScale = 0;

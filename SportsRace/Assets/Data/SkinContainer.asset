@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3cfdf1e260c5b4c8706a89888f65b3, type: 3}
   m_Name: SkinContainer
   m_EditorClassIdentifier: 
-  Skins: []
+  Skins:
+  - {fileID: 11400000, guid: 80b036bac73be7d418d1246595479c04, type: 2}
+  - {fileID: 11400000, guid: 21953fa12b9cc8842a3c9b46f3d0dbbd, type: 2}
+  - {fileID: 11400000, guid: 5d978242c3f8ba64585e71bb524beeed, type: 2}

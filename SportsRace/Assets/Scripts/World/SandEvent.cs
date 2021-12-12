@@ -16,6 +16,7 @@ public class SandEvent : ATrackEvent
     private Collider _coll;
     private ARunner _currentRunner;
     private bool _isRunnerLeave;
+    private bool _subbed;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class SandEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _currentRunner = r;
+            _subbed = true;
             _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
@@ -102,7 +104,10 @@ public class SandEvent : ATrackEvent
 
     private void OnRunnerChange(SportType newType, ARunner r)
     {
-       // StopAllCoroutines();
+        if (!_subbed)
+            return;
+
+        StopAllCoroutines();
         r.StopAllCoroutines();
         r.State = RunnerState.Default;
         OnSwitchRunner?.Invoke();
@@ -115,11 +120,11 @@ public class SandEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        StopAllCoroutines();
+        _subbed = false;
         if (_currentRunner != null)
         {
             _currentRunner.OnRunnerChanged -= OnRunnerChange;
-            Debug.Log($"Event {this.name} is unsubed!");
         }
-        StopAllCoroutines();
     }
 }

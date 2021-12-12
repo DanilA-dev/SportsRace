@@ -17,7 +17,7 @@ public class WallEvent : ATrackEvent
 
     private Collider _coll;
     private bool _isRunnerUp;
-
+    private bool _subbed;
     private ARunner _currentRunner;
 
     private void Awake()
@@ -39,6 +39,7 @@ public class WallEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _currentRunner = r;
+            _subbed = true;
             _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
@@ -85,6 +86,9 @@ public class WallEvent : ATrackEvent
 
     private void OnRunnerChange(SportType arg1, ARunner r)
     {
+        if (!_subbed)
+            return;
+
         r.StopAllCoroutines();
         r.State = RunnerState.Default;
         OnSwitchRunner?.Invoke();
@@ -125,11 +129,11 @@ public class WallEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        StopAllCoroutines();
+        _subbed = false;
         if (_currentRunner != null)
         {
             _currentRunner.OnRunnerChanged -= OnRunnerChange;
         }
-
-        StopAllCoroutines();
     }
 }

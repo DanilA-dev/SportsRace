@@ -200,12 +200,12 @@ public abstract class ARunner : MonoBehaviour
     #region State Methods
     private IEnumerator OnStunnedState()
     {
-        _runnerAnimator.Play("Obstacle jump");
+        PlayAnimation("Obstacle jump");
         _canMove = false;
         yield return new WaitForSeconds(0.8f);
         _canMove = true;
         defaultSpeed = 30;
-        _runnerAnimator.Play("After obstacle break");
+        PlayAnimation("After obstacle break");
         yield return new WaitForSeconds(2);
         State = RunnerState.Default;
     }
@@ -214,30 +214,30 @@ public abstract class ARunner : MonoBehaviour
     {
         UnFreezeBody(RigidbodyConstraints.FreezePositionX);
         _canMove = false;
-        _runnerAnimator.Play("Obstacle jump");
+        PlayAnimation("Obstacle jump");
     }
 
     private IEnumerator OnHitHardState()
     {
-        _runnerAnimator.Play("Boxer Punch");
+        PlayAnimation("Boxer Punch");
         yield return new WaitForSeconds(1f);
         State = RunnerState.Default;
     }
     private void OnHitWeakState()
     {
-        _runnerAnimator.Play("Weak Punch");
+        PlayAnimation("Weak Punch");
     }
 
     private void OnJumpSandState()
     {
         _canMove = false;
-        _runnerAnimator.Play("Sand Jump");
+        PlayAnimation("Sand Jump");
 
     }
 
     private void OnJumpObstacleState()
     {
-        _runnerAnimator.Play("Obstacle jump");
+        PlayAnimation("Obstacle jump");
         _canMove = false;
         gravity = 8;
     }
@@ -245,7 +245,7 @@ public abstract class ARunner : MonoBehaviour
     private void OnSwimState()
     {
         body.isKinematic = false;
-        _runnerAnimator.Play("Swimming");
+        PlayAnimation("Swimming");
         gravity = 8;
         CheckTrack(true);
     }
@@ -254,7 +254,7 @@ public abstract class ARunner : MonoBehaviour
     {
         body.isKinematic = false;
         _canMove = false;
-        _runnerAnimator.Play("Stand Up");
+        PlayAnimation("Stand Up");
         gravity = 8;
         yield return new WaitForSeconds(2);
         State = RunnerState.Default;
@@ -266,7 +266,7 @@ public abstract class ARunner : MonoBehaviour
         _canMove = false;
         CheckTrack(false);
         gravity = 10;
-        _runnerAnimator.Play("Wall Dump");
+        PlayAnimation("Wall Dump");
         yield return new WaitForSeconds(3);
         State = RunnerState.StandUp;
     }
@@ -277,7 +277,7 @@ public abstract class ARunner : MonoBehaviour
         CheckTrack(false);
         _canMove = false;
         gravity = 0;
-        _runnerAnimator.Play("Climbing to Top");
+        PlayAnimation("Climbing to Top");
         yield return new WaitForSeconds(1);
         State = RunnerState.Default;
         gravity = 20;
@@ -289,7 +289,7 @@ public abstract class ARunner : MonoBehaviour
         _canMove = false;
         CheckTrack(false);
         gravity = 0;
-        _runnerAnimator.Play("Climbing");
+        PlayAnimation("Climbing");
     }
 
     private void OnDefaultState()
@@ -303,6 +303,14 @@ public abstract class ARunner : MonoBehaviour
 
 
     #endregion
+
+    private void PlayAnimation(string name)
+    {
+        if (RunnerAnimator == null)
+            return;
+
+        RunnerAnimator.Play(name);
+    }
 
     public void SetAvaliableRunnerList()
     {
@@ -324,20 +332,18 @@ public abstract class ARunner : MonoBehaviour
     public void OnMenu()
     {
         StopAllCoroutines();
-        _canMove = true;
+        _canMove = false;
         _isFinished = false;
         _finishIndex = 0;
         body.useGravity = true;
         body.isKinematic = false;
         transform.position = start.position;
-
-        if (RunnerAnimator != null)
-            RunnerAnimator.Play("Idle");
     }
 
     public void OnStart()
     {
         State = RunnerState.Default;
+        _canMove = true;
     }
 
 

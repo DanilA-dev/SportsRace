@@ -15,6 +15,7 @@ public class BoxEvent : ATrackEvent
     private Collider _coll;
     private ARunner _currentRunner;
     private bool _propDestroyed;
+    private bool _subbed;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class BoxEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _currentRunner = r;
+            _subbed = true;
             _currentRunner.OnRunnerChanged += OnRunnerChange;
         }
     }
@@ -76,6 +78,9 @@ public class BoxEvent : ATrackEvent
 
     private void OnRunnerChange(SportType arg1, ARunner r)
     {
+        if (!_subbed)
+            return;
+
         StopAllCoroutines();
         r.StopAllCoroutines();
         r.State = RunnerState.Default;
@@ -90,11 +95,11 @@ public class BoxEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        StopAllCoroutines();
+        _subbed = true;
         if (_currentRunner != null)
         {
             _currentRunner.OnRunnerChanged -= OnRunnerChange;
         }
-
-        StopAllCoroutines();
     }
 }

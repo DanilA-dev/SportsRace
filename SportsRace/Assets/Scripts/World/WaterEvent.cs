@@ -11,6 +11,7 @@ public class WaterEvent : ATrackEvent
     private ARunner _currentRunner;
 
     private bool _isRunnerOut;
+    private bool _subbed;
 
     private void Awake()
     {
@@ -33,6 +34,7 @@ public class WaterEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _currentRunner = r;
+            _subbed = true;
             _currentRunner.OnRunnerChanged += OnRunnerChange;
             r.State = RunnerState.Swim;
         }
@@ -50,6 +52,9 @@ public class WaterEvent : ATrackEvent
 
     private void OnRunnerChange(SportType arg1, ARunner r)
     {
+        if (!_subbed)
+            return;
+
         if (_isRunnerOut)
             return;
 
@@ -60,9 +65,11 @@ public class WaterEvent : ATrackEvent
     public override void Unsubscribe()
     {
         StopAllCoroutines();
+        _subbed = false;
         if (_currentRunner != null)
         {
             _currentRunner.OnRunnerChanged -= OnRunnerChange;
+            _currentRunner.State = RunnerState.Default;
         }
     }
 }

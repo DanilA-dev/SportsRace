@@ -1561,9 +1561,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2397024921089880054}
   - component: {fileID: 2794844252720285727}
-  - component: {fileID: -3761031415241367347}
   m_Layer: 5
-  m_Name: Sprinter2
+  m_Name: SprinterSkin2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1606,20 +1605,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-3761031415241367347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3028707976604185932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cef06329b3e1ee44bbe2aca9d8fe430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 0
-  runnerData: {fileID: 11400000, guid: d43d44ac3e3286843bf992de66e3666e, type: 2}
 --- !u!1 &3097745646975548476
 GameObject:
   m_ObjectHideFlags: 0
