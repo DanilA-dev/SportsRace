@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skins: {fileID: 11400000, guid: fa41f3769760c3d44bd31a0104651da9, type: 2}
   Rank: 0
-  Coins: 150
+  Coins: 840
   Cups: 0
-  WinsToNextRank: 0
+  WinsToNextRank: 2

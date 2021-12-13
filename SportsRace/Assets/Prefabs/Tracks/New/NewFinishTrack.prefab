@@ -750,7 +750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 1.2
-  pedestalRiseSpeed: 2
+  pedestalRiseSpeed: 4
   jumpOffset: {x: -5, y: 5, z: 3}
   risingPedestal: {fileID: 7895636985195563781}
   pedestalMovePoint: {fileID: 411619187}
