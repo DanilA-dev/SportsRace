@@ -78,7 +78,7 @@ public class WallEvent : ATrackEvent
             if (r.State == RunnerState.Default || r.State == RunnerState.Climb)
             {
                 r.State = RunnerState.Fall;
-                r.ThrowAway(Vector3.back);
+                r.ThrowAway(Vector3.back * 0.7f);
             }
         }
     }
@@ -93,17 +93,6 @@ public class WallEvent : ATrackEvent
         OnSwitchRunner?.Invoke();
     }
 
-    private IEnumerator MoveUpRoutine(ARunner r)
-    {
-        var Point = new Vector3(r.transform.position.x, upPoint.position.y, r.transform.position.z);
-
-        for (float i = 0; i < climbTime; i+= Time.deltaTime)
-        {
-            r.transform.position = Vector3.MoveTowards(r.transform.position, Point, climbSpeed * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-        OnTop(r);
-    }
 
     public void ColliderReEnable()
     {
@@ -118,13 +107,6 @@ public class WallEvent : ATrackEvent
         _coll.enabled = false;
     }
 
-    private IEnumerator Timer(ARunner r)
-    {
-        _coll.enabled = false;
-        yield return new WaitForSeconds(1);
-        _coll.enabled = true;
-        r.State = RunnerState.StandUp;
-    }
 
     public override void Unsubscribe()
     {

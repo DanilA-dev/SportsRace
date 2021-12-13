@@ -45,13 +45,13 @@ public class ObstacleTrackEvent : ATrackEvent
     {
         if (r.Type == type)
         {
-            if (r.State != RunnerState.JumpObstacle && !_isJumped)
+            if (r.State != RunnerState.JumpObstacle)
                 StartCoroutine(JumpingOver(r));
 
         }
         else
         {
-            if(r.State != RunnerState.Stunned && !_isJumped)
+            if(r.State != RunnerState.Stunned)
             {
                 StartCoroutine(StunJumping(r));
             }

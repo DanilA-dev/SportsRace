@@ -55,7 +55,12 @@ public class WaterEvent : ATrackEvent
             return;
 
         if (_isRunnerOut)
+        {
+            if(r != null)
+                r.State = RunnerState.Default;
+
             return;
+        }
 
         r.State = RunnerState.Swim;
         OnSwitchRunner?.Invoke();

@@ -40,14 +40,14 @@ public class RunnersSelectionController : MonoBehaviour
         for (int i = 0; i < runnersPrefabs.Count; i++)
         {
             var r = Instantiate(skinsData.GetEquippedSkins()[i].corePrefab, player);
-            r.transform.localPosition = Vector3.zero;
+            r.transform.localPosition = r.GroundPositionOffset;
             r.gameObject.SetActive(false);
         }
 
         for (int i = 0; i < runnersPrefabs.Count; i++)
         {
             var r = Instantiate(runnersPrefabs[i], bot);
-            r.transform.localPosition = Vector3.zero;
+            r.transform.localPosition = r.GroundPositionOffset;
             r.gameObject.SetActive(false);
         }
     }

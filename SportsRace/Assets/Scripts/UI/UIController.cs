@@ -73,6 +73,11 @@ public class UIController : MonoBehaviour
         TurnOnPanel(UIPanelType.Store);
     }
 
+    public void OnRewards()
+    {
+        TurnOnPanel(UIPanelType.Rewards);
+    }
+
     public void OnPause()
     {
         Time.timeScale = 0;

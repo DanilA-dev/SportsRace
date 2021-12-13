@@ -6,11 +6,8 @@ using UnityEngine;
 
 public class PlayerRunner : ARunner
 {
-    [SerializeField] private float force;
-    [SerializeField] private float downRay;
 
     private Vector3 moveVector;
-
 
     public static event Action<float> OnSpeedChange;
 
@@ -22,10 +19,6 @@ public class PlayerRunner : ARunner
         _canMove = true;
     }
 
-    private void GameController_OnCoreEnter()
-    {
-        CheckTrack(true);
-    }
 
 
     private void FixedUpdate()
@@ -96,23 +89,6 @@ public class PlayerRunner : ARunner
     private IEnumerator TrackChecking(float time)
     {
         yield return new WaitForSeconds(time);
-
-        // var collPos = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-        //
-        // Collider[] c = Physics.OverlapSphere(collPos, 3, whatIsTrack);
-        // foreach (var coll in c)
-        // {
-        //     if(coll.TryGetComponent(out TrackEntity t))
-        //     {
-        //         SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-        //         OnSpeedChange?.Invoke(this.defaultSpeed);
-        //
-        //         if (state == RunnerState.Default)
-        //             _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-        //     }
-        // }
-
-
        var rayPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
        RaycastHit hit;
        if (Physics.Raycast(rayPos, Vector3.down, out hit, whatIsTrack))
@@ -129,16 +105,6 @@ public class PlayerRunner : ARunner
     }
 
 
-    public override void OnReset()
-    {
-        _canMove = true;
-        _isFinished = false;
-        _finishIndex = 0;
-        body.useGravity = true;
-        body.isKinematic = false;
-        SetSpeed(defaultSpeed);
-    }
-
     public override void Move(Vector3 dir, float speed)
     {
         if (!_canMove)
@@ -151,4 +117,5 @@ public class PlayerRunner : ARunner
     {
         _canMove = false;
     }
+
 }

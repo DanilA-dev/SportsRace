@@ -179,8 +179,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.9777716, y: 1, z: 1}
-  m_Center: {x: 0.011114145, y: 0, z: 7.043895e-12}
+  m_Size: {x: 0.9663198, y: 1, z: 0.6232875}
+  m_Center: {x: 0.016840052, y: 9.373227e-13, z: -0.1883562}
 --- !u!114 &1611479000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,6 +675,22 @@ PrefabInstance:
     - target: {fileID: 3572016164837204190, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
       propertyPath: m_Name
       value: CoinsTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Size.y
+      value: 2.6744459
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.x
+      value: -1.12891155e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.y
+      value: -0.8372238
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.z
+      value: 0.000000104137214
       objectReference: {fileID: 0}
     - target: {fileID: 9123109204872877140, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
       propertyPath: m_RootOrder

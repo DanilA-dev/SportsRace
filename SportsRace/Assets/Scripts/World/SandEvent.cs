@@ -17,6 +17,7 @@ public class SandEvent : ATrackEvent
     private ARunner _currentRunner;
     private bool _isRunnerLeave;
     private bool _subbed;
+    private bool _isJumpingNow;
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class SandEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _isRunnerLeave = true;
+            StopAllCoroutines();
         }
     }
 
@@ -75,7 +77,7 @@ public class SandEvent : ATrackEvent
     {
         if(r.Type == type)
         {
-            if(r.State != RunnerState.JumpSand)
+            if(r.State != RunnerState.JumpSand && !_isJumpingNow)
             {
                 StartCoroutine(Jumping(r));
             }
@@ -85,12 +87,14 @@ public class SandEvent : ATrackEvent
 
     private IEnumerator Jumping(ARunner r)
     {
-            r.State = RunnerState.JumpSand;
-            r.Jump(-GetJumpDirection(r), jumpForce);
-            yield return new WaitForSeconds(1);
-            r.RunnerAnimator.Play("Idle");
-            yield return new WaitForSeconds(1);
-            CheckIfRunnerLeft(r);
+        _isJumpingNow = true;
+        r.State = RunnerState.JumpSand;
+        r.Jump(-GetJumpDirection(r), jumpForce);
+        yield return new WaitForSeconds(1);
+        r.State = RunnerState.Default;
+        yield return new WaitForSeconds(1);
+        _isJumpingNow = false;
+        CheckIfRunnerLeft(r);
     }
 
     private void CheckIfRunnerLeft(ARunner r)

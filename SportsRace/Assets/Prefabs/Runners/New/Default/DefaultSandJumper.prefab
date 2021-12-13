@@ -3600,6 +3600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   runnerData: {fileID: 11400000, guid: bcd02dbd5fc4a6e418733348c75ae670, type: 2}
+  groundPositionOffset: {x: 0, y: 0.05, z: 0}
 --- !u!1 &8654572218015686438
 GameObject:
   m_ObjectHideFlags: 0

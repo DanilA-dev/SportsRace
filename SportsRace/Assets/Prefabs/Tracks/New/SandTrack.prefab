@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  jumpForce: 8
+  jumpForce: 10
   minimumDistanceToPoint: 5
   jumpPoint1: {fileID: 1330321299}
   jumpPoint2: {fileID: 1927199926}
@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  jumpForce: 8
+  jumpForce: 10
   minimumDistanceToPoint: 5
   jumpPoint1: {fileID: 566780436}
   jumpPoint2: {fileID: 908592324}
@@ -1494,6 +1494,22 @@ PrefabInstance:
     - target: {fileID: 3572016164837204190, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
       propertyPath: m_Name
       value: CoinsTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Size.y
+      value: 2.9951694
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.x
+      value: -1.3450994e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.y
+      value: -0.9975875
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.z
+      value: 0.00000012407962
       objectReference: {fileID: 0}
     - target: {fileID: 9123109204872877140, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
       propertyPath: m_RootOrder

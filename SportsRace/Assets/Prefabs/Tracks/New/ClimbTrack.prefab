@@ -1327,6 +1327,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoinsTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Size.y
+      value: 2.993958
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.x
+      value: -1.4621768e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.y
+      value: -0.99697924
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.z
+      value: 0.00000012397774
+      objectReference: {fileID: 0}
     - target: {fileID: 9123109204872877140, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
       propertyPath: m_RootOrder
       value: 18

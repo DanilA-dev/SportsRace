@@ -74,7 +74,6 @@ public class BoxEvent : ATrackEvent
             r.isKinematic = false;
             r.AddForce(forceToPoint.localPosition * destroyForce,ForceMode.Impulse);
         }
-        Unsubscribe();
     }
 
     public override void OnRunnerChanged(SportType arg1, ARunner r)

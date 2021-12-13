@@ -11,12 +11,14 @@ public enum RunnerState
 {
     Default, Climb, ClimbTop, Fall, StandUp, Swim,
     JumpObstacle, JumpSand, HitWeak, HitHard, Stunned, Finish,
+    Land
 }
 
 public abstract class ARunner : MonoBehaviour
 {
 
     [SerializeField]private Transform start;
+    [SerializeField] private GameObject rotateCamera;
     [Header("Body and speed")]
     [SerializeField] protected float gravity;
     [SerializeField] protected float defaultSpeed;
@@ -153,6 +155,12 @@ public abstract class ARunner : MonoBehaviour
         particleController.StopAllLoopingParticles();
     }
 
+    public virtual void ToggleRotationCameara(bool on)
+    {
+        if(rotateCamera != null)
+            rotateCamera.SetActive(on);
+    }
+
     #endregion
 
     
@@ -208,10 +216,21 @@ public abstract class ARunner : MonoBehaviour
             case RunnerState.Finish:
                 OnFinishState();
                 break;
+            case RunnerState.Land:
+                StartCoroutine(OnLandState());
+                break;
 
             default: Debug.Log("State is None");
                 break;
         }
+    }
+
+    private IEnumerator OnLandState()
+    {
+        PlayAnimation("Falling to Landing");
+        gravity = 50;
+        yield return new WaitForSeconds(1);
+        State = RunnerState.Default;
     }
 
 
@@ -221,12 +240,12 @@ public abstract class ARunner : MonoBehaviour
     {
         PlayAnimation("Obstacle jump");
         _canMove = false;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.3f);
         _canMove = true;
-        defaultSpeed = 30;
+        gravity = 50;
         PlayTrackEventParticle(TrackEventParticleType.ObstacleHit);
         PlayAnimation("After obstacle break");
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.3f);
         State = RunnerState.Default;
     }
 
@@ -276,7 +295,7 @@ public abstract class ARunner : MonoBehaviour
         _canMove = false;
         PlayAnimation("Stand Up");
         gravity = 8;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         State = RunnerState.Default;
     }
 
@@ -301,7 +320,8 @@ public abstract class ARunner : MonoBehaviour
         PlayAnimation("Climbing to Top");
         yield return new WaitForSeconds(1);
         State = RunnerState.Default;
-        gravity = 20;
+        yield return new WaitForSeconds(0.3f);
+        State = RunnerState.Land;
     }
 
     private void OnClimbState()
@@ -353,6 +373,7 @@ public abstract class ARunner : MonoBehaviour
     public void OnMenu()
     {
         StopAllCoroutines();
+        ToggleRotationCameara(false);
         body.constraints = defaultDodyConstrain;
         _canMove = false;
         _isFinished = false;

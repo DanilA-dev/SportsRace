@@ -224,6 +224,7 @@ MonoBehaviour:
   trackType: 5
   beginPoint: {fileID: 6337141481632322310}
   endPoint: {fileID: 3112337298613982795}
+  trackEvents: []
 --- !u!65 &9087842771758592584
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2763,6 +2764,26 @@ PrefabInstance:
     - target: {fileID: 3572016164837204190, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
       propertyPath: m_Name
       value: CoinsTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Size.y
+      value: 3.079021
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Size.z
+      value: 0.8220868
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.x
+      value: -1.2748468e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.y
+      value: -1.0395107
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526755822315352202, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
+      propertyPath: m_Center.z
+      value: -0.088956565
       objectReference: {fileID: 0}
     - target: {fileID: 9123109204872877140, guid: c77e5ddadecb308489dbb8839f11ebe3, type: 3}
       propertyPath: m_RootOrder
