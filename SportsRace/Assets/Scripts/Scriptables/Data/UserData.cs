@@ -14,7 +14,7 @@ public class UserData : ScriptableObject
     private void ClearData()
     {
         skins.ClearData();
-        Rank = LeagueRank.Bronze1;
+        Rank = LeagueRank.Bronze;
         Coins = 150;
         Cups = 0;
         WinsToNextRank = 0;

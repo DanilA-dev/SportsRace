@@ -21,7 +21,7 @@ public class FinishTrack : ATrackEvent
     [SerializeField] private UnityEvent Onx10Platform;
 
 
-    private int _coinsMultiplier;
+    private int _coinsMultiplier = 1;
     private int _positionIndex = 0;
     private bool _isColliding;
     
@@ -29,9 +29,12 @@ public class FinishTrack : ATrackEvent
     {
         if(other.TryGetComponent(out ARunner r))
         {
+            if (r.IsFinished)
+                return;
+
+            r.IsFinished = true;
             _positionIndex++;
             r.SetFinishPosition(_positionIndex);
-            r.IsFinished = true;
             r.State = RunnerState.Finish;
             Debug.Log($"{r.gameObject.name} is Finishend in {r.FinishIndex} place");
             StartCoroutine(JumpToPedestal(r, PedestalPos(r.FinishIndex).position));
@@ -74,7 +77,6 @@ public class FinishTrack : ATrackEvent
             }
             yield return null;
         }
-        Debug.Log("lose??!");
         CheckPlayerPos(runner);
     }
 
@@ -90,7 +92,8 @@ public class FinishTrack : ATrackEvent
 
     private void OnPlayerWin(ARunner runner)
     {
-        var totalPoints = _coinsMultiplier * GameController.SessionScore;
+        int endMultiplier = _coinsMultiplier < 1 ? 1 : _coinsMultiplier;
+        int totalPoints = endMultiplier * GameController.SessionScore;
         Debug.Log(totalPoints);
         GameController.Data.Coins += totalPoints;
         runner.RunnerAnimator.Play("Victory");
@@ -125,7 +128,7 @@ public class FinishTrack : ATrackEvent
     public override void Unsubscribe()
     {
         _positionIndex = 0;
-        _coinsMultiplier = 0;
+        _coinsMultiplier = 1;
         StopAllCoroutines();
     }
 }

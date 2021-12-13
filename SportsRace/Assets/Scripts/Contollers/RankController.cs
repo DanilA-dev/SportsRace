@@ -19,6 +19,7 @@ public class RankController : MonoBehaviour
 
     [SerializeField] private List<Image> gameBarsImg = new List<Image>();
 
+    private Rank _nextRank;
 
     private void Awake()
     {
@@ -36,22 +37,29 @@ public class RankController : MonoBehaviour
 
     private void SetPlayerRank()
     {
-        var nextRank = rankData.Ranks.Where(r => r.CurrentRank == data.Rank + 1).FirstOrDefault();
-        if (data.WinsToNextRank >= nextRank.WinsToOpen)
+        _nextRank = rankData.Ranks.Where(r => r.CurrentRank == data.Rank + 1).FirstOrDefault();
+        if (_nextRank == null)
+            return;
+
+        if (data.WinsToNextRank >= _nextRank.WinsToOpen)
         {
-            data.Rank = nextRank.CurrentRank;
+            data.Rank = _nextRank.CurrentRank;
             data.WinsToNextRank = 0;
         }
     }
 
     private void SetRankIcons()
     {
+        var nextRank = rankData.Ranks.Where(r => r.CurrentRank == data.Rank + 1).FirstOrDefault();
+
         for (int i = 0; i < rankData.Ranks.Count; i++)
         {
             if (data.Rank == rankData.Ranks[i].CurrentRank)
             {
                 currentRankImage.sprite = rankData.Ranks[i].Icon;
-                nextRankImage.sprite = rankData.Ranks.Where(r => r.CurrentRank == data.Rank + 1)
+
+                if(_nextRank != null)
+                    nextRankImage.sprite = rankData.Ranks.Where(r => r.CurrentRank == data.Rank + 1)
                                                      .FirstOrDefault().Icon;
             }
         }

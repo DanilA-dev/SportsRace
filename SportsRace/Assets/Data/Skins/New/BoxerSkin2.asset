@@ -15,6 +15,6 @@ MonoBehaviour:
   State: 0
   Type: 1
   SportType: 1
-  Price: 100
+  Price: 1000
   skinPrefab: {fileID: 4528551339823831868, guid: 7ab236ed72b56a847a2ad262e6927b6c, type: 3}
   corePrefab: {fileID: -7856344920139159, guid: 225c0a2aa51becf4087fdb509cbeb719, type: 3}

@@ -51,7 +51,9 @@ public class PlayerRunner : ARunner
 
     protected override void ChangeRunner(SportType value)
     {
-        if(_avaliableRunners.Count < 0)
+        base.ChangeRunner(value);
+
+        if (_avaliableRunners.Count < 0)
         {
             Debug.LogError("No Avaliable runners!!!");
             return;

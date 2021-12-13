@@ -27,6 +27,26 @@ public class TrackEntity : MonoBehaviour
     public Transform EndPoint => endPoint;
 
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (GameController.CurrentState == GameState.Core)
+        {
+            if (other.TryGetComponent(out ARunner runner))
+                runner.PlayTrackTypeParticle(trackType);
+               
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (GameController.CurrentState == GameState.Core)
+        {
+            if (other.TryGetComponent(out ARunner runner))
+                runner.StopLoopingParticles();
+        }
+    }
+
+
     private void OnTriggerStay(Collider other)
     {
         if(GameController.CurrentState == GameState.Core)

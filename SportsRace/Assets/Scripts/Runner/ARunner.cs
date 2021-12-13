@@ -27,6 +27,8 @@ public abstract class ARunner : MonoBehaviour
     [Space]
     [Header("Track Check")]
     [SerializeField] protected LayerMask whatIsTrack;
+    [Header("Particles Controller")]
+    [SerializeField] protected RunnerParticles particleController;
     [Space]
     [SerializeField] protected List<RunnerObject> _avaliableRunners = new List<RunnerObject>();
 
@@ -104,9 +106,6 @@ public abstract class ARunner : MonoBehaviour
     
     public virtual void SetFinishPosition(int index)
     {
-        if (_isFinished)
-            return;
-
         _finishIndex = index;
     }
     
@@ -121,7 +120,10 @@ public abstract class ARunner : MonoBehaviour
         // SetAvaliableRunnerList();
         defaultDodyConstrain = body.constraints;
     }
-    protected virtual void ChangeRunner(SportType value) { }
+    protected virtual void ChangeRunner(SportType value)
+    {
+        PlayTrackEventParticle(TrackEventParticleType.SwitchCharacter);
+    }
 
     public virtual void SetFinishAnimation()
     {
@@ -134,6 +136,21 @@ public abstract class ARunner : MonoBehaviour
     public virtual void ThrowAway(Vector3 dir)
     {
         body.velocity = dir;
+    }
+
+    public virtual void PlayTrackTypeParticle(SportType type)
+    {
+        particleController.PlayByTrackType(type);
+    }
+
+    public virtual void PlayTrackEventParticle(TrackEventParticleType type)
+    {
+        particleController.PlayByTrackEvent(type);
+    }
+
+    public virtual void StopLoopingParticles()
+    {
+        particleController.StopAllLoopingParticles();
     }
 
     #endregion
@@ -207,6 +224,7 @@ public abstract class ARunner : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         _canMove = true;
         defaultSpeed = 30;
+        PlayTrackEventParticle(TrackEventParticleType.ObstacleHit);
         PlayAnimation("After obstacle break");
         yield return new WaitForSeconds(2);
         State = RunnerState.Default;
@@ -269,6 +287,7 @@ public abstract class ARunner : MonoBehaviour
         CheckTrack(false);
         gravity = 10;
         PlayAnimation("Wall Dump");
+        PlayTrackEventParticle(TrackEventParticleType.WallHit);
         yield return new WaitForSeconds(3);
         State = RunnerState.StandUp;
     }

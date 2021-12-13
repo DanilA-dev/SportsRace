@@ -56,7 +56,7 @@ public class BoxEvent : ATrackEvent
             {
                 r.State = RunnerState.HitHard;
                 _propDestroyed = true;
-                StartCoroutine(DestroyBoxProp(0.6f));
+                StartCoroutine(DestroyBoxProp(0.6f,r));
             }
         }
         else
@@ -65,10 +65,10 @@ public class BoxEvent : ATrackEvent
         }
     }
 
-    private IEnumerator DestroyBoxProp(float time)
+    private IEnumerator DestroyBoxProp(float time, ARunner runner)
     {
         yield return new WaitForSeconds(time);
-
+        runner.PlayTrackEventParticle(TrackEventParticleType.BoxPunch);
         foreach (var r in boxPropParts)
         {
             r.isKinematic = false;

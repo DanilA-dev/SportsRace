@@ -14,8 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ranks:
   - CurrentRank: 0
-    Icon: {fileID: 21300000, guid: 6ce996cd41348a040a614d1352886a51, type: 3}
+    Icon: {fileID: 21300000, guid: cf813e20899db9e43b91e83ec29e844b, type: 3}
     WinsToOpen: 5
   - CurrentRank: 1
-    Icon: {fileID: 21300000, guid: cf813e20899db9e43b91e83ec29e844b, type: 3}
+    Icon: {fileID: 21300000, guid: 524d954afb6b7234eab32c1e15b1155f, type: 3}
+    WinsToOpen: 5
+  - CurrentRank: 2
+    Icon: {fileID: 21300000, guid: 6ce996cd41348a040a614d1352886a51, type: 3}
+    WinsToOpen: 5
+  - CurrentRank: 3
+    Icon: {fileID: 21300000, guid: 3209c91800260bb4c9dd3840ec369cb5, type: 3}
     WinsToOpen: 5

@@ -26,7 +26,7 @@ public class BotRunner : ARunner
 
     private void FixedUpdate()
     {
-        if (GameController.CurrentState == GameState.Core)
+        if (GameController.CurrentState == GameState.Core || GameController.CurrentState == GameState.Finish)
         {
             Move(moveVector, defaultSpeed);
             ApplyGravity();
@@ -84,6 +84,8 @@ public class BotRunner : ARunner
 
     protected override void ChangeRunner(SportType value)
     {
+        base.ChangeRunner(value);
+
         if (_avaliableRunners.Count < 0)
         {
             Debug.LogError("No Avaliable runners!!!");
