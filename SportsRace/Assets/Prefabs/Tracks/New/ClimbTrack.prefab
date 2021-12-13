@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   climbTime: 2
-  climbSpeed: 1
+  climbSpeed: 2
   type: 4
   upPoint: {fileID: 475609166}
   topPoint: {fileID: 488281878}
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   climbTime: 2
-  climbSpeed: 1
+  climbSpeed: 2
   type: 4
   upPoint: {fileID: 475609166}
   topPoint: {fileID: 488281878}
