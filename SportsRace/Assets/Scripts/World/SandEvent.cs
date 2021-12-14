@@ -55,7 +55,7 @@ public class SandEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _isRunnerLeave = true;
-            StopAllCoroutines();
+            r.State = RunnerState.Default;
         }
     }
 
@@ -105,7 +105,7 @@ public class SandEvent : ATrackEvent
             StartCoroutine(Jumping(r));
     }
 
-    public override void OnRunnerChanged(SportType newType, ARunner r)
+    public override void OnRunnerChanged(ARunner r)
     {
         if (!_subbed)
             return;

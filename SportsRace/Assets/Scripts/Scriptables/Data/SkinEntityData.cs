@@ -16,6 +16,7 @@ public enum SkinType
 [CreateAssetMenu(menuName ="Data/SkinEntityData")]
 public class SkinEntityData : ScriptableObject
 {
+    public string SaveString;
     public SkinState State;
     public SkinType Type;
     public SportType SportType;

@@ -17,6 +17,7 @@ public class RunnersSelectionController : MonoBehaviour
 
     public void SetCreatedRunners()
     {
+        Debug.Log("Creating runners");
         GetTrackRunners();
         CreateRunners();
     }
@@ -39,7 +40,7 @@ public class RunnersSelectionController : MonoBehaviour
     {
         for (int i = 0; i < runnersPrefabs.Count; i++)
         {
-            var r = Instantiate(skinsData.GetEquippedSkins()[i].corePrefab, player);
+            var r = Instantiate(runnersPrefabs[i], player);
             r.transform.localPosition = r.GroundPositionOffset;
             r.gameObject.SetActive(false);
         }

@@ -19,10 +19,6 @@ public class BotRunner : ARunner
         _canMove = true;
     }
 
-    private void GameController_OnCoreEnter()
-    {
-        CheckTrack(true);
-    }
 
     private void FixedUpdate()
     {
@@ -51,20 +47,6 @@ public class BotRunner : ARunner
     {
         yield return new WaitForSeconds(time);
 
-      // Collider[] c = Physics.OverlapSphere(transform.position, 2, whatIsTrack);
-      // foreach (var coll in c)
-      // {
-      //     if (coll.TryGetComponent(out TrackEntity t))
-      //     {
-      //         SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
-      //
-      //         if (state == RunnerState.Default)
-      //             _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-      //
-      //         if (runnerType != t.TrackType)
-      //             Punish(t);
-      //     }
-      // }
        var rayPos = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
        RaycastHit hit;
        if (Physics.Raycast(rayPos, Vector3.down, out hit, whatIsTrack))
@@ -73,7 +55,7 @@ public class BotRunner : ARunner
            {
                 SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
 
-                if (state == RunnerState.Default)
+                if (_runnerAnimator != null && state == RunnerState.Default)
                     _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
 
                 if (runnerType != t.TrackType)
@@ -85,7 +67,6 @@ public class BotRunner : ARunner
     protected override void ChangeRunner(SportType value)
     {
         base.ChangeRunner(value);
-
         if (_avaliableRunners.Count < 0)
         {
             Debug.LogError("No Avaliable runners!!!");
@@ -96,6 +77,7 @@ public class BotRunner : ARunner
         {
             if (_avaliableRunners[i].Type == value)
             {
+                base.ChangeRunner(value);
                 CurrentRunner = _avaliableRunners[i];
                 RunnerAnimator = CurrentRunner.GetComponent<Animator>();
                 CurrentRunner.gameObject.SetActive(true);
@@ -104,6 +86,25 @@ public class BotRunner : ARunner
             else
                 _avaliableRunners[i].gameObject.SetActive(false);
         }
+    }
+
+    public override void SetFinishAnimation()
+    {
+        if (_runnerAnimator == null)
+            return;
+
+        if (_finishIndex > 1)
+            _runnerAnimator.Play("Defeated");
+        else if (_finishIndex == 1)
+            _runnerAnimator.Play("Victory");
+    }
+
+    public override void CheckPosition()
+    {
+        if (_finishIndex > 1)
+            _runnerAnimator.Play("Defeated");
+        else if (_finishIndex == 1)
+            _runnerAnimator.Play("Victory");
     }
 
 
@@ -115,34 +116,16 @@ public class BotRunner : ARunner
     private IEnumerator SwitchRunner(TrackEntity t)
     {
         yield return new WaitForSeconds(switchTime);
-        RunnerType = t.TrackType;
+
+        if(Type != t.TrackType)
+            RunnerType = t.TrackType;
+
         CheckTrack(true);
     }
 
     public override void SetFinishPosition(int index)
     {
         _finishIndex = index;
-    }
-
-
-    public override void FinishStop()
-    {
-        _canMove = false;
-    }
-
-    public override void SetFinishAnimation()
-    {
-        base.SetFinishAnimation();
-    }
-
-    public override void OnReset()
-    {
-        _canMove = true;
-        _isFinished = false;
-        _finishIndex = 0;
-        SetSpeed(defaultSpeed);
-        body.useGravity = true;
-        body.isKinematic = false;
     }
 
     public override void Move(Vector3 dir, float speed)

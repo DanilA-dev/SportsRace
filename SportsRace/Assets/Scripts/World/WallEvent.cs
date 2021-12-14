@@ -67,6 +67,10 @@ public class WallEvent : ATrackEvent
             if (r.State == RunnerState.Climb && r.transform.position.y == Point.y)
             {
                 r.State = RunnerState.ClimbTop;
+
+                if(r.Player != null)
+                    r.Player.DisableButtons(2);
+
                 if (r.State == RunnerState.ClimbTop)
                     _coll.enabled = false;
             }
@@ -83,7 +87,7 @@ public class WallEvent : ATrackEvent
         }
     }
 
-    public override void OnRunnerChanged(SportType arg1, ARunner r)
+    public override void OnRunnerChanged(ARunner r)
     {
         if (!_subbed)
             return;

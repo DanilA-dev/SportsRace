@@ -65,7 +65,6 @@ public class FinishTrack : ATrackEvent
     private IEnumerator RiseFirstPlace(ARunner runner)
     {
         float xMultiplier = 0f;
-       // OnPlatformRise?.Invoke();
         while (_positionIndex == 1)
         {
             var pedestalT = risingPedestal.transform.position;
@@ -80,6 +79,10 @@ public class FinishTrack : ATrackEvent
                 _coinsMultiplier = 10;
                 StopAllCoroutines();
                 TopPlatform(runner);
+                
+                runner.ToggleRotationCameara(true);
+                OnCupEarned?.Invoke();
+
             }
             yield return null;
         }
@@ -93,24 +96,18 @@ public class FinishTrack : ATrackEvent
         var seq = DOTween.Sequence();
         seq.Append(runner.transform.DOMove(topPlatformPoint.position, 1.3f));
         seq.Join(runner.transform.DORotate(new Vector3(0, topPlatformPoint.position.y, 0), 1));
-        seq.OnComplete(() =>OnPlayerWin(runner));
+        seq.OnComplete(() =>Onx10PlayerWin(runner));
 
     }
 
-    private void OnPlayerWin(ARunner runner)
+    private void Onx10PlayerWin(ARunner runner)
     {
         int endMultiplier = _coinsMultiplier < 1 ? 1 : _coinsMultiplier;
         int totalPoints = endMultiplier * GameController.SessionScore;
 
-        if (_coinsMultiplier == 10)
-        {
-            GameController.Data.Cups++;
-            runner.ToggleRotationCameara(true);
-            OnCupEarned?.Invoke();
-        }
-
         Debug.Log(totalPoints);
         runner.RunnerAnimator.Play("Victory");
+        GameController.Data.Cups++;
         GameController.Data.Coins += totalPoints;
         GameController.CurrentState = GameState.Win;
         GameController.Data.WinsToNextRank++;
@@ -120,23 +117,8 @@ public class FinishTrack : ATrackEvent
 
     private void CheckPlayerPos(ARunner runner)
     {
-        StopAllCoroutines();
-        runner.SetFinishAnimation();
-        
-
-        if (runner as PlayerRunner && runner.FinishIndex == 1)
-        {
-            OnPlayerWin(runner);
-        }
-        else
-        {
-            if (runner as PlayerRunner)
-                runner.RunnerAnimator.Play("Defeated");
-
-            GameController.Data.Coins += GameController.SessionScore;
-            SaveController.SaveData();
-            GameController.CurrentState = GameState.Lose;
-        }
+       // StopAllCoroutines();
+        runner.CheckPosition();
     } 
     
 

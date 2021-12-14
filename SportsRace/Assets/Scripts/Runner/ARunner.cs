@@ -17,7 +17,7 @@ public enum RunnerState
 public abstract class ARunner : MonoBehaviour
 {
 
-    [SerializeField]private Transform start;
+    [SerializeField] private Transform start;
     [SerializeField] private GameObject rotateCamera;
     [Header("Body and speed")]
     [SerializeField] protected float gravity;
@@ -35,18 +35,20 @@ public abstract class ARunner : MonoBehaviour
     [SerializeField] protected List<RunnerObject> _avaliableRunners = new List<RunnerObject>();
 
     private event Action<RunnerState> OnStateChange;
-    public event Action<SportType, ARunner> OnRunnerChanged;
+    public event Action<ARunner> OnRunnerChanged;
 
 
     protected Animator _runnerAnimator;
     protected RunnerObject _currentRunner;
 
     protected RigidbodyConstraints defaultDodyConstrain;
-    protected  int _finishIndex;
+    protected int _finishIndex;
     protected bool _isFinished;
     protected bool _canMove;
 
     #region Properties
+
+    public virtual IPlayer Player { get; }
 
     public SportType RunnerType
     {
@@ -55,7 +57,7 @@ public abstract class ARunner : MonoBehaviour
         {
             runnerType = value;
             ChangeRunner(value);
-            OnRunnerChanged?.Invoke(value, this);
+            OnRunnerChanged?.Invoke(this);
         }
     }
 
@@ -85,21 +87,11 @@ public abstract class ARunner : MonoBehaviour
 
     public abstract void Move(Vector3 dir, float speed);
     public abstract void CheckTrack(bool canCheck, float delay = 0);
-    public abstract void FinishStop();
 
     #endregion
 
     #region Virtual Methods
 
-    public virtual void SwitchRunner(object someRunner) { }
-    public virtual void InitStartRunner(object someRunner) { }
-
-    public virtual void OnReset() { }
-
-    public virtual void FreezeBody(RigidbodyConstraints constrain)
-    {
-        body.constraints = ~constrain;
-    }
 
     public virtual void UnFreezeBody(RigidbodyConstraints constrain)
     {
@@ -119,7 +111,6 @@ public abstract class ARunner : MonoBehaviour
 
     protected virtual void Start()
     {
-        // SetAvaliableRunnerList();
         defaultDodyConstrain = body.constraints;
     }
     protected virtual void ChangeRunner(SportType value)
@@ -127,13 +118,9 @@ public abstract class ARunner : MonoBehaviour
         PlayTrackEventParticle(TrackEventParticleType.SwitchCharacter);
     }
 
-    public virtual void SetFinishAnimation()
-    {
-        if (_finishIndex > 1)
-            _runnerAnimator.Play("Defeated");
-        else if (_finishIndex == 1)
-            _runnerAnimator.Play("Victory");
-    }
+    public virtual void SetFinishAnimation() { }
+
+    public virtual void CheckPosition() { }
     
     public virtual void ThrowAway(Vector3 dir)
     {
@@ -161,9 +148,14 @@ public abstract class ARunner : MonoBehaviour
             rotateCamera.SetActive(on);
     }
 
+  // public virtual void DisableButtons(float time)
+  // {
+  //     GameController.SwitchButtonsController.DisableSwitchButtons(time);
+  // }
+
     #endregion
 
-    
+
     private void OnEnable()
     {
         OnStateChange += SetState;
@@ -225,17 +217,20 @@ public abstract class ARunner : MonoBehaviour
         }
     }
 
+
+
+
+    #region State Methods
     private IEnumerator OnLandState()
     {
         PlayAnimation("Falling to Landing");
         gravity = 50;
+       // DisableButtons(1);
         yield return new WaitForSeconds(1);
         State = RunnerState.Default;
     }
 
 
-
-    #region State Methods
     private IEnumerator OnStunnedState()
     {
         PlayAnimation("Obstacle jump");
@@ -259,7 +254,7 @@ public abstract class ARunner : MonoBehaviour
     private IEnumerator OnHitHardState()
     {
         PlayAnimation("Boxer Punch");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
         State = RunnerState.Default;
     }
     private void OnHitWeakState()
@@ -271,7 +266,6 @@ public abstract class ARunner : MonoBehaviour
     {
         _canMove = false;
         PlayAnimation("Sand Jump");
-
     }
 
     private void OnJumpObstacleState()
@@ -285,7 +279,7 @@ public abstract class ARunner : MonoBehaviour
     {
         body.isKinematic = false;
         PlayAnimation("Swimming");
-        gravity = 8;
+        gravity = 0;
         CheckTrack(true);
     }
 
@@ -320,7 +314,7 @@ public abstract class ARunner : MonoBehaviour
         PlayAnimation("Climbing to Top");
         yield return new WaitForSeconds(1);
         State = RunnerState.Default;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         State = RunnerState.Land;
     }
 
@@ -367,12 +361,15 @@ public abstract class ARunner : MonoBehaviour
     {
         var getTracks = TracksController.Instance.LevelTracks.ToList();
         var firtsTrack = getTracks[0];
-        RunnerType = firtsTrack.TrackType;
+
+        if(getTracks.Count > 0 && _avaliableRunners.Count > 0)
+            RunnerType = firtsTrack.TrackType;
     }
 
     public void OnMenu()
     {
         StopAllCoroutines();
+        particleController.StopAllLoopingParticles();
         ToggleRotationCameara(false);
         body.constraints = defaultDodyConstrain;
         _canMove = false;

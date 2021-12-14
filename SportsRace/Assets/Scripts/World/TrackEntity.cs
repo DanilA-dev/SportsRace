@@ -32,8 +32,10 @@ public class TrackEntity : MonoBehaviour
         if (GameController.CurrentState == GameState.Core)
         {
             if (other.TryGetComponent(out ARunner runner))
+            {
                 runner.PlayTrackTypeParticle(trackType);
-               
+            }
+
         }
     }
 
@@ -52,7 +54,7 @@ public class TrackEntity : MonoBehaviour
         if(GameController.CurrentState == GameState.Core)
         {
             if (other.TryGetComponent(out ARunner runner))
-                runner.CheckTrack(true);
+                 runner.CheckTrack(true);
         }
     }
 

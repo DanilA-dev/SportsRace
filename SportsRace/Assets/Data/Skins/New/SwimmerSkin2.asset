@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e204b8e96812449b35e2cae0f09c2e, type: 3}
   m_Name: SwimmerSkin2
   m_EditorClassIdentifier: 
+  SaveString: swim2
   State: 0
   Type: 1
   SportType: 2
   Price: 1000
-  skinPrefab: {fileID: 6265352222516992454, guid: 0ff0d641b220a68448ecaea303eff3e7, type: 3}
-  corePrefab: {fileID: 5619810732055839508, guid: 857a54f7428a40c47a063bef74facb51, type: 3}
+  skinPrefab: {fileID: 8044534045986196900, guid: 0ff0d641b220a68448ecaea303eff3e7, type: 3}
+  corePrefab: {fileID: 2992147782022897694, guid: 857a54f7428a40c47a063bef74facb51, type: 3}

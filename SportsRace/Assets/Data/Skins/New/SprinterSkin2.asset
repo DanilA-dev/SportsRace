@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e204b8e96812449b35e2cae0f09c2e, type: 3}
   m_Name: SprinterSkin2
   m_EditorClassIdentifier: 
-  State: 0
+  SaveString: sprint2
+  State: 1
   Type: 1
   SportType: 0
   Price: 1000

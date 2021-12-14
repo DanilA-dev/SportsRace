@@ -37,16 +37,17 @@ public class BoxEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _subbed = true;
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.TryGetComponent(out ARunner r))
-        {
             CheckType(r);
         }
     }
+
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if (other.TryGetComponent(out ARunner r))
+    //    {
+    //        CheckType(r);
+    //    }
+    //}
 
     private void CheckType(ARunner r)
     {
@@ -55,14 +56,11 @@ public class BoxEvent : ATrackEvent
             if(r.State != RunnerState.HitHard && !_propDestroyed)
             {
                 r.State = RunnerState.HitHard;
-                _propDestroyed = true;
-                StartCoroutine(DestroyBoxProp(0.6f,r));
+                StartCoroutine(DestroyBoxProp(0.3f,r));
             }
         }
         else
-        {
-              r.State = RunnerState.HitWeak;
-        }
+            r.State = RunnerState.HitWeak;
     }
 
     private IEnumerator DestroyBoxProp(float time, ARunner runner)
@@ -74,9 +72,11 @@ public class BoxEvent : ATrackEvent
             r.isKinematic = false;
             r.AddForce(forceToPoint.localPosition * destroyForce,ForceMode.Impulse);
         }
+        _propDestroyed = true;
+        Unsubscribe();
     }
 
-    public override void OnRunnerChanged(SportType arg1, ARunner r)
+    public override void OnRunnerChanged(ARunner r)
     {
         if (!_subbed)
             return;
@@ -97,6 +97,6 @@ public class BoxEvent : ATrackEvent
     {
         base.Unsubscribe();
         StopAllCoroutines();
-        _subbed = true;
+        _subbed = false;
     }
 }

@@ -16,7 +16,7 @@ public abstract class ATrackEvent : MonoBehaviour
         }
     }
 
-    public virtual void OnRunnerChanged(SportType arg1, ARunner arg2) { }
+    public virtual void OnRunnerChanged(ARunner arg2) { }
 
     public virtual void Unsubscribe()
     {

@@ -31,6 +31,9 @@ public class RankController : MonoBehaviour
 
     public void CheckRank()
     {
+        if (data.Rank == LeagueRank.Platinum)
+            return;
+
         SetPlayerRank();
         SetRankIcons();
     }

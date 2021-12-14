@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e204b8e96812449b35e2cae0f09c2e, type: 3}
   m_Name: DefaultSwimmerSkin
   m_EditorClassIdentifier: 
+  SaveString: defaultSwim
   State: 2
   Type: 0
   SportType: 2
   Price: 0
   skinPrefab: {fileID: 0}
-  corePrefab: {fileID: 6199691961612704046, guid: 1c59f2fcd894e5849993e0cad6b448e0, type: 3}
+  corePrefab: {fileID: 2035817514908772384, guid: 1c59f2fcd894e5849993e0cad6b448e0, type: 3}

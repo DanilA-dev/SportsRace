@@ -17,15 +17,21 @@ public class SaveController : MonoBehaviour
             Destroy(Instance.gameObject);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        if(!GameController.GameFirstEnter)
-            LoadData();
+        LoadData();
     }
 
     private void OnApplicationQuit()
     {
         SaveData();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if(pause)
+            SaveData();
+
     }
 
     private void LoadData()
@@ -35,8 +41,10 @@ public class SaveController : MonoBehaviour
         data.Rank = (LeagueRank)PlayerPrefs.GetInt("Rank");
         data.WinsToNextRank = PlayerPrefs.GetInt("Wins");
 
-        for (int i = 0; i < Instance.data.skins.Skins.Count; i++)
-            data.skins.Skins[i].State = (SkinState)PlayerPrefs.GetInt("Skins");
+       // foreach (var skin in Instance.data.skins.Skins)
+       // {
+       //     skin.State = (SkinState)PlayerPrefs.GetInt(skin.SaveString + "_state", 0);
+       // }
     }
 
     public static void SaveData()
@@ -46,7 +54,9 @@ public class SaveController : MonoBehaviour
         PlayerPrefs.SetInt("Rank", (int)Instance.data.Rank);
         PlayerPrefs.SetInt("Wins", Instance.data.WinsToNextRank);
 
-        for (int i = 0; i < Instance.data.skins.Skins.Count; i++)
-            PlayerPrefs.SetInt("Skins", (int)Instance.data.skins.Skins[i].State);
+       /// foreach (var skin in Instance.data.skins.Skins)
+       /// {
+       ///     PlayerPrefs.SetInt(skin.SaveString + "_state", (int)skin.State);
+       /// }
     }
 }

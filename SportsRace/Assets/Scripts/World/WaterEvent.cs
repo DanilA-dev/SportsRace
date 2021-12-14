@@ -39,6 +39,12 @@ public class WaterEvent : ATrackEvent
         }
     }
 
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent(out ARunner r))
+            r.State = RunnerState.Swim;
+    }
+
     private void OnTriggerExit(Collider other)
     {
         _isRunnerOut = true;
@@ -49,7 +55,7 @@ public class WaterEvent : ATrackEvent
         }
     }
 
-    public override void OnRunnerChanged(SportType arg1, ARunner r)
+    public override void OnRunnerChanged(ARunner r)
     {
         if (!_subbed)
             return;

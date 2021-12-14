@@ -84,7 +84,7 @@ public class ObstacleTrackEvent : ATrackEvent
         r.State = RunnerState.Default;
     }
 
-    public override void OnRunnerChanged(SportType arg1, ARunner r)
+    public override void OnRunnerChanged(ARunner r)
     {
         if (!_subbed)
             return;

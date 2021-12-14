@@ -15,7 +15,7 @@ public class TracksController : MonoBehaviour
     [SerializeField] private float offset;
     [SerializeField] private Vector3 finishOffset;
     [SerializeField] private List<TrackEntity> tracksPrefab = new List<TrackEntity>();
-    [SerializeField] private List<TrackEntity> createdLevelTrack = new List<TrackEntity>();
+    [SerializeField] private List<TrackEntity> createdLevelTracks = new List<TrackEntity>();
 
     private HashSet<TrackEntity> levelTracks = new HashSet<TrackEntity>();
     private List<int> trackIndexList = new List<int>();
@@ -24,6 +24,7 @@ public class TracksController : MonoBehaviour
     private TrackEntity _finishTrack;
 
     public HashSet<TrackEntity> LevelTracks => levelTracks;
+    public List<TrackEntity> CreatedTracks => createdLevelTracks;
 
 
 
@@ -53,11 +54,11 @@ public class TracksController : MonoBehaviour
             var createdTrack = Instantiate(levelTracks.ToList()[RandomGeneratedIndex()]);
 
             var trackRotation = Quaternion.Euler(new Vector3(-90, 0, 90));
-            var nextPos = new Vector3(0, 0, (createdLevelTrack[createdLevelTrack.Count - 1]
+            var nextPos = new Vector3(0, 0, (createdLevelTracks[createdLevelTracks.Count - 1]
                                               .EndPoint.position - createdTrack.BeginPoint.localPosition).z + offset);
             createdTrack.transform.rotation = trackRotation;
             createdTrack.transform.position = nextPos;
-            createdLevelTrack.Add(createdTrack);
+            createdLevelTracks.Add(createdTrack);
 
             if (trackIndexList.Count == levelTracks.Count)
             {
@@ -67,7 +68,7 @@ public class TracksController : MonoBehaviour
         }
         _finishTrack = Instantiate(finishPrefab);
         _finishTrack.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
-        _finishTrack.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTrack[createdLevelTrack.Count - 1]
+        _finishTrack.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTracks[createdLevelTracks.Count - 1]
                                               .EndPoint.position - finishPrefab.BeginPoint.localPosition).z + finishOffset.z);
     }
 
@@ -97,20 +98,20 @@ public class TracksController : MonoBehaviour
 
         yield return StartCoroutine(TracksUnsubscribe());
 
-        for (int i = 1; i < createdLevelTrack.Count; i++)
+        for (int i = 1; i < createdLevelTracks.Count; i++)
         {
-            Destroy(createdLevelTrack[i].gameObject);
+            Destroy(createdLevelTracks[i].gameObject);
             yield return null;
         }
-        createdLevelTrack.Clear();
-        createdLevelTrack.Add(startTrack);
+        createdLevelTracks.Clear();
+        createdLevelTracks.Add(startTrack);
     }
 
     private IEnumerator TracksUnsubscribe()
     {
-        for (int i = 0; i < createdLevelTrack.Count; i++)
+        for (int i = 0; i < createdLevelTracks.Count; i++)
         {
-            createdLevelTrack[i].UnsubscribeFromEvents();
+            createdLevelTracks[i].UnsubscribeFromEvents();
             yield return null;
         }
     }
@@ -127,4 +128,12 @@ public class TracksController : MonoBehaviour
             Debug.Log(levelTracks.ToList()[i] + "is in Level Tracks!!!");
     }
 
+
+    public void UnSubFromTracks()
+    {
+        foreach (var t in createdLevelTracks)
+        {
+            t.UnsubscribeFromEvents();
+        }
+    }
 }

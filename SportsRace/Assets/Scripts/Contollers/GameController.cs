@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum GameState
 {
-    None, Menu, Core, Win, Lose, Finish
+    None, Menu, Core, Win, Lose, Finish, Pause, UnPause
 }
 
 public class GameController : MonoBehaviour
@@ -19,7 +19,9 @@ public class GameController : MonoBehaviour
 
     private int _sessionScore;
     private GameState _currentState;
-    private bool _gameFirstEnter;
+
+    private int _gameFirstEnter;
+
 
     public static event Action OnMenuEnter;
     public static event Action OnCoreEnter;
@@ -28,7 +30,8 @@ public class GameController : MonoBehaviour
 
 
     #region Properties
-    public static bool GameFirstEnter { get => Instance._gameFirstEnter; set => Instance._gameFirstEnter = value; }
+    public static SwitchButtonInitializer SwitchButtonsController => Instance.switchButtonsController;
+    public static int GameFirstEnter { get => Instance._gameFirstEnter; set => Instance._gameFirstEnter = value; }
     public static UserData Data { get => Instance.data; set => Instance.data = value; }
     public static int SessionScore { get => Instance._sessionScore; set => Instance._sessionScore = value; }
 
@@ -62,16 +65,17 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameFirstEnter = true;
         CurrentState = GameState.Menu;
-        
-        if(!PlayerPrefs.HasKey("FirstStart"))
+        _gameFirstEnter = PlayerPrefs.GetInt("FirstStart");
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (!PlayerPrefs.HasKey("FirstStart"))
         {
-            _gameFirstEnter = true;
-            PlayerPrefs.SetInt("FirstStart", _gameFirstEnter ? 1 : 0);
+            _gameFirstEnter = 1;
+            PlayerPrefs.SetInt("FirstStart", _gameFirstEnter);
         }
-        else
-            _gameFirstEnter = (PlayerPrefs.GetInt("FirstStart") != 0);
     }
 
 
@@ -102,11 +106,36 @@ public class GameController : MonoBehaviour
             case GameState.Finish:
                 OnFinishState();
                 break;
+
+            case GameState.Pause:
+                OnPauseState();
+                break;
+
+            case GameState.UnPause:
+                OnUnPauseState();
+                break;
+            
         }
     }
 
 
     #region GameState Methods
+    private void OnUnPauseState()
+    {
+        Time.timeScale = 1;
+        UIController.TurnOffPanel(UIPanelType.Pause);
+    }
+
+
+    private void OnPauseState()
+    {
+        foreach (var r in runners)
+            r.StopAllCoroutines();
+
+        Time.timeScale = 0;
+        TracksController.Instance.UnSubFromTracks();
+        UIController.TurnOnPanel(UIPanelType.Pause);
+    }
 
     private void OnFinishState()
     {
@@ -134,6 +163,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator OnMenuState()
     {
+        
         yield return StartCoroutine(runnersController.ClearCreatedRunners());
         yield return StartCoroutine(TracksController.Instance.CreateTrack());
 
@@ -149,9 +179,9 @@ public class GameController : MonoBehaviour
 
         foreach (var r in runners)
         {
+            r.StopAllCoroutines();
             r.SetAvaliableRunnerList();
             r.OnMenu();
-            yield return null;
         }    
     }
 

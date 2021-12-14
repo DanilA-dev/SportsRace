@@ -4,13 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRunner : ARunner
+public class PlayerRunner : ARunner, IPlayer
 {
 
     private Vector3 moveVector;
 
     public static event Action<float> OnSpeedChange;
 
+    public override IPlayer Player { get => this; }
     public override RunnerState State { get => base.State; set => base.State = value; }
 
     protected override void Start()
@@ -73,8 +74,29 @@ public class PlayerRunner : ARunner
 
     public override void SetFinishAnimation()
     {
-        base.SetFinishAnimation();
+         if (_runnerAnimator == null)
+             return;
+        
+         if (_finishIndex > 1)
+             _runnerAnimator.Play("Defeated");
+         else if (_finishIndex == 1)
+             _runnerAnimator.Play("Victory");
+        
         GameController.CurrentState = GameState.Finish;
+    }
+
+    public override void CheckPosition()
+    {
+        GameController.Data.Coins += GameController.SessionScore;
+        SaveController.SaveData();
+
+        if (_finishIndex == 1)
+        {
+            GameController.Data.WinsToNextRank++;
+            GameController.CurrentState = GameState.Win;
+        }
+        else
+            GameController.CurrentState = GameState.Lose;
     }
 
     public override void CheckTrack(bool canCheck, float time = 0)
@@ -98,12 +120,11 @@ public class PlayerRunner : ARunner
                 SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
                 OnSpeedChange?.Invoke(this.defaultSpeed);
 
-                if (state == RunnerState.Default)
+                if (_runnerAnimator != null && state == RunnerState.Default)
                     _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
            }
        }
     }
-
 
     public override void Move(Vector3 dir, float speed)
     {
@@ -113,9 +134,8 @@ public class PlayerRunner : ARunner
         body.velocity = dir * speed * Time.deltaTime;
     }
 
-    public override void FinishStop()
+    public void DisableButtons(float time)
     {
-        _canMove = false;
+        GameController.SwitchButtonsController.DisableSwitchButtons(time);
     }
-
 }
