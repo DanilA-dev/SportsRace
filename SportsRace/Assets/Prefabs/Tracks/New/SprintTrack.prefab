@@ -81,7 +81,7 @@ MeshRenderer:
   m_Materials:
   - {fileID: -6478536213147159724, guid: 6c08eac8b3b5c624db98e67bf841919b, type: 3}
   - {fileID: 3016479151454471876, guid: 6c08eac8b3b5c624db98e67bf841919b, type: 3}
-  - {fileID: -876546973899608171, guid: 6c08eac8b3b5c624db98e67bf841919b, type: 3}
+  - {fileID: 2100000, guid: 697abaff2ded01f4987d020e4b743bda, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1046,7 +1046,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a1687490a50b9c3468c0a5d3ffbad41b, type: 3}
       propertyPath: m_Materials.Array.data[4]
       value: 
-      objectReference: {fileID: 2100000, guid: 7bcc06bab8096944d8fa7f3265098d6a, type: 2}
+      objectReference: {fileID: 2100000, guid: 5e97a2e4629cc924099908390f8c618f, type: 2}
     - target: {fileID: 919132149155446097, guid: a1687490a50b9c3468c0a5d3ffbad41b, type: 3}
       propertyPath: m_Name
       value: Full stadium
@@ -1087,11 +1087,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.067459874
+      value: -0.0681
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.037178304
+      value: 0.03702
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1121,6 +1121,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e126e9b6b405f234791fb1e637b4d802, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 697abaff2ded01f4987d020e4b743bda, type: 2}
     - target: {fileID: 919132149155446097, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
       propertyPath: m_Name
       value: label

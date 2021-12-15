@@ -804,6 +804,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   runnerData: {fileID: 11400000, guid: 90c76932d84fb15479b3c9ec7676789a, type: 2}
+  groundPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &2372352123690292351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,7 +2003,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 47b85a6516ac6be4699c534974f51670, type: 2}
+  - {fileID: 2100000, guid: 5e97a2e4629cc924099908390f8c618f, type: 2}
   - {fileID: 2100000, guid: 47b85a6516ac6be4699c534974f51670, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
