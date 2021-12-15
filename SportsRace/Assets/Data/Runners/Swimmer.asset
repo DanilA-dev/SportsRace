@@ -15,25 +15,25 @@ MonoBehaviour:
   Speeds:
   - type: 0
     speed: 125
-    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+    animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}
   - type: 3
     speed: 125
-    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+    animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}
   - type: 5
     speed: 125
-    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+    animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}
   - type: 2
     speed: 250
     animValue: {fileID: 7400000, guid: 1ecee6fa3f989fc448e598bb7fd2980e, type: 2}
   - type: 6
     speed: 125
-    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+    animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}
   - type: 1
     speed: 125
-    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+    animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}
   - type: 4
     speed: 125
-    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+    animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}
   - type: 8
     speed: 150
-    animValue: {fileID: 7400000, guid: bccbd4c542edf4e48a7bb26350496e9d, type: 2}
+    animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}

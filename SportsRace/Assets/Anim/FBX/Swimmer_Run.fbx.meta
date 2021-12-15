@@ -1,23 +1,11 @@
 fileFormatVersion: 2
-guid: d2c98d97ec726c641b8e371c19e9438a
+guid: 62a7b89e16b62d84086ac3c2a061fed3
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
-      74: 5231894672797306291
-    second: Armature|Armature|Armature|Armature|Armature|Armature.001|Armature|Armat
-  - first:
-      74: -5964696389003507037
-    second: Armature|Armature|Armature|Armature|Armature|Armature|Armature|Armat
-  - first:
-      74: 5774167747913995962
-    second: Armature|Armature|Armature|Armature|Armature|Armature|Armature|Armat.001
-  - first:
-      74: 997367503119964364
-    second: Armature|Armature|Armature|Armature|Armature|Armature|Armature|Armat.002
-  - first:
-      74: 445819222690364645
-    second: Armature|Armature|Armature|Armature|Armature|Armature|Armature|Armature|
+      74: -203655887218126122
+    second: mixamo.com
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -106,7 +94,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
