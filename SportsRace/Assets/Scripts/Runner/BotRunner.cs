@@ -20,6 +20,7 @@ public class BotRunner : ARunner
     {
         base.Start();
         _botCollider = GetComponent<Collider>();
+        transform.rotation = Quaternion.Euler(Vector3.zero);
         _canMove = true;
     }
 

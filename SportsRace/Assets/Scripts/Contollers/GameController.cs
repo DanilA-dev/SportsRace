@@ -182,7 +182,9 @@ public class GameController : MonoBehaviour
             r.StopAllCoroutines();
             r.SetAvaliableRunnerList();
             r.OnMenu();
-        }    
+        }
+
+        TracksController.Instance.CheckFullTrack();
     }
 
     #endregion

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +23,11 @@ public class TrackEntity : MonoBehaviour
     [SerializeField] private Transform endPoint;
     [SerializeField] private List<ATrackEvent> trackEvents = new List<ATrackEvent>();
 
+    private bool _isPlayerSwitchedRight;
 
+    public static event Action OnRightSwitchPlayer;
+
+    public bool IsPlayerSwitchedRight => _isPlayerSwitchedRight;
     public SportType TrackType => trackType;
     public Transform BeginPoint => beginPoint;
     public Transform EndPoint => endPoint;
@@ -34,6 +39,7 @@ public class TrackEntity : MonoBehaviour
         {
             if (other.TryGetComponent(out ARunner runner))
             {
+                runner.CheckTrack(true);
                 runner.PlayTrackTypeParticle(trackType);
             }
 
@@ -57,6 +63,15 @@ public class TrackEntity : MonoBehaviour
             if (other.TryGetComponent(out ARunner runner))
                 if(runner.Type != trackType)
                     runner.CheckTrack(true);
+
+            if (other.TryGetComponent(out PlayerRunner player))
+            {
+                if(!_isPlayerSwitchedRight && player.Type == trackType )
+                {
+                    _isPlayerSwitchedRight = true;
+                    OnRightSwitchPlayer?.Invoke();
+                }
+            }
 
         }
     }

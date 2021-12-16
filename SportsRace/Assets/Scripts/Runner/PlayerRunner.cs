@@ -10,8 +10,8 @@ public class PlayerRunner : ARunner, IPlayer
     private Vector3 _moveVector;
     private Collider _playerCollider;
 
-
     public static event Action<float> OnSpeedChange;
+
 
     public override IPlayer Player { get => this; }
     public override RunnerState State { get => base.State; set => base.State = value; }
@@ -121,7 +121,7 @@ public class PlayerRunner : ARunner, IPlayer
        if (Physics.Raycast(rayPos, Vector3.down, out hit, whatIsTrack))
        {
            if (hit.collider.TryGetComponent(out TrackEntity t))
-            {
+           {
                 SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
                 OnSpeedChange?.Invoke(this.defaultSpeed);
 
@@ -129,7 +129,7 @@ public class PlayerRunner : ARunner, IPlayer
 
                 if (_runnerAnimator != null && state == RunnerState.Default)
                     _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-            }
+           }
         }
     }
 

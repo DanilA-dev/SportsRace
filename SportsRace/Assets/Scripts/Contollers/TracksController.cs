@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Threading.Tasks;
+using DG.Tweening;
 
 public class TracksController : MonoBehaviour
 {
@@ -17,7 +18,10 @@ public class TracksController : MonoBehaviour
     [SerializeField] private List<TrackEntity> tracksPrefab = new List<TrackEntity>();
     [SerializeField] private List<TrackEntity> createdLevelTracks = new List<TrackEntity>();
 
+    private List<Vector3> tracksPos = new List<Vector3>();
+
     private HashSet<TrackEntity> levelTracks = new HashSet<TrackEntity>();
+    private List<TrackEntity> tracksChecker = new List<TrackEntity>();
     private List<int> trackIndexList = new List<int>();
 
     private int _lastIndexFromThree;
@@ -51,29 +55,52 @@ public class TracksController : MonoBehaviour
 
         for (int i = 0; i < tracksAmount; i++)
         {
-            var createdTrack = Instantiate(levelTracks.ToList()[RandomGeneratedIndex()]);
+           var createdTrack = Instantiate(levelTracks.ToList()[RandomGeneratedIndex()]);
 
-            var trackRotation = Quaternion.Euler(new Vector3(-90, 0, 90));
-            var nextPos = new Vector3(0, 0, (createdLevelTracks[createdLevelTracks.Count - 1]
-                                              .EndPoint.position - createdTrack.BeginPoint.localPosition).z + offset);
-            createdTrack.transform.rotation = trackRotation;
-            createdTrack.transform.position = nextPos;
 
-            if (createdTrack.TrackType == SportType.WaterTrack)
-                createdTrack.transform.position = new Vector3(-0.17f, -0.08f, nextPos.z);
-
-            createdLevelTracks.Add(createdTrack);
-
-            if (trackIndexList.Count == levelTracks.Count)
-            {
-                _lastIndexFromThree = trackIndexList[trackIndexList.Count - 1];
-                trackIndexList.Clear();
-            }
+           var trackRotation = Quaternion.Euler(new Vector3(-90, 0, 90));
+           var nextPos = new Vector3(0, 0, (createdLevelTracks[createdLevelTracks.Count - 1]
+                                             .EndPoint.position - createdTrack.BeginPoint.localPosition).z + offset);
+           createdTrack.transform.rotation = trackRotation;
+           createdTrack.transform.position = nextPos;
+          
+           if (createdTrack.TrackType == SportType.WaterTrack)
+               createdTrack.transform.position = new Vector3(-0.17f, -0.08f, nextPos.z);
+          
+           createdLevelTracks.Add(createdTrack);
+          
+           if (trackIndexList.Count == levelTracks.Count)
+           {
+               _lastIndexFromThree = trackIndexList[trackIndexList.Count - 1];
+               trackIndexList.Clear();
+           }
         }
+
         _finishTrack = Instantiate(finishPrefab);
         _finishTrack.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
         _finishTrack.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTracks[createdLevelTracks.Count - 1]
                                               .EndPoint.position - finishPrefab.BeginPoint.localPosition).z + finishOffset.z);
+
+       // SavePos();
+    }
+
+    private void SavePos()
+    {
+        for (int i = 1; i < createdLevelTracks.Count - 1; i++)
+        {
+            createdLevelTracks[i].transform.DOMoveY(createdLevelTracks[i].transform.position.y, 1).From(-7);
+        }
+
+        
+    }
+
+    public void CheckFullTrack()
+    {
+        for (int j = 0; j < createdLevelTracks.Count - 1; j++)
+        {
+             if (createdLevelTracks[j].TrackType == createdLevelTracks[j + 1].TrackType)
+                 GameController.CurrentState = GameState.Menu;
+        }
     }
 
     private int RandomGeneratedIndex()

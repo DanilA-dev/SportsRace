@@ -8,11 +8,12 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private TMP_Text metaCoins;
+    [SerializeField] private float fadeTime;
     [SerializeField] private Image blackFadeScreen;
 
     private void OnEnable()
     {
-        blackFadeScreen.DOFade(0, 0.3f).From(1);
+        blackFadeScreen.DOFade(0, fadeTime).From(1);
     }
 
     private void Start()
