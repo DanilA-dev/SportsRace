@@ -58,6 +58,10 @@ public class TracksController : MonoBehaviour
                                               .EndPoint.position - createdTrack.BeginPoint.localPosition).z + offset);
             createdTrack.transform.rotation = trackRotation;
             createdTrack.transform.position = nextPos;
+
+            if (createdTrack.TrackType == SportType.WaterTrack)
+                createdTrack.transform.position = new Vector3(-0.17f, -0.08f, nextPos.z);
+
             createdLevelTracks.Add(createdTrack);
 
             if (trackIndexList.Count == levelTracks.Count)

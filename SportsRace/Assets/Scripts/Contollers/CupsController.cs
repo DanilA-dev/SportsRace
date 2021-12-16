@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CupsController : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> shelfCups = new List<GameObject>();
+    [SerializeField] private List<Cup> shelfCups = new List<Cup>();
 
     private void OnEnable()
     {
         for (int i = 0; i < GameController.Data.Cups; i++)
         {
-            shelfCups[i].SetActive(true);
+            shelfCups[i].UnLock();
         }
     }
+
+    
 
 }

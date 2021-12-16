@@ -55,6 +55,8 @@ public class WallEvent : ATrackEvent
     private void CheckType(ARunner r)
     {
         var Point = new Vector3(r.transform.position.x, upPoint.position.y, r.transform.position.z);
+        var Top = new Vector3(r.transform.position.x, topPoint.position.y, topPoint.position.z);
+
 
         if (r.Type == type)
         {
@@ -67,13 +69,17 @@ public class WallEvent : ATrackEvent
             if (r.State == RunnerState.Climb && r.transform.position.y == Point.y)
             {
                 r.State = RunnerState.ClimbTop;
+               
 
-                if(r.Player != null)
+                if (r.Player != null)
                     r.Player.DisableButtons(2);
 
                 if (r.State == RunnerState.ClimbTop)
                     _coll.enabled = false;
             }
+
+            if(r.State == RunnerState.ClimbTop && r.transform.position.z != Top.z)
+                r.transform.position = Vector3.MoveTowards(r.transform.position, Top, 10 * Time.deltaTime);
 
 
         }
@@ -83,7 +89,12 @@ public class WallEvent : ATrackEvent
             {
                 r.State = RunnerState.Fall;
                 r.ParticleController.PlayByTrackEvent(TrackEventParticleType.WallHit);
-                r.ThrowAway(Vector3.back * 0.7f);
+
+                var jumpDir = new Vector3(r.Body.velocity.x, r.transform.position.y 
+                                        + r.TrackVariables.KnockOutYOffset, r.Body.velocity.z
+                                        + r.TrackVariables.KnockOutZOffset);
+
+                r.Jump(-jumpDir, r.TrackVariables.KnockOutForce);
             }
         }
     }

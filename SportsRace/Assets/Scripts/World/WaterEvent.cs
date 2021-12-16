@@ -50,8 +50,8 @@ public class WaterEvent : ATrackEvent
         _isRunnerOut = true;
         if (other.TryGetComponent(out ARunner r))
         {
-            r.OnRunnerChanged -= OnRunnerChanged;
             r.State = RunnerState.Default;
+            r.OnRunnerChanged -= OnRunnerChanged;
         }
     }
 
@@ -62,9 +62,7 @@ public class WaterEvent : ATrackEvent
 
         if (_isRunnerOut)
         {
-            if(r != null)
-                r.State = RunnerState.Default;
-
+            r.State = RunnerState.Default;
             return;
         }
 

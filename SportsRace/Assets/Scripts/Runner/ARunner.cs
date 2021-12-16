@@ -32,6 +32,7 @@ public abstract class ARunner : MonoBehaviour
     [Header("Particles Controller")]
     [SerializeField] protected RunnerParticles particleController;
     [Space]
+    [SerializeField] private RunnerTrackVariables trackVariables;
     [SerializeField] protected List<RunnerObject> _avaliableRunners = new List<RunnerObject>();
 
     private event Action<RunnerState> OnStateChange;
@@ -48,7 +49,10 @@ public abstract class ARunner : MonoBehaviour
 
     #region Properties
 
+    public RunnerTrackVariables TrackVariables => trackVariables;
     public virtual IPlayer Player { get; }
+
+    public abstract Collider RunnerCollider { get; set; }
 
     public RunnerParticles ParticleController => particleController;
     public SportType RunnerType
@@ -232,7 +236,7 @@ public abstract class ARunner : MonoBehaviour
     {
         StopTrackTypeParticles();
         PlayAnimation("Falling to Landing");
-        gravity = 50;
+        gravity = 70;
         yield return new WaitForSeconds(1);
         State = RunnerState.Default;
     }
@@ -323,13 +327,15 @@ public abstract class ARunner : MonoBehaviour
     {
         StopTrackTypeParticles();
         body.isKinematic = true;
+       // RunnerCollider.enabled = false;
         CheckTrack(false);
         _canMove = false;
         gravity = 0;
         PlayAnimation("Climbing to Top");
         yield return new WaitForSeconds(1);
         State = RunnerState.Default;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.6f);
+        RunnerCollider.enabled = true;
         State = RunnerState.Land;
     }
 
@@ -415,4 +421,26 @@ public abstract class ARunner : MonoBehaviour
         _avaliableRunners.Clear();
     }
 
+}
+
+
+[Serializable]
+public class RunnerTrackVariables
+{
+    [Header("Jump Track")]
+    [SerializeField] private float sandJumpForce = 10;
+    [SerializeField] private float sandJumpYoffset;
+
+    [Header("Wall Track")]
+    [SerializeField] private float knockOutForce;
+    [SerializeField] private float knockOutYOffset;
+    [SerializeField] private float knockOutZOffset;
+
+
+    public float SandJumpForce => sandJumpForce;
+    public float YOffset => sandJumpYoffset;
+
+    public float KnockOutForce => knockOutForce;
+    public float KnockOutYOffset => knockOutYOffset;
+    public float KnockOutZOffset => knockOutZOffset;
 }

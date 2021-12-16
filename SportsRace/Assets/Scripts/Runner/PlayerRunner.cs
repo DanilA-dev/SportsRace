@@ -8,15 +8,20 @@ public class PlayerRunner : ARunner, IPlayer
 {
 
     private Vector3 _moveVector;
+    private Collider _playerCollider;
+
 
     public static event Action<float> OnSpeedChange;
 
     public override IPlayer Player { get => this; }
     public override RunnerState State { get => base.State; set => base.State = value; }
 
+    public override Collider RunnerCollider { get => _playerCollider; set => _playerCollider = value; }
+
     protected override void Start()
     {
         base.Start();
+        _playerCollider = GetComponent<Collider>();
         _canMove = true;
     }
 
@@ -116,20 +121,24 @@ public class PlayerRunner : ARunner, IPlayer
        if (Physics.Raycast(rayPos, Vector3.down, out hit, whatIsTrack))
        {
            if (hit.collider.TryGetComponent(out TrackEntity t))
-           {
+            {
                 SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
                 OnSpeedChange?.Invoke(this.defaultSpeed);
 
-                if (runnerType == t.TrackType)
-                    particleController.PlayRunnerSpecial(t.TrackType);
-                else
-                    particleController.StopRunnerSpecialParticles();
-
+                PlaySpecialParticle(t);
 
                 if (_runnerAnimator != null && state == RunnerState.Default)
                     _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
-           }
-       }
+            }
+        }
+    }
+
+    private void PlaySpecialParticle(TrackEntity t)
+    {
+        if (runnerType == t.TrackType)
+            particleController.PlayRunnerSpecial(t.TrackType);
+        else
+            particleController.StopRunnerSpecialParticles();
     }
 
     public override void Move(Vector3 dir, float speed)

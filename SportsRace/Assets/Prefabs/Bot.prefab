@@ -58,6 +58,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   particleController: {fileID: 5713844434590948154}
+  trackVariables:
+    sandJumpForce: 10
+    sandJumpYoffset: 0
+    knockOutForce: 2
+    knockOutYOffset: 1
+    knockOutZOffset: 1
   _avaliableRunners: []
   switchTime: 3
 --- !u!54 &8315555140351003961

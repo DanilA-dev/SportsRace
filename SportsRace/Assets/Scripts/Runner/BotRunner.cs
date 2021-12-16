@@ -10,12 +10,16 @@ public class BotRunner : ARunner
 
 
     private Vector3 _moveVector;
+    private Collider _botCollider;
 
     public override RunnerState State { get => base.State; set => base.State = value; }
+    public override Collider RunnerCollider { get => _botCollider; set => _botCollider = value; }
+
 
     protected override void Start()
     {
         base.Start();
+        _botCollider = GetComponent<Collider>();
         _canMove = true;
     }
 

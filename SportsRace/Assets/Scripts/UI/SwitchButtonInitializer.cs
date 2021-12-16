@@ -41,12 +41,12 @@ public class SwitchButtonInitializer : MonoBehaviour
         _isAllButtonsDisabled = true;
 
         foreach (var b in switches)
-            b.SwitchButton.interactable = false;
+            b.SwitchButton.enabled = false;
 
         yield return new WaitForSeconds(time);
 
         foreach (var b in switches)
-            b.SwitchButton.interactable = true;
+            b.SwitchButton.enabled = true;
 
         _isAllButtonsDisabled = false;
     }

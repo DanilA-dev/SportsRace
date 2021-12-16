@@ -10,6 +10,7 @@ public class SwitchRunnerButton : MonoBehaviour
     [SerializeField] private TMP_Text text;
     [SerializeField] private Button button;
     [SerializeField] private Image selectBorder;
+    [SerializeField] private Image icon;
      
 
     private SportType _switchType;
@@ -29,6 +30,7 @@ public class SwitchRunnerButton : MonoBehaviour
         _switchType = newType;
         _buttonData = data;
         text.text = _switchType.ToString();
+        icon.sprite = _buttonData.buttonsData.Where(b => b.Type == _switchType).FirstOrDefault().Sprite;
         button.onClick.AddListener(() => SwitchAndDisable(_switchType));
     }
 
