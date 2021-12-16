@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerRunner : ARunner, IPlayer
 {
 
-    private Vector3 moveVector;
+    private Vector3 _moveVector;
 
     public static event Action<float> OnSpeedChange;
 
@@ -26,7 +26,7 @@ public class PlayerRunner : ARunner, IPlayer
     {
         if (GameController.CurrentState == GameState.Core)
         {
-            Move(moveVector, defaultSpeed);
+            Move(_moveVector, defaultSpeed);
             ApplyGravity();
         }
     }
@@ -34,7 +34,7 @@ public class PlayerRunner : ARunner, IPlayer
     private void ApplyGravity()
     {
         var velocityY = -gravity * Time.deltaTime;
-        moveVector = new Vector3(0, velocityY, 1);
+        _moveVector = new Vector3(0, velocityY, 1);
     }
 
     public void SwitchRunner(SportType newType)
@@ -119,6 +119,12 @@ public class PlayerRunner : ARunner, IPlayer
            {
                 SetSpeed(_currentRunner.RunnerData.GetTrackSpeed(t.TrackType));
                 OnSpeedChange?.Invoke(this.defaultSpeed);
+
+                if (runnerType == t.TrackType)
+                    particleController.PlayRunnerSpecial(t.TrackType);
+                else
+                    particleController.StopRunnerSpecialParticles();
+
 
                 if (_runnerAnimator != null && state == RunnerState.Default)
                     _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));

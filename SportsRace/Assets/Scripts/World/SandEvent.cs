@@ -8,6 +8,7 @@ public class SandEvent : ATrackEvent
 {
     [SerializeField] private SportType type;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float yOffset;
     [SerializeField] private float minimumDistanceToPoint;
     [SerializeField] private Transform jumpPoint1;
     [SerializeField] private Transform jumpPoint2;
@@ -18,6 +19,8 @@ public class SandEvent : ATrackEvent
     private bool _isRunnerLeave;
     private bool _subbed;
     private bool _isJumpingNow;
+
+    private Vector3 _jumpDir;
 
     private void Awake()
     {

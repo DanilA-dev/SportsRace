@@ -14,16 +14,18 @@ public class SwitchRunnerButton : MonoBehaviour
     private SportType _switchType;
     private PlayerRunner _player;
     private SwitchButtonInitializer _switchButtonController;
+    private SwitchButtonData _buttonData;
 
     public SportType SwitchType { get => _switchType; set => _switchType = value; }
     public Button SwitchButton { get => button; set => button = value; }
 
 
-    public void Init(PlayerRunner player, SportType newType, SwitchButtonInitializer buttonController)
+    public void Init(PlayerRunner player, SportType newType, SwitchButtonInitializer buttonController, SwitchButtonData data)
     {
         _player = player;
         _switchButtonController = buttonController;
         _switchType = newType;
+        _buttonData = data;
         text.text = _switchType.ToString();
         button.onClick.AddListener(() => SwitchAndDisable(_switchType));
     }

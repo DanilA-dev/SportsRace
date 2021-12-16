@@ -11,7 +11,8 @@ public enum SportType
     SnowTrack,
     SprintObstaclesTrack,
     Finish,
-    Start
+    Start,
+    DontMatter
 }
 
 public class TrackEntity : MonoBehaviour
@@ -54,7 +55,9 @@ public class TrackEntity : MonoBehaviour
         if(GameController.CurrentState == GameState.Core)
         {
             if (other.TryGetComponent(out ARunner runner))
-                 runner.CheckTrack(true);
+                if(runner.Type != trackType)
+                    runner.CheckTrack(true);
+
         }
     }
 

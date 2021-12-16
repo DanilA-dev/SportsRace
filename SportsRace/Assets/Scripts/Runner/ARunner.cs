@@ -137,9 +137,14 @@ public abstract class ARunner : MonoBehaviour
         particleController.PlayByTrackEvent(type);
     }
 
+    public virtual void PlayRunnerSpecialParticle(SportType type)
+    {
+        particleController.PlayRunnerSpecial(type);
+    }
+
     public virtual void StopLoopingParticles()
     {
-        particleController.StopAllLoopingParticles();
+        particleController.StopTrackTypeParticles();
     }
 
     public virtual void ToggleRotationCameara(bool on)
@@ -148,10 +153,6 @@ public abstract class ARunner : MonoBehaviour
             rotateCamera.SetActive(on);
     }
 
-  // public virtual void DisableButtons(float time)
-  // {
-  //     GameController.SwitchButtonsController.DisableSwitchButtons(time);
-  // }
 
     #endregion
 
@@ -223,6 +224,7 @@ public abstract class ARunner : MonoBehaviour
     #region State Methods
     private IEnumerator OnLandState()
     {
+        StopLoopingParticles();
         PlayAnimation("Falling to Landing");
         gravity = 50;
        // DisableButtons(1);
@@ -246,6 +248,7 @@ public abstract class ARunner : MonoBehaviour
 
     private void OnFinishState()
     {
+        StopLoopingParticles();
         UnFreezeBody(RigidbodyConstraints.FreezePositionX);
         _canMove = false;
         PlayAnimation("Obstacle jump");
@@ -259,17 +262,20 @@ public abstract class ARunner : MonoBehaviour
     }
     private void OnHitWeakState()
     {
+        StopLoopingParticles();
         PlayAnimation("Weak Punch");
     }
 
     private void OnJumpSandState()
     {
+        StopLoopingParticles();
         _canMove = false;
         PlayAnimation("Sand Jump");
     }
 
     private void OnJumpObstacleState()
     {
+        StopLoopingParticles();
         PlayAnimation("Obstacle jump");
         _canMove = false;
         gravity = 8;
@@ -285,6 +291,7 @@ public abstract class ARunner : MonoBehaviour
 
     private IEnumerator OnStandUpState()
     {
+        StopLoopingParticles();
         body.isKinematic = false;
         _canMove = false;
         PlayAnimation("Stand Up");
@@ -295,18 +302,20 @@ public abstract class ARunner : MonoBehaviour
 
     private IEnumerator OnFallState()
     {
+        StopLoopingParticles();
         body.isKinematic = false;
         _canMove = false;
         CheckTrack(false);
         gravity = 10;
         PlayAnimation("Wall Dump");
         PlayTrackEventParticle(TrackEventParticleType.WallHit);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1.5f);
         State = RunnerState.StandUp;
     }
 
     private IEnumerator OnClimbTopState()
     {
+        StopLoopingParticles();
         body.isKinematic = true;
         CheckTrack(false);
         _canMove = false;
@@ -320,6 +329,7 @@ public abstract class ARunner : MonoBehaviour
 
     private void OnClimbState()
     {
+        StopLoopingParticles();
         body.isKinematic = true;
         _canMove = false;
         CheckTrack(false);
@@ -369,7 +379,7 @@ public abstract class ARunner : MonoBehaviour
     public void OnMenu()
     {
         StopAllCoroutines();
-        particleController.StopAllLoopingParticles();
+        particleController.StopTrackTypeParticles();
         ToggleRotationCameara(false);
         body.constraints = defaultDodyConstrain;
         _canMove = false;

@@ -9,7 +9,7 @@ public class BotRunner : ARunner
     [SerializeField,Range(0,10)] private float switchTime;
 
 
-    private Vector3 moveVector;
+    private Vector3 _moveVector;
 
     public override RunnerState State { get => base.State; set => base.State = value; }
 
@@ -24,7 +24,7 @@ public class BotRunner : ARunner
     {
         if (GameController.CurrentState == GameState.Core || GameController.CurrentState == GameState.Finish)
         {
-            Move(moveVector, defaultSpeed);
+            Move(_moveVector, defaultSpeed);
             ApplyGravity();
         }
     }
@@ -32,7 +32,7 @@ public class BotRunner : ARunner
     private void ApplyGravity()
     {
         var velocityY = -gravity * Time.deltaTime;
-        moveVector = new Vector3(0, velocityY, 1);
+        _moveVector = new Vector3(0, velocityY, 1);
     }
 
     public override void CheckTrack(bool canCheck, float time = 0)
@@ -59,7 +59,10 @@ public class BotRunner : ARunner
                     _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
 
                 if (runnerType != t.TrackType)
+                {
                     Punish(t);
+                    particleController.StopRunnerSpecialParticles();
+                }
            }
        }
     }
@@ -118,7 +121,10 @@ public class BotRunner : ARunner
         yield return new WaitForSeconds(switchTime);
 
         if(Type != t.TrackType)
+        {
             RunnerType = t.TrackType;
+            particleController.PlayRunnerSpecial(t.TrackType);
+        }
 
         CheckTrack(true);
     }

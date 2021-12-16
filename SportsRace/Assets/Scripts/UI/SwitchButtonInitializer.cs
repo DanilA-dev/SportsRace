@@ -6,6 +6,7 @@ using UnityEngine;
 public class SwitchButtonInitializer : MonoBehaviour
 {
     [SerializeField] private PlayerRunner player;
+    [SerializeField] private SwitchButtonData buttonData;
     [SerializeField] private List<SwitchRunnerButton> switches = new List<SwitchRunnerButton>();
 
     public List<SwitchRunnerButton> Switches => switches;
@@ -23,9 +24,7 @@ public class SwitchButtonInitializer : MonoBehaviour
         var t = TracksController.Instance.LevelTracks.ToList();
 
         for (int i = 0; i < switches.Count; i++)
-        {
-            switches[i].Init(player, t[i].TrackType, this);
-        }
+            switches[i].Init(player, t[i].TrackType, this, buttonData);
     }
 
     public void DisableSwitchButtons(float time)
