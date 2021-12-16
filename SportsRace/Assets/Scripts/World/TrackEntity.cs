@@ -45,7 +45,7 @@ public class TrackEntity : MonoBehaviour
         if (GameController.CurrentState == GameState.Core)
         {
             if (other.TryGetComponent(out ARunner runner))
-                runner.StopLoopingParticles();
+                runner.StopTrackTypeParticles();
         }
     }
 

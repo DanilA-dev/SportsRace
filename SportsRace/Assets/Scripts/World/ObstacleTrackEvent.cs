@@ -60,8 +60,9 @@ public class ObstacleTrackEvent : ATrackEvent
 
     private IEnumerator StunJumping(ARunner r)
     {
-        r.State = RunnerState.Stunned;
         var jumpDir = new Vector3(r.Body.velocity.x, r.transform.position.y + 1, r.Body.velocity.z);
+        r.ParticleController.PlayByTrackEvent(TrackEventParticleType.ObstacleHit);
+        r.State = RunnerState.Stunned;
         r.Jump(jumpDir, force);
         foreach (var body in obstacleProp)
         {

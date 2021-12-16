@@ -66,7 +66,7 @@ public class BoxEvent : ATrackEvent
     private IEnumerator DestroyBoxProp(float time, ARunner runner)
     {
         yield return new WaitForSeconds(time);
-        runner.PlayTrackEventParticle(TrackEventParticleType.BoxPunch);
+        runner.ParticleController.PlayByTrackEvent(TrackEventParticleType.BoxPunch);
         foreach (var r in boxPropParts)
         {
             r.isKinematic = false;

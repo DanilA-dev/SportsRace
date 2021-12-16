@@ -82,6 +82,7 @@ public class WallEvent : ATrackEvent
             if (r.State == RunnerState.Default || r.State == RunnerState.Climb)
             {
                 r.State = RunnerState.Fall;
+                r.ParticleController.PlayByTrackEvent(TrackEventParticleType.WallHit);
                 r.ThrowAway(Vector3.back * 0.7f);
             }
         }
