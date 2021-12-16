@@ -9,6 +9,7 @@ public class SwitchRunnerButton : MonoBehaviour
 {
     [SerializeField] private TMP_Text text;
     [SerializeField] private Button button;
+    [SerializeField] private Image selectBorder;
      
 
     private SportType _switchType;
@@ -18,6 +19,7 @@ public class SwitchRunnerButton : MonoBehaviour
 
     public SportType SwitchType { get => _switchType; set => _switchType = value; }
     public Button SwitchButton { get => button; set => button = value; }
+    public Image SelectBorder { get => selectBorder; set => selectBorder = value; }
 
 
     public void Init(PlayerRunner player, SportType newType, SwitchButtonInitializer buttonController, SwitchButtonData data)
@@ -35,9 +37,13 @@ public class SwitchRunnerButton : MonoBehaviour
         _player.SwitchRunner(_switchType);
 
         foreach (var button in _switchButtonController.Switches.Where(s => s.SwitchType != _player.Type))
-            button.SwitchButton.interactable = true;
+        {
+            button.SwitchButton.enabled = true;
+            button.SelectBorder.gameObject.SetActive(false);
+        }
 
-        button.interactable = false;
+        selectBorder.gameObject.SetActive(true);
+        button.enabled = false;
     }
     
 
