@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SandTrack1
+  m_Name: SandTrack2 1
   m_Shader: {fileID: 4800000, guid: 7ffc1bc2bbb1ef64f84b552b2d2f0619, type: 3}
   m_ShaderKeywords: TCP2_MOBILE TCP2_REFLECTIONS_FRESNEL TCP2_RIM_LIGHTING_LIGHTMASK
   m_LightmapFlags: 4
@@ -33,16 +33,16 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: e6465b5c61725e143bed91b9b1771d24, type: 3}
-        m_Scale: {x: 76.6, y: 19.85}
-        m_Offset: {x: -22.2, y: 4.1}
+        m_Texture: {fileID: 2800000, guid: 6881efcfba773fe4d8f1c464b40fc107, type: 3}
+        m_Scale: {x: -9.8, y: -2.6}
+        m_Offset: {x: 9.82, y: 0.87}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 0, y: 0}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
@@ -58,8 +58,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: e6465b5c61725e143bed91b9b1771d24, type: 3}
-        m_Scale: {x: 86.9, y: 19.85}
-        m_Offset: {x: -22.2, y: 4.1}
+        m_Scale: {x: -12.55, y: -3.9}
+        m_Offset: {x: 9.82, y: 0.87}
     - _MatCapMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -150,8 +150,8 @@ Material:
     - _RampBandsSmoothing: 0.1
     - _RampOffset: 0
     - _RampScale: 1
-    - _RampSmoothing: 0.274
-    - _RampThreshold: 0.682
+    - _RampSmoothing: 0.1
+    - _RampThreshold: 0.75
     - _RampType: 0
     - _ReceiveShadows: 1
     - _ReceiveShadowsOff: 1
@@ -161,7 +161,7 @@ Material:
     - _RimMax: 1
     - _RimMin: 0.5
     - _SingleIndirectColor: 0
-    - _Smoothness: 0.5
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularMapType: 0
@@ -188,9 +188,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.9528302, g: 0.90478355, b: 0.6427109, a: 1}
+    - _Color: {r: 1, g: 0.95816463, b: 0.7216981, a: 1}
+    - _EmissionColor: {r: 0.023153365, g: 0.023153365, b: 0.023153365, a: 1}
     - _HColor: {r: 1, g: 1, b: 1, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
