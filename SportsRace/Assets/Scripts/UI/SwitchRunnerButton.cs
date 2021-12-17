@@ -29,7 +29,7 @@ public class SwitchRunnerButton : MonoBehaviour
         _switchButtonController = buttonController;
         _switchType = newType;
         _buttonData = data;
-        text.text = _buttonData.buttonsData.Where(b => b.Type == _switchType).FirstOrDefault().Name;
+        text.text = _switchType.ToString();
         icon.sprite = _buttonData.buttonsData.Where(b => b.Type == _switchType).FirstOrDefault().Sprite;
         button.onClick.AddListener(() => SwitchAndDisable(_switchType));
     }

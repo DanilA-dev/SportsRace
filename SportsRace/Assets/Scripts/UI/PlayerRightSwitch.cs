@@ -10,8 +10,6 @@ public class PlayerRightSwitch : MonoBehaviour
     [SerializeField] private float appearTime;
     [SerializeField] private float disappearTime;
 
-    [SerializeField] private Sprite[] sprites;
-
     private void OnEnable()
     {
         TrackEntity.OnRightSwitchPlayer += RightSwitch;
@@ -24,9 +22,6 @@ public class PlayerRightSwitch : MonoBehaviour
 
     private void RightSwitch()
     {
-        var randomSprite = sprites[Random.Range(0, sprites.Length)];
-        awesomeIcon.sprite = randomSprite;
-
         var seq = DOTween.Sequence();
         awesomeIcon.transform.DORewind();
         seq.Join(awesomeIcon.DOFade(1, 0.3f));
