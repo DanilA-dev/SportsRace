@@ -26,11 +26,12 @@ public class PlayerRightSwitch : MonoBehaviour
         var rand = sprites[Random.Range(0, sprites.Length)];
         awesomeIcon.sprite = rand;
 
-        var seq = DOTween.Sequence();
+        
         awesomeIcon.transform.DORewind();
+        var seq = DOTween.Sequence();
         seq.Join(awesomeIcon.DOFade(1, 0.3f));
         seq.Append(awesomeIcon.transform.DOScale(1, appearTime).From(0));
-        seq.Append(awesomeIcon.transform.DOShakeRotation(0.2f, 10));
+        seq.Append(awesomeIcon.transform.DOShakeScale(0.2f, 1));
         seq.Append(awesomeIcon.DOFade(0, disappearTime));
     }
 }

@@ -388,7 +388,7 @@ public abstract class ARunner : MonoBehaviour
             RunnerType = firtsTrack.TrackType;
     }
 
-    public void OnMenu()
+    public virtual void OnMenu()
     {
         StopAllCoroutines();
         particleController.StopTrackTypeParticles();
@@ -404,7 +404,7 @@ public abstract class ARunner : MonoBehaviour
         transform.rotation = Quaternion.Euler(Vector3.zero);
     }
 
-    public void OnStart()
+    public virtual void OnStart()
     {
         State = RunnerState.Default;
         _canMove = true;
