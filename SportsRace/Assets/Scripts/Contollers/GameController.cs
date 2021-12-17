@@ -67,6 +67,8 @@ public class GameController : MonoBehaviour
     {
         CurrentState = GameState.Menu;
         _gameFirstEnter = PlayerPrefs.GetInt("FirstStart");
+
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     private void OnApplicationQuit()
@@ -184,7 +186,7 @@ public class GameController : MonoBehaviour
             r.OnMenu();
         }
 
-        TracksController.Instance.CheckFullTrack();
+      //  TracksController.Instance.CheckFullTrack();
     }
 
     #endregion

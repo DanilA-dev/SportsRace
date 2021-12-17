@@ -11,6 +11,7 @@ public class SwitchButtonData : ScriptableObject
 [System.Serializable]
 public class ButtonData
 {
+    public string Name;
     public SportType Type;
     public Sprite Sprite;
 }

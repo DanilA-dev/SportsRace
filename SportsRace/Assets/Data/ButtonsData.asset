@@ -13,17 +13,24 @@ MonoBehaviour:
   m_Name: ButtonsData
   m_EditorClassIdentifier: 
   buttonsData:
-  - Type: 0
+  - Name: Sprint
+    Type: 0
     Sprite: {fileID: 21300000, guid: 0d40d1243f6fafa47b09e7e972034a58, type: 3}
-  - Type: 1
+  - Name: Box
+    Type: 1
     Sprite: {fileID: 21300000, guid: 7b4d0f251d1bd6b48a158f06bc4e500c, type: 3}
-  - Type: 2
+  - Name: Swim
+    Type: 2
     Sprite: {fileID: 21300000, guid: b09b57e5580041341baa18419a2130e7, type: 3}
-  - Type: 3
+  - Name: Jump
+    Type: 3
     Sprite: {fileID: 21300000, guid: e231124d23cf2c146b135bcb2657aebf, type: 3}
-  - Type: 4
+  - Name: Climb
+    Type: 4
     Sprite: {fileID: 21300000, guid: 331e1b271b5e1fc4eabd91a3c06e4229, type: 3}
-  - Type: 6
+  - Name: Obstacle Spint
+    Type: 6
     Sprite: {fileID: 21300000, guid: d68571a684d90aa468e5ba84be855897, type: 3}
-  - Type: 5
+  - Name: Snowboard
+    Type: 5
     Sprite: {fileID: 21300000, guid: 71cf5acde61fde74883e663b28501b48, type: 3}
