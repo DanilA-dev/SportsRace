@@ -9,6 +9,7 @@ public class PlayerRightSwitch : MonoBehaviour
     [SerializeField] private Image awesomeIcon;
     [SerializeField] private float appearTime;
     [SerializeField] private float disappearTime;
+    [SerializeField] Sprite[] sprites;
 
     private void OnEnable()
     {
@@ -22,6 +23,9 @@ public class PlayerRightSwitch : MonoBehaviour
 
     private void RightSwitch()
     {
+        var rand = sprites[Random.Range(0, sprites.Length)];
+        awesomeIcon.sprite = rand;
+
         var seq = DOTween.Sequence();
         awesomeIcon.transform.DORewind();
         seq.Join(awesomeIcon.DOFade(1, 0.3f));
