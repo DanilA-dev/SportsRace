@@ -20,7 +20,6 @@ public class BotRunner : ARunner
     {
         base.Start();
         _botCollider = GetComponent<Collider>();
-        transform.rotation = Quaternion.Euler(Vector3.zero);
         _canMove = true;
     }
 
@@ -115,6 +114,12 @@ public class BotRunner : ARunner
             _runnerAnimator.Play("Victory");
     }
 
+
+    public override void OnMenu()
+    {
+        base.OnMenu();
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+    }
 
     private void Punish(TrackEntity t)
     {
