@@ -76,13 +76,14 @@ public class FinishTrack : ATrackEvent
             _coinsMultiplier = Mathf.RoundToInt(xMultiplier);
             if (risingPedestal.transform.position == pedestalMovePoint.position && runner.FinishIndex == 1 && runner as PlayerRunner)
             {
+                PlayerRunner player = runner as PlayerRunner;
+
+                player.TurnOnFinishCamera();
+
                 _coinsMultiplier = 10;
                 StopAllCoroutines();
                 TopPlatform(runner);
-                
-                runner.ToggleRotationCameara(true);
                 OnCupEarned?.Invoke();
-
             }
             yield return null;
         }

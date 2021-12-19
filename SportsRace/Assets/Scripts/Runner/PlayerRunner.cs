@@ -7,6 +7,7 @@ using Cinemachine;
 public class PlayerRunner : ARunner, IPlayer
 {
     [Header("Camera Setup")]
+    [SerializeField] private Transform finishRotateCamera;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private float menuCameraAngle;
     [SerializeField] private float coreCameraAngle;
@@ -14,7 +15,6 @@ public class PlayerRunner : ARunner, IPlayer
 
     private Vector3 _moveVector;
     private Collider _playerCollider;
-    private CinemachineVirtualCameraBase _baseVirtualCam;
 
     public static event Action<float> OnSpeedChange;
 
@@ -24,10 +24,6 @@ public class PlayerRunner : ARunner, IPlayer
 
     public override Collider RunnerCollider { get => _playerCollider; set => _playerCollider = value; }
 
-    private void Awake()
-    {
-        _baseVirtualCam = virtualCamera.GetComponent<CinemachineVirtualCameraBase>();
-    }
 
     protected override void Start()
     {
@@ -50,18 +46,13 @@ public class PlayerRunner : ARunner, IPlayer
 
     public void SetCameraMenu()
     {
-        if (_baseVirtualCam == null)
-            return;
-
+        virtualCamera.PreviousStateIsValid = false;
         var composer = virtualCamera.GetCinemachineComponent<CinemachineComposer>();
         composer.m_DeadZoneHeight = menuCameraAngle;
     }
 
     public void SetCameraCore()
     {
-        if (_baseVirtualCam == null)
-            return;
-
         var composer = virtualCamera.GetCinemachineComponent<CinemachineComposer>();
         composer.m_DeadZoneHeight = coreCameraAngle;
     }
@@ -179,9 +170,21 @@ public class PlayerRunner : ARunner, IPlayer
         body.velocity = dir * speed * Time.deltaTime;
     }
 
+    public void TurnOnFinishCamera()
+    {
+        finishRotateCamera.gameObject.SetActive(true);
+    }
+
+    public void TurnOffFinishCamera()
+    {
+        finishRotateCamera.localRotation = Quaternion.Euler(Vector3.zero);
+        finishRotateCamera.gameObject.SetActive(false);
+    }
+
     public override void OnMenu()
     {
         base.OnMenu();
+        TurnOffFinishCamera();
         SetCameraMenu();
     }
 

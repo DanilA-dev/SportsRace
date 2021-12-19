@@ -18,7 +18,6 @@ public abstract class ARunner : MonoBehaviour
 {
 
     [SerializeField] private Transform start;
-    [SerializeField] private GameObject rotateCamera;
     [Header("Body and speed")]
     [SerializeField] protected float gravity;
     [SerializeField] protected float defaultSpeed;
@@ -155,12 +154,6 @@ public abstract class ARunner : MonoBehaviour
     public virtual void StopRunnerSpecialParticles()
     {
         particleController.StopRunnerSpecialParticles();
-    }
-
-    public virtual void ToggleRotationCameara(bool on)
-    {
-        if(rotateCamera != null)
-            rotateCamera.SetActive(on);
     }
 
 
@@ -392,7 +385,6 @@ public abstract class ARunner : MonoBehaviour
     {
         StopAllCoroutines();
         particleController.StopTrackTypeParticles();
-        ToggleRotationCameara(false);
         body.constraints = defaultDodyConstrain;
         _canMove = false;
         _isFinished = false;

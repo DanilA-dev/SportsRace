@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 public class RankController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class RankController : MonoBehaviour
     [SerializeField] private UserData data;
     [SerializeField] private RankData rankData;
     [Header("UI")]
+    [SerializeField] private TMP_Text maxRankText;
     [SerializeField] private Image currentRankImage;
     [SerializeField] private Image nextRankImage;
     [SerializeField] private Sprite winGameSkinBar;
@@ -32,7 +34,14 @@ public class RankController : MonoBehaviour
     public void CheckRank()
     {
         if (data.Rank == LeagueRank.Platinum)
+        {
+            maxRankText.gameObject.SetActive(true);
+            for (int i = 0; i < gameBarsImg.Count; i++)
+                gameBarsImg[i].gameObject.SetActive(false);
+
             return;
+        }
+           
 
         SetPlayerRank();
         SetRankIcons();
@@ -55,13 +64,14 @@ public class RankController : MonoBehaviour
     {
         var nextRank = rankData.Ranks.Where(r => r.CurrentRank == data.Rank + 1).FirstOrDefault();
 
+
         for (int i = 0; i < rankData.Ranks.Count; i++)
         {
             if (data.Rank == rankData.Ranks[i].CurrentRank)
             {
                 currentRankImage.sprite = rankData.Ranks[i].Icon;
 
-                if(_nextRank != null)
+                if(data.Rank != LeagueRank.Platinum)
                     nextRankImage.sprite = rankData.Ranks.Where(r => r.CurrentRank == data.Rank + 1)
                                                      .FirstOrDefault().Icon;
             }
@@ -76,4 +86,5 @@ public class RankController : MonoBehaviour
                 gameBarsImg[j].sprite = winGameSkinBar;
         }
     }
+    
 }
