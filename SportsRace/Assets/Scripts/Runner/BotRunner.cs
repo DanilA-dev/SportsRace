@@ -23,7 +23,7 @@ public class BotRunner : ARunner
         _botCollider = GetComponent<Collider>();
         _canMove = true;
     }
-
+    
 
     private void FixedUpdate()
     {
@@ -115,12 +115,6 @@ public class BotRunner : ARunner
             _runnerAnimator.Play("Victory");
     }
 
-
-    public override void OnMenu()
-    {
-        transform.rotation = Quaternion.Euler(Vector3.zero);
-        base.OnMenu();
-    }
 
     private void Punish(TrackEntity t)
     {

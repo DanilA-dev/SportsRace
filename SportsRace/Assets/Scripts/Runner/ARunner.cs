@@ -251,7 +251,6 @@ public abstract class ARunner : MonoBehaviour
     private void OnFinishState()
     {
         StopTrackTypeParticles();
-        StopRunnerSpecialParticles();
         UnFreezeBody(RigidbodyConstraints.FreezePositionX);
         _canMove = false;
         PlayAnimation("Obstacle jump");

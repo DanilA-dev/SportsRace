@@ -15,14 +15,16 @@ public class SnowEvent : ATrackEvent
     {
         if(other.TryGetComponent(out ARunner r))
         {
+            r.CheckTrack(true);
+
             if (r.Type == type)
                 return;
 
-            LoverRunners(r);
+            LowerRunners(r);
         }
     }
 
-    private void LoverRunners(ARunner r)
+    private void LowerRunners(ARunner r)
     {
         foreach (Transform t in r.transform)
         {

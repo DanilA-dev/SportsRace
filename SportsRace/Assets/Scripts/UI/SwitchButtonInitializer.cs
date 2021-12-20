@@ -17,7 +17,7 @@ public class SwitchButtonInitializer : MonoBehaviour
     {
         foreach (var b in switches)
         {
-            b.SwitchButton.interactable = true;
+            b.SwitchButton.enabled = true;
             b.SelectBorder.gameObject.SetActive(false);
         }
     }

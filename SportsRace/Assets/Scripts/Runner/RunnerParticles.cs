@@ -35,9 +35,6 @@ public class RunnerParticles : MonoBehaviour
         if (runnerSpecialParticle.Count <= 0)
             return;
 
-        foreach (var p in runnerSpecialParticle)
-            p.Stop();
-
         for (int i = 0; i < runnerSpecialParticle.Count; i++)
         {
             if (runnerSpecialParticle[i].SpecialType == type)

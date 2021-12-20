@@ -34,6 +34,7 @@ public class FinishTrack : ATrackEvent
     {
         if(other.TryGetComponent(out ARunner r))
         {
+            r.StopRunnerSpecialParticles();
             if (r.IsFinished)
                 return;
 
