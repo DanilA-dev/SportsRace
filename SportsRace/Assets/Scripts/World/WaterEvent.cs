@@ -51,20 +51,17 @@ public class WaterEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             r.State = RunnerState.Default;
-            r.OnRunnerChanged -= OnRunnerChanged;
+            Unsubscribe();
         }
     }
 
     public override void OnRunnerChanged(ARunner r)
     {
+        if (_isRunnerOut)
+            r.State = RunnerState.Default;
+
         if (!_subbed)
             return;
-
-        if (_isRunnerOut)
-        {
-            r.State = RunnerState.Default;
-            return;
-        }
 
         r.State = RunnerState.Swim;
         OnSwitchRunner?.Invoke();

@@ -111,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611478998}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000014, y: -0.0703, z: 0.033484}
+  m_LocalPosition: {x: 0.000014, y: -0.0703, z: 0.0366}
   m_LocalScale: {x: 0.17270513, y: 0.04302286, z: 0.007660975}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -252,8 +252,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.90520275, y: 1, z: 0.9999999}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.90520275, y: 1, z: 1.3778716}
+  m_Center: {x: 0, y: -1.0764257e-13, z: 0.18893594}
 --- !u!114 &1412283561997809883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03756
+      value: 0.03784
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48e3a452b8f9f4345b47a8ad030fd692, type: 3}
       propertyPath: m_LocalRotation.w
@@ -916,11 +916,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: deepColor.r
-      value: 0.2392121
+      value: 0.23920146
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shoreColor.b
-      value: 0.30175897
+      value: 0.30174834
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: waveSteepness
@@ -960,7 +960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shallowColor.g
-      value: 0.41787693
+      value: 0.4178663
       objectReference: {fileID: 0}
     - target: {fileID: 3571767707691462230, guid: b1b6a4a4712a0364bbffc21e45491ba2, type: 3}
       propertyPath: shallowColor.r

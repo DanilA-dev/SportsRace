@@ -53,7 +53,7 @@ public abstract class ARunner : MonoBehaviour
 
     public abstract Collider RunnerCollider { get; set; }
 
-    public RunnerParticles ParticleController => particleController;
+    public  RunnerParticles ParticleController => particleController;
     public SportType RunnerType
     {
         get => runnerType;
@@ -151,7 +151,7 @@ public abstract class ARunner : MonoBehaviour
         particleController.StopTrackTypeParticles();
     }
 
-    public virtual void StopRunnerSpecialParticles()
+    public void StopRunnerSpecialParticles()
     {
         particleController.StopRunnerSpecialParticles();
     }

@@ -19,6 +19,7 @@ public class PlayerRunner : ARunner, IPlayer
     public static event Action<float> OnSpeedChange;
 
 
+    
     public override IPlayer Player { get => this; }
     public override RunnerState State { get => base.State; set => base.State = value; }
 
@@ -160,6 +161,11 @@ public class PlayerRunner : ARunner, IPlayer
             particleController.PlayRunnerSpecial(t.TrackType);
         else
             particleController.StopRunnerSpecialParticles();
+    }
+
+    public override void PlayTrackEventParticle(TrackEventParticleType type)
+    {
+        ParticleController.PlayByTrackEvent(type);
     }
 
     public override void Move(Vector3 dir, float speed)

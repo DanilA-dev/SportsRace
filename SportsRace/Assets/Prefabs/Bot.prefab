@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 0}
-  rotateCamera: {fileID: 0}
   gravity: 8
   defaultSpeed: 200
   body: {fileID: 8315555140351003961}
@@ -167,7 +166,7 @@ MonoBehaviour:
   - EventType: 0
     Particle: {fileID: 1875153630513688301}
   - EventType: 3
-    Particle: {fileID: 0}
+    Particle: {fileID: 1875153630513688301}
   - EventType: 1
     Particle: {fileID: 4132610929269928600}
   - EventType: 4
@@ -188,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4865807609286998, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}
       propertyPath: m_RootOrder

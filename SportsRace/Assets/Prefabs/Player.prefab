@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: {fileID: 0}
-  rotateCamera: {fileID: 7095329576107048911}
   gravity: 8
   defaultSpeed: 200
   body: {fileID: 2144528910}
@@ -154,6 +153,10 @@ MonoBehaviour:
     knockOutYOffset: 1
     knockOutZOffset: 1
   _avaliableRunners: []
+  finishRotateCamera: {fileID: 3749571728925403452}
+  virtualCamera: {fileID: 0}
+  menuCameraAngle: 0
+  coreCameraAngle: 0.945
 --- !u!54 &2144528910
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -358,7 +361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1040608886635896, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4865807609286998, guid: a97415c6b57076f41a6621a7b51d63a3, type: 3}
       propertyPath: m_RootOrder

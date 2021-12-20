@@ -12,6 +12,7 @@ public class BotRunner : ARunner
     private Vector3 _moveVector;
     private Collider _botCollider;
 
+
     public override RunnerState State { get => base.State; set => base.State = value; }
     public override Collider RunnerCollider { get => _botCollider; set => _botCollider = value; }
 
@@ -62,7 +63,7 @@ public class BotRunner : ARunner
                 if (_runnerAnimator != null && state == RunnerState.Default)
                     _runnerAnimator.Play(_currentRunner.RunnerData.GetAnimationValue(t.TrackType));
 
-                if (runnerType != t.TrackType)
+                if (runnerType != t.TrackType && t.TrackType != SportType.Start)
                 {
                     Punish(t);
                     particleController.StopRunnerSpecialParticles();
@@ -117,8 +118,8 @@ public class BotRunner : ARunner
 
     public override void OnMenu()
     {
-        base.OnMenu();
         transform.rotation = Quaternion.Euler(Vector3.zero);
+        base.OnMenu();
     }
 
     private void Punish(TrackEntity t)
@@ -137,6 +138,11 @@ public class BotRunner : ARunner
         }
 
         CheckTrack(true);
+    }
+
+    public override void PlayTrackEventParticle(TrackEventParticleType type)
+    {
+        ParticleController.PlayByTrackEvent(type);
     }
 
     public override void SetFinishPosition(int index)
