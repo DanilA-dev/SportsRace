@@ -59,13 +59,10 @@ public class TracksController : MonoBehaviour
 
 
            var trackRotation = Quaternion.Euler(new Vector3(-90, 0, 90));
-           var nextPos = new Vector3(0, 0, (createdLevelTracks[createdLevelTracks.Count - 1]
+           var nextPos = new Vector3(createdTrack.PosOffset.x, createdTrack.PosOffset.y, (createdLevelTracks[createdLevelTracks.Count - 1]
                                              .EndPoint.position - createdTrack.BeginPoint.localPosition).z + offset);
            createdTrack.transform.rotation = trackRotation;
            createdTrack.transform.position = nextPos;
-          
-           if (createdTrack.TrackType == SportType.WaterTrack)
-               createdTrack.transform.position = new Vector3(-0.17f, -0.08f, nextPos.z);
           
            createdLevelTracks.Add(createdTrack);
           
@@ -80,19 +77,8 @@ public class TracksController : MonoBehaviour
         _finishTrack.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
         _finishTrack.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTracks[createdLevelTracks.Count - 1]
                                               .EndPoint.position - finishPrefab.BeginPoint.localPosition).z + finishOffset.z);
-
-       // SavePos();
     }
 
-    private void SavePos()
-    {
-        for (int i = 1; i < createdLevelTracks.Count - 1; i++)
-        {
-            createdLevelTracks[i].transform.DOMoveY(createdLevelTracks[i].transform.position.y, 1).From(-7);
-        }
-
-        
-    }
 
     public void CheckFullTrack()
     {

@@ -154,6 +154,7 @@ MonoBehaviour:
     knockOutZOffset: 1
   _avaliableRunners: []
   finishRotateCamera: {fileID: 3749571728925403452}
+  finishRiseCamera: {fileID: 0}
   virtualCamera: {fileID: 0}
   menuCameraAngle: 0
   coreCameraAngle: 0.945
@@ -203,7 +204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3749571728925403452
 Transform:
   m_ObjectHideFlags: 0

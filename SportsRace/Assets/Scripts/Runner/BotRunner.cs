@@ -27,7 +27,8 @@ public class BotRunner : ARunner
 
     private void FixedUpdate()
     {
-        if (GameController.CurrentState == GameState.Core || GameController.CurrentState == GameState.Finish)
+        if (GameController.CurrentState == GameState.Core || GameController.CurrentState == GameState.Finish
+            || GameController.CurrentState == GameState.Win || GameController.CurrentState == GameState.Lose)
         {
             Move(_moveVector, defaultSpeed);
             ApplyGravity();

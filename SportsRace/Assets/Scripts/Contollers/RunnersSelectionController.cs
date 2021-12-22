@@ -6,7 +6,7 @@ public class RunnersSelectionController : MonoBehaviour
 {
     [SerializeField] private SkinsContainerData skinsData;
     [SerializeField] private Transform player;
-    [SerializeField] private Transform bot;
+    [SerializeField] private Transform[] bots;
 
     [SerializeField] private List<RunnerObject> runnersPrefabs = new List<RunnerObject>();
 
@@ -45,12 +45,17 @@ public class RunnersSelectionController : MonoBehaviour
             r.gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < runnersPrefabs.Count; i++)
+        for (int j = 0; j < bots.Length; j++)
         {
-            var r = Instantiate(runnersPrefabs[i], bot);
-            r.transform.localPosition = r.GroundPositionOffset;
-            r.gameObject.SetActive(false);
+            for (int i = 0; i < runnersPrefabs.Count; i++)
+            {
+                var r = Instantiate(runnersPrefabs[i], bots[j]);
+                r.transform.localPosition = r.GroundPositionOffset;
+                r.gameObject.SetActive(false);
+            }
         }
+
+       
     }
 
 
@@ -59,7 +64,9 @@ public class RunnersSelectionController : MonoBehaviour
         yield return new WaitForEndOfFrame();
         _createdRunners.Clear();
         ClearRunner(player);
-        ClearRunner(bot);
+
+        foreach (var bot in bots)
+            ClearRunner(bot);
     }
 
     private void ClearRunner(Transform transform)
@@ -73,5 +80,6 @@ public class RunnersSelectionController : MonoBehaviour
         foreach (var r in GameController.Instance.Runners)
             r.ClearRunners();
     }
+
 
 }

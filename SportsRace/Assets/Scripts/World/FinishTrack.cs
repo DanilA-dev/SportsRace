@@ -18,6 +18,8 @@ public class FinishTrack : ATrackEvent
     [SerializeField] private Transform runnerUpPoint;
     [SerializeField] private Transform firstPlacePoint;
     [SerializeField] private Transform secondPlacePoint;
+    [SerializeField] private Transform thirdPlacePoint;
+    [SerializeField] private Transform fourthPlacePoint;
     [SerializeField] private Transform topPlatformPoint;
 
     [SerializeField] private UnityEvent Onx10Platform;
@@ -49,7 +51,26 @@ public class FinishTrack : ATrackEvent
 
     private Transform PedestalPos(int pos)
     {
-        return pos == 1 ? firstPlacePoint : secondPlacePoint;
+        Transform point = null;
+
+        switch(pos)
+        {
+            case 1:
+                point = firstPlacePoint;
+                break;
+
+            case 2:
+                point = secondPlacePoint;
+                break;
+            case 3:
+                point = thirdPlacePoint;
+                break;
+            case 4:
+                point = fourthPlacePoint;
+                break;
+
+        }
+        return point;
     }
 
     private IEnumerator JumpToPedestal(ARunner r, Vector3 dir)
@@ -68,6 +89,7 @@ public class FinishTrack : ATrackEvent
         float xMultiplier = 0f;
         while (_positionIndex == 1)
         {
+
             var pedestalT = risingPedestal.transform.position;
             var runnerT = runner.transform.position;
 
@@ -80,7 +102,6 @@ public class FinishTrack : ATrackEvent
                 PlayerRunner player = runner as PlayerRunner;
 
                 player.TurnOnFinishCamera();
-
                 _coinsMultiplier = 10;
                 StopAllCoroutines();
                 TopPlatform(runner);
@@ -119,7 +140,7 @@ public class FinishTrack : ATrackEvent
 
     private void CheckPlayerPos(ARunner runner)
     {
-       // StopAllCoroutines();
+        // StopAllCoroutines();
         runner.CheckPosition();
     } 
     

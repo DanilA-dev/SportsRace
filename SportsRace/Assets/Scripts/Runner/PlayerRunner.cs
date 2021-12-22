@@ -8,6 +8,7 @@ public class PlayerRunner : ARunner, IPlayer
 {
     [Header("Camera Setup")]
     [SerializeField] private Transform finishRotateCamera;
+    [SerializeField] private Transform finishRiseCamera;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private float menuCameraAngle;
     [SerializeField] private float coreCameraAngle;
@@ -203,5 +204,15 @@ public class PlayerRunner : ARunner, IPlayer
     public void DisableButtons(float time)
     {
         GameController.SwitchButtonsController.DisableSwitchButtons(time);
+    }
+
+    public void TurnOnPlayerPedestalCam()
+    {
+        finishRiseCamera.gameObject.SetActive(true);
+    }
+
+    public void TurnOffPlayerPedestalCam()
+    {
+        finishRiseCamera.gameObject.SetActive(false);
     }
 }

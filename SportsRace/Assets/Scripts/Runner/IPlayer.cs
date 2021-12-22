@@ -5,4 +5,8 @@ using UnityEngine;
 public interface IPlayer
 {
     void DisableButtons(float time);
+
+    void TurnOnPlayerPedestalCam();
+    void TurnOffPlayerPedestalCam();
+
 }

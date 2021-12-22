@@ -21,16 +21,22 @@ public class TrackEntity : MonoBehaviour
     [SerializeField] private SportType trackType;
     [SerializeField] private Transform beginPoint;
     [SerializeField] private Transform endPoint;
+    [SerializeField] private Vector3 posOffset;
     [SerializeField] private List<ATrackEvent> trackEvents = new List<ATrackEvent>();
 
     private bool _isPlayerSwitchedRight;
 
     public static event Action OnRightSwitchPlayer;
 
+    #region Properties
+
+    public Vector3 PosOffset => posOffset;
     public bool IsPlayerSwitchedRight => _isPlayerSwitchedRight;
     public SportType TrackType => trackType;
     public Transform BeginPoint => beginPoint;
     public Transform EndPoint => endPoint;
+
+    #endregion
 
 
     private void OnTriggerEnter(Collider other)
