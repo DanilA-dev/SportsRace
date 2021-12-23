@@ -17,10 +17,14 @@ public class PlayerRunner : ARunner, IPlayer
     private Vector3 _moveVector;
     private Collider _playerCollider;
 
+    private bool _canCheckTrack = true;
+
     public static event Action<float> OnSpeedChange;
+    public event Action<PlayerRunner> OnTapEvent;
+    public event Action OnTrackEventEnter;
+    public event Action OnTrackEventExit;
 
 
-    
     public override IPlayer Player { get => this; }
     public override RunnerState State { get => base.State; set => base.State = value; }
 
@@ -34,8 +38,6 @@ public class PlayerRunner : ARunner, IPlayer
         _canMove = true;
 
     }
-
-
 
     private void FixedUpdate()
     {
@@ -76,10 +78,7 @@ public class PlayerRunner : ARunner, IPlayer
         base.ChangeRunner(value);
 
         if (_avaliableRunners.Count < 0)
-        {
-            Debug.LogError("No Avaliable runners!!!");
             return;
-        }
 
         for (int i = 0; i < _avaliableRunners.Count; i++)
         {
@@ -129,11 +128,11 @@ public class PlayerRunner : ARunner, IPlayer
 
     public override void CheckTrack(bool canCheck, float time = 0)
     {
+        if (!_canCheckTrack)
+            return;
+
        if(canCheck)
-       {
             StartCoroutine(TrackChecking(time));
-       }
-      
     }
 
     private IEnumerator TrackChecking(float time)
@@ -214,5 +213,25 @@ public class PlayerRunner : ARunner, IPlayer
     public void TurnOffPlayerPedestalCam()
     {
         finishRiseCamera.gameObject.SetActive(false);
+    }
+
+    public void ActivateTapIvent()
+    {
+        OnTapEvent?.Invoke(this);
+    }
+
+    public void SetCheckTracker(bool on)
+    {
+        _canCheckTrack = on;
+    }
+
+    public void OnTappableTrackEnter()
+    {
+        OnTrackEventEnter?.Invoke();
+    }
+
+    public void OnTappableTrackExit()
+    {
+        OnTrackEventExit?.Invoke();
     }
 }

@@ -79,7 +79,7 @@ public abstract class ARunner : MonoBehaviour
     public virtual RunnerObject CurrentRunner { get => _currentRunner; set => _currentRunner = value; }
     public Rigidbody Body { get => body; set => body = value; }
     public virtual Animator RunnerAnimator { get => _runnerAnimator; set => _runnerAnimator = value; }
-    public float DefaultSpeed => defaultSpeed;
+    public float DefaultSpeed { get => defaultSpeed; set => defaultSpeed = value; }
     public float Gravity { get => gravity; set => gravity = value; }
     public virtual int FinishIndex => _finishIndex;
     public virtual bool IsFinished { get => _isFinished; set => _isFinished = value; }
