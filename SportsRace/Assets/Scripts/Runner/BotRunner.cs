@@ -3,9 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BotRunner : ARunner
 {
+    [Header("Bot Switch settings")]
+    [SerializeField] private bool randomizeTime;
+    [SerializeField,Range(1,10)] private float minTime;
+    [SerializeField,Range(1, 10)] private float maxTime;
+
     [SerializeField,Range(0,10)] private float switchTime;
 
 
@@ -124,7 +130,7 @@ public class BotRunner : ARunner
 
     private IEnumerator SwitchRunner(TrackEntity t)
     {
-        yield return new WaitForSeconds(switchTime);
+        yield return new WaitForSeconds(SwitchTime());
 
         if(Type != t.TrackType)
         {
@@ -151,5 +157,17 @@ public class BotRunner : ARunner
             return;
 
         body.velocity = dir * speed * Time.deltaTime;
+    }
+
+    private float SwitchTime()
+    {
+        float time = 0;
+
+        if (randomizeTime)
+            time = Random.Range(minTime, maxTime);
+        else
+            time = switchTime;
+
+        return time;
     }
 }

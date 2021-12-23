@@ -17,7 +17,7 @@ public enum RunnerState
 public abstract class ARunner : MonoBehaviour
 {
 
-    [SerializeField] private Transform start;
+    [SerializeField] private Transform startPoint;
     [Header("Body and speed")]
     [SerializeField] protected float gravity;
     [SerializeField] protected float defaultSpeed;
@@ -64,8 +64,6 @@ public abstract class ARunner : MonoBehaviour
             OnRunnerChanged?.Invoke(this);
         }
     }
-
-
     public virtual RunnerState State
     {
         get => state;
@@ -126,11 +124,6 @@ public abstract class ARunner : MonoBehaviour
 
     public virtual void CheckPosition() { }
     
-    public virtual void ThrowAway(Vector3 dir)
-    {
-        body.velocity = dir;
-    }
-
     public virtual void PlayTrackTypeParticle(SportType type)
     {
         particleController.PlayByTrackType(type);
@@ -156,21 +149,17 @@ public abstract class ARunner : MonoBehaviour
         particleController.StopRunnerSpecialParticles();
     }
 
-
     #endregion
-
 
     private void OnEnable()
     {
         OnStateChange += SetState;
     }
 
-
     private void OnDisable()
     {
         OnStateChange -= SetState;
     }
-
 
     public void SetState(RunnerState newState)
     {
@@ -221,9 +210,6 @@ public abstract class ARunner : MonoBehaviour
         }
     }
 
-
-
-
     #region State Methods
     private IEnumerator OnLandState()
     {
@@ -242,7 +228,6 @@ public abstract class ARunner : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         _canMove = true;
         gravity = 50;
-        //PlayTrackEventParticle(TrackEventParticleType.ObstacleHit);
         PlayAnimation("After obstacle break");
         yield return new WaitForSeconds(1.3f);
         State = RunnerState.Default;
@@ -391,9 +376,11 @@ public abstract class ARunner : MonoBehaviour
         body.useGravity = true;
         body.isKinematic = false;
         body.velocity = Vector3.zero;
-        transform.position = start.position;
+        transform.position = startPoint.position;
         transform.rotation = Quaternion.Euler(Vector3.zero);
     }
+
+    
 
     public virtual void OnStart()
     {

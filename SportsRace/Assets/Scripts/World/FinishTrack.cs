@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Events;
-
+using Cinemachine;
 public class FinishTrack : ATrackEvent
 {
+    [SerializeField] private GameObject pedestalCam;
     [Header("Pedestal")]
     [SerializeField] private float multiplierOffset;
     [SerializeField] private float jumpForce;
@@ -90,6 +91,10 @@ public class FinishTrack : ATrackEvent
         while (_positionIndex == 1)
         {
 
+            if(runner is PlayerRunner)
+                pedestalCam.gameObject.SetActive(true);
+
+
             var pedestalT = risingPedestal.transform.position;
             var runnerT = runner.transform.position;
 
@@ -100,6 +105,7 @@ public class FinishTrack : ATrackEvent
             if (risingPedestal.transform.position == pedestalMovePoint.position && runner.FinishIndex == 1 && runner as PlayerRunner)
             {
                 PlayerRunner player = runner as PlayerRunner;
+                pedestalCam.gameObject.SetActive(false);
 
                 player.TurnOnFinishCamera();
                 _coinsMultiplier = 10;
@@ -142,8 +148,12 @@ public class FinishTrack : ATrackEvent
     {
         // StopAllCoroutines();
         runner.CheckPosition();
-    } 
-    
+
+        if(runner is PlayerRunner)
+            pedestalCam.gameObject.SetActive(false);
+
+    }
+
 
     public override void Unsubscribe()
     {

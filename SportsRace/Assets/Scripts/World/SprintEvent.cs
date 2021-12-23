@@ -19,11 +19,13 @@ public class SprintEvent : ATrackEvent
         {
             if(player.Type == SportType.SprintTrack)
             {
-                player.OnTappableTrackEnter();
-                player.OnTapEvent += OnTapActivate;
-                player.OnRunnerChanged += Player_OnRunnerChanged;
+                if(!_subbed)
+                {
+                    player.OnTapEvent += OnTapActivate;
+                    player.OnRunnerChanged += Player_OnRunnerChanged;
+                    player.OnTappableTrackEnter();
+                }
             }
-           
         }
     }
 
@@ -40,11 +42,13 @@ public class SprintEvent : ATrackEvent
     private void Player_OnRunnerChanged(ARunner r)
     {
         var player = r.GetComponent<PlayerRunner>();
+        _subbed = true;
         player.SetCheckTracker(true);
     }
 
     private void OnTapActivate(PlayerRunner player)
     {
+        _subbed = true;
         player.SetCheckTracker(false);
         player.DefaultSpeed += speedPerTap;
 
