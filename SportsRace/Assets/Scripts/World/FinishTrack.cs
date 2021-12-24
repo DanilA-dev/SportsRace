@@ -149,12 +149,19 @@ public class FinishTrack : ATrackEvent
 
     private void CheckPlayerPos(ARunner runner)
     {
-        // StopAllCoroutines();
         runner.CheckPosition();
         runner.Body.isKinematic = false;
 
         if(runner is PlayerRunner)
+        {
+            if(runner.FinishIndex == 1)
+            {
+                int endMultiplier = _coinsMultiplier < 1 ? 1 : _coinsMultiplier;
+                int totalPoints = endMultiplier * GameController.SessionScore;
+                GameController.Data.Coins += totalPoints;
+            }
             pedestalCam.gameObject.SetActive(false);
+        }    
 
     }
 
