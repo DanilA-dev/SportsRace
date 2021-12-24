@@ -16,10 +16,6 @@ public class Cup : MonoBehaviour
     public CupState State => state;
     public Vector3 FinishPos => finishLocalPos;
 
-    public void OnEnable()
-    {
-        state = CupState.Locked;
-    }
 
     public void UnLock()
     {

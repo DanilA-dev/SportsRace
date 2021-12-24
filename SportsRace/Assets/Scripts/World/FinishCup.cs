@@ -14,7 +14,7 @@ public class FinishCup : MonoBehaviour
         var cup = cups.Where(c => c.State == CupState.Locked).FirstOrDefault();
         var createdCup = Instantiate(cup, this.transform);
         createdCup.DisableLockSkin();
-        createdCup.transform.localPosition = createdCup.FinishPos;
+        createdCup.transform.localPosition = new Vector3(0, 0, createdCup.FinishPos.z);
         createdCup.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 90));
         createdCup.transform.localScale = cupScale;
 

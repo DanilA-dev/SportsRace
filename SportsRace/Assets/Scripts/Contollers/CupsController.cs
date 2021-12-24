@@ -9,13 +9,25 @@ public class CupsController : MonoBehaviour
     public List<Cup> ShelfCups => shelfCups;
 
 
-    private void OnEnable()
+    private void Start()
+    {
+        GameController.OnMenuEnter += OnMenuEnter;
+    }
+
+    private void OnDestroy()
+    {
+        GameController.OnMenuEnter -= OnMenuEnter;
+    }
+
+    private void OnMenuEnter()
     {
         for (int i = 0; i < GameController.Data.Cups; i++)
         {
             shelfCups[i].UnLock();
         }
     }
+
+   
 
     
 

@@ -367,7 +367,6 @@ public abstract class ARunner : MonoBehaviour
 
     public virtual void OnMenu()
     {
-        StopAllCoroutines();
         particleController.StopTrackTypeParticles();
         body.constraints = defaultDodyConstrain;
         _canMove = false;

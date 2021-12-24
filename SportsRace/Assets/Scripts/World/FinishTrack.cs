@@ -91,7 +91,7 @@ public class FinishTrack : ATrackEvent
         while (_positionIndex == 1)
         {
 
-            if(runner is PlayerRunner)
+            if (runner is PlayerRunner)
                 pedestalCam.gameObject.SetActive(true);
 
 
@@ -115,6 +115,9 @@ public class FinishTrack : ATrackEvent
             }
             yield return null;
         }
+        while (_positionIndex != 4)
+            yield return null;
+
         CheckPlayerPos(runner);
     }
 
@@ -148,6 +151,7 @@ public class FinishTrack : ATrackEvent
     {
         // StopAllCoroutines();
         runner.CheckPosition();
+        runner.Body.isKinematic = false;
 
         if(runner is PlayerRunner)
             pedestalCam.gameObject.SetActive(false);

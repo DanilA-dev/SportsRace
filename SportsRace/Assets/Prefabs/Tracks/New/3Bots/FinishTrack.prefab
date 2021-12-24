@@ -759,19 +759,7 @@ MonoBehaviour:
         m_CallState: 2
   OnPlatformRise:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 883923744603344679}
-        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &883923743092130002
 GameObject:
   m_ObjectHideFlags: 0
