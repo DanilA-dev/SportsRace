@@ -74,9 +74,12 @@ public class TracksController : MonoBehaviour
         }
 
         _finishTrack = Instantiate(finishPrefab);
-        _finishTrack.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 90));
+        _finishTrack.transform.rotation = Quaternion.Euler(Vector3.zero);
         _finishTrack.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTracks[createdLevelTracks.Count - 1]
                                               .EndPoint.position - finishPrefab.BeginPoint.localPosition).z + finishOffset.z);
+
+        var finishCup = _finishTrack.GetComponentInChildren<FinishCup>();
+        finishCup.SetNexCup(GameController.CupController.ShelfCups);
     }
 
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UserData
   m_EditorClassIdentifier: 
   skins: {fileID: 11400000, guid: fa41f3769760c3d44bd31a0104651da9, type: 2}
-  Rank: 1
-  Coins: 1380
-  Cups: 2
-  WinsToNextRank: 1
+  Rank: 0
+  Coins: 760
+  Cups: 1
+  WinsToNextRank: 2

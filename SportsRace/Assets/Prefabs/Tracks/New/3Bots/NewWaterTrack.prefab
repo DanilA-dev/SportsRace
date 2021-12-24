@@ -226,7 +226,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 3.7717454, z: 1}
+  m_Size: {x: 1, y: 4.7586093, z: 1}
   m_Center: {x: -1.1289116e-10, y: -0.83722377, z: 0.000000104137214}
 --- !u!114 &3339361854164447012
 MonoBehaviour:
@@ -771,13 +771,13 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   colorGradientTexture: {fileID: 0}
-  shallowColor: {r: 0.009721218, g: 0.41785067, b: 0.95597345, a: 1}
-  deepColor: {r: 0.23918584, g: 0.7249937, b: 0.8980392, a: 1}
+  shallowColor: {r: 0.009721218, g: 0.41784558, b: 0.95597345, a: 1}
+  deepColor: {r: 0.23918074, g: 0.7249937, b: 0.8980392, a: 1}
   colorDepth: 4
   horizonColor: {r: 1, g: 1, b: 1, a: 0.8509804}
   horizonDistance: 20
   shoreFade: 0
-  shoreColor: {r: 0, g: 0.98039216, b: 0.30173272, a: 0}
+  shoreColor: {r: 0, g: 0.98039216, b: 0.30172762, a: 0}
   shoreStrength: 0
   shoreBlend: 0
   shoreDepth: 0

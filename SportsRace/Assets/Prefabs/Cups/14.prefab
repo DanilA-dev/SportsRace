@@ -214,4 +214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6315c01fd33d944b1db53b29a1079c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
+  finishLocalPos: {x: 0, y: 0, z: -0.898}
   locked: {fileID: 8676934465264077720}

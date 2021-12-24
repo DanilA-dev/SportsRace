@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private UserData data;
     [SerializeField] private RunnersSelectionController runnersController;
+    [SerializeField] private CupsController cupsController;
     [SerializeField] private SwitchButtonInitializer switchButtonsController;
     [SerializeField] private List<ARunner> runners = new List<ARunner>();
 
@@ -30,6 +31,7 @@ public class GameController : MonoBehaviour
 
 
     #region Properties
+    public static CupsController CupController => Instance.cupsController;
     public static SwitchButtonInitializer SwitchButtonsController => Instance.switchButtonsController;
     public static int GameFirstEnter { get => Instance._gameFirstEnter; set => Instance._gameFirstEnter = value; }
     public static UserData Data { get => Instance.data; set => Instance.data = value; }

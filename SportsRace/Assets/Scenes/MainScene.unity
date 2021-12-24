@@ -1168,7 +1168,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: minTime
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: startPoint
@@ -8061,7 +8061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tracksAmount: 7
   startTrack: {fileID: 1767071084}
-  finishPrefab: {fileID: 5283868751788939686, guid: a80d385a9bddeb947a92462899943dd1, type: 3}
+  finishPrefab: {fileID: 2144446695866022998, guid: 6e2a74985bdcd6b41b9a6b01babc62df, type: 3}
   offset: 9.8
   finishOffset: {x: 6.75, y: -0.2, z: 0.7}
   tracksPrefab:
@@ -9973,6 +9973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 186fe934915b7194db1280e4fa7d6b42, type: 2}
   runnersController: {fileID: 1558769196}
+  cupsController: {fileID: 1202450896}
   switchButtonsController: {fileID: 489049940}
   runners:
   - {fileID: 5745608471659400802}
@@ -12093,7 +12094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: minTime
-      value: 1
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: startPoint
@@ -14542,7 +14543,7 @@ MonoBehaviour:
   m_ScreenX: 0.736
   m_ScreenY: 0.5
   m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0.945
+  m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 2
   m_BiasX: 0
@@ -21208,7 +21209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: minTime
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2891898389640787388, guid: 6725ae74fc1eaf945856d9b4bec21fd0, type: 3}
       propertyPath: startPoint
