@@ -358,11 +358,11 @@ public abstract class ARunner : MonoBehaviour
 
     public void SetAvaliableRunnerList()
     {
-        foreach (Transform t in transform)
-        {
-            if (t.TryGetComponent(out RunnerObject r))
-                _avaliableRunners.Add(r);
-        }
+       // foreach (Transform t in transform)
+       // {
+       //     if (t.TryGetComponent(out RunnerObject r))
+       //         _avaliableRunners.Add(r);
+       // }
         InitStartType();
     }
 
@@ -377,6 +377,7 @@ public abstract class ARunner : MonoBehaviour
 
     public virtual void OnMenu()
     {
+        PlayAnimation("Idle");
         particleController.StopTrackTypeParticles();
         body.constraints = defaultDodyConstrain;
         _canMove = false;

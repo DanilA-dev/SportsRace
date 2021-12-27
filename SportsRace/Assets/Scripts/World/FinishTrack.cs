@@ -10,9 +10,7 @@ public class FinishTrack : ATrackEvent
     [SerializeField] private GameObject pedestalCam;
     [Header("Pedestal")]
     [SerializeField] private float multiplierOffset;
-    [SerializeField] private float jumpForce;
     [SerializeField] private float pedestalRiseSpeed;
-    [SerializeField] private Vector3 jumpOffset;
     [SerializeField] private Transform risingPedestal;
     [Header("Move Points")]
     [SerializeField] private Transform pedestalMovePoint;
@@ -78,7 +76,7 @@ public class FinishTrack : ATrackEvent
     {
         r.transform.LookAt(dir);
         r.transform.DOMove(dir, 1);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.2f);
         r.SetFinishAnimation();
         r.Body.isKinematic = true;
         r.transform.DORotate(new Vector3(0, -180, 0),1);

@@ -17,9 +17,8 @@ public class RunnersSelectionController : MonoBehaviour
 
     public void SetCreatedRunners()
     {
-        Debug.Log("Creating runners");
         GetTrackRunners();
-        CreateRunners();
+       // CreateRunners();
     }
 
     public void GetTrackRunners()

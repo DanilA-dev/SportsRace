@@ -480,7 +480,7 @@ MonoBehaviour:
   trackType: 2
   beginPoint: {fileID: 988441910867915255}
   endPoint: {fileID: 8015284496319287400}
-  posOffset: {x: 0, y: 0, z: 0}
+  posOffset: {x: 0, y: -0.033, z: 0}
   trackEvents:
   - {fileID: 8193197018065952708}
   - {fileID: 306363786441149370}
@@ -772,13 +772,13 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   colorGradientTexture: {fileID: 0}
-  shallowColor: {r: 0.009721218, g: 0.41783664, b: 0.95597345, a: 1}
-  deepColor: {r: 0.2391718, g: 0.7249937, b: 0.8980392, a: 1}
+  shallowColor: {r: 0.009721218, g: 0.41783231, b: 0.95597345, a: 1}
+  deepColor: {r: 0.23916748, g: 0.7249937, b: 0.8980392, a: 1}
   colorDepth: 4
   horizonColor: {r: 1, g: 1, b: 1, a: 0.8509804}
   horizonDistance: 20
   shoreFade: 0
-  shoreColor: {r: 0, g: 0.98039216, b: 0.30171868, a: 0}
+  shoreColor: {r: 0, g: 0.98039216, b: 0.30171436, a: 0}
   shoreStrength: 0
   shoreBlend: 0
   shoreDepth: 0

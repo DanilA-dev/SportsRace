@@ -7982,7 +7982,7 @@ MonoBehaviour:
   trackType: 1
   beginPoint: {fileID: 7799937027190870689}
   endPoint: {fileID: 8361843064098039548}
-  posOffset: {x: 0, y: 0, z: 0}
+  posOffset: {x: 0, y: -0.04, z: 0}
   trackEvents:
   - {fileID: 1539876561516996034}
   - {fileID: 1539876559601419916}

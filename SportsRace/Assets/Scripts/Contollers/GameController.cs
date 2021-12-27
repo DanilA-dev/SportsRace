@@ -165,14 +165,13 @@ public class GameController : MonoBehaviour
 
     private IEnumerator OnMenuState()
     {
-        
-        yield return StartCoroutine(runnersController.ClearCreatedRunners());
-        yield return StartCoroutine(TracksController.Instance.CreateTrack());
-
         Time.timeScale = 1;
         _sessionScore = 0;
-        RankController.Instance.CheckRank();
+        
+        //yield return StartCoroutine(runnersController.ClearCreatedRunners());
+        yield return StartCoroutine(TracksController.Instance.CreateTrack());
 
+        RankController.Instance.CheckRank();
         runnersController.SetCreatedRunners(); 
         OnMenuEnter?.Invoke();
         UIController.TurnOnPanel(UIPanelType.Menu);
@@ -185,7 +184,6 @@ public class GameController : MonoBehaviour
             r.SetAvaliableRunnerList();
             r.OnMenu();
         }
-
         TracksController.Instance.CheckFullTrack();
     }
 
