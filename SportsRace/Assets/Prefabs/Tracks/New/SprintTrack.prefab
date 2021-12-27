@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3798654402217741444}
   - component: {fileID: 6363468266377570686}
   - component: {fileID: 7932276888257102513}
+  - component: {fileID: 6492183059975219086}
   m_Layer: 3
   m_Name: SprintTrack
   m_TagString: Untagged
@@ -132,6 +133,7 @@ MonoBehaviour:
   trackType: 0
   beginPoint: {fileID: 5688028245915365450}
   endPoint: {fileID: 2610021545328456233}
+  posOffset: {x: 0, y: 0, z: 0}
   trackEvents: []
 --- !u!65 &7932276888257102513
 BoxCollider:
@@ -146,6 +148,35 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.19015244, y: 0.061822094, z: 0.01053151}
   m_Center: {x: -0.0002408409, y: -0.07213583, z: 0.04004518}
+--- !u!114 &6492183059975219086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017215129050516876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711095a37318a6b42bfbe4c44e5152eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedPerTap: 1
+  maxSpeed: 300
+  OnRunnerChange:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6492183059975219086}
+        m_TargetAssemblyTypeName: SprintEvent, Assembly-CSharp
+        m_MethodName: ColliderReEnable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3095436319180631677
 GameObject:
   m_ObjectHideFlags: 0

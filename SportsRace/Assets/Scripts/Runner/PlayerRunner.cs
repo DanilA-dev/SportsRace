@@ -6,6 +6,8 @@ using UnityEngine;
 using Cinemachine;
 public class PlayerRunner : ARunner, IPlayer
 {
+    [SerializeField] private List<TapEventVariables> tapVariables = new List<TapEventVariables>();
+
     [Header("Camera Setup")]
     [SerializeField] private Transform finishRotateCamera;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
@@ -24,6 +26,7 @@ public class PlayerRunner : ARunner, IPlayer
     public event Action OnTrackEventExit;
 
 
+    public List<TapEventVariables> TapVariables => tapVariables;
     public override IPlayer Player { get => this; }
     public override RunnerState State { get => base.State; set => base.State = value; }
 
@@ -223,4 +226,12 @@ public class PlayerRunner : ARunner, IPlayer
     {
         OnTrackEventExit?.Invoke();
     }
+}
+
+[Serializable]
+public class TapEventVariables
+{
+    public SportType Type;
+    public float SpeedPerTap;
+    public float MaxTapSpeed;
 }

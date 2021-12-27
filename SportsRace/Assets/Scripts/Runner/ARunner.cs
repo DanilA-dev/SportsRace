@@ -11,7 +11,7 @@ public enum RunnerState
 {
     Default, Climb, ClimbTop, Fall, StandUp, Swim,
     JumpObstacle, JumpSand, HitWeak, HitHard, Stunned, Finish,
-    Land
+    Land, Idle
 }
 
 public abstract class ARunner : MonoBehaviour
@@ -204,11 +204,15 @@ public abstract class ARunner : MonoBehaviour
             case RunnerState.Land:
                 StartCoroutine(OnLandState());
                 break;
+            case RunnerState.Idle:
+                OnIdleState();
+                break;
 
             default: Debug.Log("State is None");
                 break;
         }
     }
+
 
     #region State Methods
     private IEnumerator OnLandState()
@@ -333,10 +337,16 @@ public abstract class ARunner : MonoBehaviour
         gravity = 8;
         body.isKinematic = false;
         Move(Vector3.forward, defaultSpeed);
+
+
     }
 
-
+    private void OnIdleState()
+    {
+        PlayAnimation("Idle");
+    }
     #endregion
+
 
     private void PlayAnimation(string name)
     {

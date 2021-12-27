@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class SandEvent : ATrackEvent
 {
@@ -21,6 +22,9 @@ public class SandEvent : ATrackEvent
     private bool _isJumpingNow;
 
     private Vector3 _jumpDir;
+
+
+    public float JumpForce { get => jumpForce; set => jumpForce = value; }
 
     private void Awake()
     {
@@ -92,7 +96,7 @@ public class SandEvent : ATrackEvent
     {
         _isJumpingNow = true;
         r.State = RunnerState.JumpSand;
-        r.Jump(-GetJumpDirection(r), jumpForce);
+        r.Jump(Vector3.forward, JumpForce);
         yield return new WaitForSeconds(1);
         r.State = RunnerState.Default;
         yield return new WaitForSeconds(1);

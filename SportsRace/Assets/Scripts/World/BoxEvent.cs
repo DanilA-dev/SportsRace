@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class BoxEvent : ATrackEvent
 {
     [SerializeField] private SportType type;
+    [SerializeField] private bool isTapToDestroy;
     [SerializeField] private float destroyForce;
     [SerializeField] private Transform forceToPoint;
     [SerializeField] private List<Rigidbody> boxPropParts = new List<Rigidbody>();
@@ -17,6 +18,8 @@ public class BoxEvent : ATrackEvent
     private bool _propDestroyed;
     private bool _subbed;
 
+    public bool IsTapToDestroy { get => isTapToDestroy; set => isTapToDestroy = value; }
+
     private void Awake()
     {
         _coll = GetComponent<Collider>();
@@ -26,7 +29,7 @@ public class BoxEvent : ATrackEvent
     private IEnumerator ReEnableTrigger()
     {
         _coll.enabled = false;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.02f);
         _coll.enabled = true;
     }
 
@@ -41,13 +44,6 @@ public class BoxEvent : ATrackEvent
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.TryGetComponent(out ARunner r))
-    //    {
-    //        CheckType(r);
-    //    }
-    //}
 
     private void CheckType(ARunner r)
     {
@@ -55,15 +51,27 @@ public class BoxEvent : ATrackEvent
         {
             if(r.State != RunnerState.HitHard && !_propDestroyed)
             {
-                r.State = RunnerState.HitHard;
-                StartCoroutine(DestroyBoxProp(0.3f,r));
+                if (isTapToDestroy)
+                {
+                    r.State = RunnerState.Idle;
+                    return;
+                }
+
+                BreakProp(r);
             }
         }
         else
             r.State = RunnerState.HitWeak;
     }
 
-    private IEnumerator DestroyBoxProp(float time, ARunner runner)
+
+    public void BreakProp(ARunner r)
+    {
+        r.State = RunnerState.HitHard;
+        StartCoroutine(DestroyingProp(0.3f, r));
+    }
+
+    private IEnumerator DestroyingProp(float time, ARunner runner)
     {
         yield return new WaitForSeconds(time);
         runner.ParticleController.PlayByTrackEvent(TrackEventParticleType.BoxPunch);

@@ -3417,6 +3417,7 @@ GameObject:
   - component: {fileID: 394624652}
   - component: {fileID: 394624654}
   - component: {fileID: 394624653}
+  - component: {fileID: 394624655}
   m_Layer: 5
   m_Name: TapText
   m_TagString: Untagged
@@ -3441,7 +3442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -344}
+  m_AnchoredPosition: {x: 0, y: -628}
   m_SizeDelta: {x: 1422, y: 404.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &394624653
@@ -3481,7 +3482,7 @@ MonoBehaviour:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
     topRight: {r: 1, g: 1, b: 1, a: 1}
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 0.7058824, b: 0.023529414, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -3497,7 +3498,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 3
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3541,6 +3542,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394624651}
   m_CullTransparentMesh: 1
+--- !u!111 &394624655
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394624651}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 1562e00a538611d4cb89a141975139cf, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1562e00a538611d4cb89a141975139cf, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &394753879
 GameObject:
   m_ObjectHideFlags: 0
@@ -12713,7 +12730,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1333389652}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95b843ad5bdc63c4e84acee6069b2252, type: 3}
   m_Name: 
@@ -20941,9 +20958,101 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: startPoints.Array.data[0]
       value: 
       objectReference: {fileID: 962908728}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.SnowSpeedPerTap
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.WaterSpeedPerTap
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[1].Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[2].Type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[3].Type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[4].Type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[5].Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[6].Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[0].MaxTapSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[0].SpeedPerTap
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[1].MaxTapSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[1].SpeedPerTap
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[2].MaxTapSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[2].SpeedPerTap
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[3].MaxTapSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[3].SpeedPerTap
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[4].MaxTapSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[4].SpeedPerTap
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[5].MaxTapSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[5].SpeedPerTap
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[6].MaxTapSpeed
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
+      propertyPath: tapVariables.Array.data[6].SpeedPerTap
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547942, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: m_Name
       value: Player

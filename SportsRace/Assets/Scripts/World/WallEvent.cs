@@ -20,6 +20,8 @@ public class WallEvent : ATrackEvent
     private bool _subbed;
     private ARunner _currentRunner;
 
+    public float ClimbSpeed { get => climbSpeed; set => climbSpeed = value; }
+
     private void Awake()
     {
         _coll = GetComponent<Collider>();
