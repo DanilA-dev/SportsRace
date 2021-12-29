@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum GameState
 {
-    None, Menu, Core, Win, Lose, Finish, Pause, UnPause
+    None, Menu, Core, Win, Lose, Finish, Pause, UnPause, RestartLevel
 }
 
 public class GameController : MonoBehaviour
@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour
 
     public static event Action OnMenuEnter;
     public static event Action OnCoreEnter;
+    public static event Action OnRestartLevel;
     public static event Action<int> OnSessionScoreChange;
     private event Action<GameState> OnGameStateChanged;
 
@@ -116,7 +117,6 @@ public class GameController : MonoBehaviour
             case GameState.UnPause:
                 OnUnPauseState();
                 break;
-            
         }
     }
 
@@ -168,7 +168,6 @@ public class GameController : MonoBehaviour
         Time.timeScale = 1;
         _sessionScore = 0;
         
-        //yield return StartCoroutine(runnersController.ClearCreatedRunners());
         yield return StartCoroutine(TracksController.Instance.CreateTrack());
 
         RankController.Instance.CheckRank();

@@ -13,8 +13,6 @@ public class UIController : MonoBehaviour
 {
     public static UIController Instance;
 
-
-    [SerializeField] private TMP_Text sessionCoins;
     [SerializeField] private List<UIPanel> panels = new List<UIPanel>();
 
     public void Awake()
@@ -53,20 +51,18 @@ public class UIController : MonoBehaviour
     public void OnClickToCore()
     {
         GameController.CurrentState = GameState.Core;
-        sessionCoins.text = "";
-        GameController.OnSessionScoreChange += UpdateSessionScore;
     }
 
     public void OnClickToMenu()
     {
         GameController.CurrentState = GameState.Menu;
-        GameController.OnSessionScoreChange -= UpdateSessionScore;
     }
 
-    private void UpdateSessionScore(int amount)
+    public void OnClickSameLevel()
     {
-        sessionCoins.SetText(amount.ToString());
+        GameController.CurrentState = GameState.RestartLevel;
     }
+
 
     public void OnStore()
     {

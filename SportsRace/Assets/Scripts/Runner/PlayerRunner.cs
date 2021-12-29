@@ -192,12 +192,14 @@ public class PlayerRunner : ARunner, IPlayer
     public override void OnMenu()
     {
         base.OnMenu();
+        _canCheckTrack = false;
         TurnOffFinishCamera();
         SetCameraMenu();
     }
 
     public override void OnStart()
     {
+        _canCheckTrack = true;
         base.OnStart();
         SetCameraCore();
     }

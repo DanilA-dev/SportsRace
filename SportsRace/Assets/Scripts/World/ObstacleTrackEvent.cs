@@ -14,6 +14,7 @@ public class ObstacleTrackEvent : ATrackEvent
 
     [SerializeField] private UnityEvent OnSwitchRunner;
 
+
     private Collider _coll;
     private ARunner _currentRunner;
     private bool _isJumped;

@@ -299,7 +299,6 @@ public abstract class ARunner : MonoBehaviour
         CheckTrack(false);
         gravity = 10;
         PlayAnimation("Wall Dump");
-       // PlayTrackEventParticle(TrackEventParticleType.WallHit);
         yield return new WaitForSeconds(1.5f);
         State = RunnerState.StandUp;
     }
@@ -308,7 +307,6 @@ public abstract class ARunner : MonoBehaviour
     {
         StopTrackTypeParticles();
         body.isKinematic = true;
-       // RunnerCollider.enabled = false;
         CheckTrack(false);
         _canMove = false;
         gravity = 0;
@@ -358,11 +356,6 @@ public abstract class ARunner : MonoBehaviour
 
     public void SetAvaliableRunnerList()
     {
-       // foreach (Transform t in transform)
-       // {
-       //     if (t.TryGetComponent(out RunnerObject r))
-       //         _avaliableRunners.Add(r);
-       // }
         InitStartType();
     }
 
@@ -373,6 +366,9 @@ public abstract class ARunner : MonoBehaviour
 
         if(getTracks.Count > 0 && _avaliableRunners.Count > 0)
             RunnerType = firtsTrack.TrackType;
+
+        foreach (var runnerObj in _avaliableRunners)
+            runnerObj.transform.localPosition = runnerObj.GroundPositionOffset;
     }
 
     public virtual void OnMenu()

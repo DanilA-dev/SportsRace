@@ -13,6 +13,7 @@ public class BoxEvent : ATrackEvent
     [SerializeField] private List<Rigidbody> boxPropParts = new List<Rigidbody>();
     [SerializeField] private UnityEvent OnSwitchRunner;
 
+
     private Collider _coll;
     private ARunner _currentRunner;
     private bool _propDestroyed;
@@ -23,8 +24,8 @@ public class BoxEvent : ATrackEvent
     private void Awake()
     {
         _coll = GetComponent<Collider>();
+       
     }
-
 
     private IEnumerator ReEnableTrigger()
     {
@@ -103,8 +104,8 @@ public class BoxEvent : ATrackEvent
 
     public override void Unsubscribe()
     {
+        _subbed = false;
         base.Unsubscribe();
         StopAllCoroutines();
-        _subbed = false;
     }
 }

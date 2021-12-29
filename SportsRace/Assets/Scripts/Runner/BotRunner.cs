@@ -17,6 +17,7 @@ public class BotRunner : ARunner
 
     private Vector3 _moveVector;
     private Collider _botCollider;
+    private bool _canCheckTrack = true;
 
 
     public override RunnerState State { get => base.State; set => base.State = value; }
@@ -49,6 +50,9 @@ public class BotRunner : ARunner
 
     public override void CheckTrack(bool canCheck, float time = 0)
     {
+        if (!_canCheckTrack)
+            return;
+
         if (canCheck)
         {
             StartCoroutine(TrackChecking(time));
@@ -149,6 +153,18 @@ public class BotRunner : ARunner
     public override void SetFinishPosition(int index)
     {
         _finishIndex = index;
+    }
+
+    public override void OnMenu()
+    {
+        _canCheckTrack = false;
+        base.OnMenu();
+    }
+
+    public override void OnStart()
+    {
+        _canCheckTrack = true;
+        base.OnStart();
     }
 
     public override void Move(Vector3 dir, float speed)

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speeds:
   - type: 0
-    speed: 275
+    speed: 200
     animValue: {fileID: 7400000, guid: e074e6cd7ab05494cb0c200cfd41c84d, type: 2}
   - type: 3
     speed: 125
@@ -26,14 +26,14 @@ MonoBehaviour:
     speed: 125
     animValue: {fileID: 7400000, guid: 1ecee6fa3f989fc448e598bb7fd2980e, type: 2}
   - type: 6
-    speed: 250
+    speed: 200
     animValue: {fileID: 7400000, guid: e074e6cd7ab05494cb0c200cfd41c84d, type: 2}
   - type: 1
-    speed: 250
+    speed: 200
     animValue: {fileID: 7400000, guid: e074e6cd7ab05494cb0c200cfd41c84d, type: 2}
   - type: 4
-    speed: 250
+    speed: 200
     animValue: {fileID: 7400000, guid: e074e6cd7ab05494cb0c200cfd41c84d, type: 2}
   - type: 8
-    speed: 150
+    speed: 200
     animValue: {fileID: 7400000, guid: e074e6cd7ab05494cb0c200cfd41c84d, type: 2}

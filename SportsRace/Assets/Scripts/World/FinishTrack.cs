@@ -26,11 +26,11 @@ public class FinishTrack : ATrackEvent
 
     public static event Action OnCupEarned;
 
-
     private int _coinsMultiplier = 1;
     private int _positionIndex = 0;
     private bool _isColliding;
-    
+
+
     public override void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out ARunner r))

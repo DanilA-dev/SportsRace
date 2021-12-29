@@ -23,7 +23,7 @@ MonoBehaviour:
     speed: 125
     animValue: {fileID: 7400000, guid: 3efcdaec82866d34bbcb38089ea4a4c4, type: 2}
   - type: 2
-    speed: 250
+    speed: 200
     animValue: {fileID: 7400000, guid: 1ecee6fa3f989fc448e598bb7fd2980e, type: 2}
   - type: 6
     speed: 125

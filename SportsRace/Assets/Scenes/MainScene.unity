@@ -2323,7 +2323,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 216390579}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1333389655}
+        m_TargetAssemblyTypeName: Cinemachine.CinemachineImpulseSource, Cinemachine
+        m_MethodName: GenerateImpulse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &216390579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3720,7 +3732,6 @@ GameObject:
   - component: {fileID: 394624652}
   - component: {fileID: 394624654}
   - component: {fileID: 394624653}
-  - component: {fileID: 394624655}
   m_Layer: 5
   m_Name: TapText
   m_TagString: Untagged
@@ -3768,7 +3779,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tap-Tap
+  m_text: Tap for X2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3845,22 +3856,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394624651}
   m_CullTransparentMesh: 1
---- !u!111 &394624655
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 394624651}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 1562e00a538611d4cb89a141975139cf, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 1562e00a538611d4cb89a141975139cf, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &394753879
 GameObject:
   m_ObjectHideFlags: 0
@@ -6916,7 +6911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e603472e3596ee6419ff54d5c6db07fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sessionCoins: {fileID: 1150492211}
   panels:
   - name: Menu
     type: 1
@@ -9794,7 +9788,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 707946061}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: OnClickToMenu
+        m_MethodName: OnClickSameLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12251,6 +12245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1191136278}
   - component: {fileID: 1191136277}
+  - component: {fileID: 1191136279}
   m_Layer: 0
   m_Name: PlayerFollowCamera
   m_TagString: Untagged
@@ -12312,6 +12307,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 35.645, y: -56.8, z: 0}
+--- !u!114 &1191136279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191136276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ApplyAfter: 2
+  m_ChannelMask: 1
+  m_Gain: 1
+  m_Use2DDistance: 0
+  m_UseCameraSpace: 1
+  m_ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!21 &1196633264
 Material:
   serializedVersion: 6
@@ -14061,6 +14079,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1333389653}
   - component: {fileID: 1333389654}
+  - component: {fileID: 1333389655}
   m_Layer: 0
   m_Name: TapController
   m_TagString: Untagged
@@ -14095,8 +14114,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b843ad5bdc63c4e84acee6069b2252, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  punchDuration: 0.1
+  punchStrenght: 0.05
   player: {fileID: 2144528908}
   tapButton: {fileID: 216390578}
+--- !u!114 &1333389655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1333389652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: -1
+    m_ImpulseShape: 2
+    m_CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_ImpulseDuration: 0.2
+    m_ImpulseType: 3
+    m_DissipationRate: 0.25
+    m_RawSignal: {fileID: 11400000, guid: f73703ceb302e6045ae3686335fbe3ff, type: 2}
+    m_AmplitudeGain: 0.05
+    m_FrequencyGain: 0.1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 100
+    m_PropagationSpeed: 343
+  m_DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!21 &1335641923
 Material:
   serializedVersion: 6
@@ -23115,7 +23189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[0].SpeedPerTap
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[1].MaxTapSpeed
@@ -23123,7 +23197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[1].SpeedPerTap
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[2].MaxTapSpeed
@@ -23131,7 +23205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[2].SpeedPerTap
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[3].MaxTapSpeed
@@ -23139,7 +23213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[3].SpeedPerTap
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[4].MaxTapSpeed
@@ -23155,7 +23229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[5].SpeedPerTap
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[6].MaxTapSpeed
@@ -23163,7 +23237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547936, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: tapVariables.Array.data[6].SpeedPerTap
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7041549696571547942, guid: 2b99a24c997dc204d82a98e30786fdca, type: 3}
       propertyPath: m_Name
