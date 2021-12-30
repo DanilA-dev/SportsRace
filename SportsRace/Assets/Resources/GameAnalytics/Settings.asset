@@ -26,21 +26,21 @@ MonoBehaviour:
   UserMessagesFailed: 0
   CustomArea: 
   gameKey:
-  - 
+  - 11eea07aa5a1798b850ddef7361a7a8e
   secretKey:
-  - 
+  - 11b54a99ec5303aaadc0a5663780b3216b3e6211
   Build:
   - 0.1
   SelectedPlatformOrganization:
-  - 
+  - papprika-studio
   SelectedPlatformStudio:
-  - 
+  - Papprika Studio
   SelectedPlatformGame:
-  - 
-  SelectedPlatformGameID: ffffffff
-  SelectedOrganization: 00000000
-  SelectedStudio: 00000000
-  SelectedGame: 00000000
+  - Sports Race
+  SelectedPlatformGameID: acbb0200
+  SelectedOrganization: 01000000
+  SelectedStudio: 01000000
+  SelectedGame: 01000000
   NewVersion: 
   Changes: 
   SignUpOpen: 1
@@ -48,7 +48,7 @@ MonoBehaviour:
   GameName: SportsRace
   OrganizationName: 
   OrganizationIdentifier: 
-  EmailGA: 
+  EmailGA: danil.almuka@gmail.com
   IntroScreen: 0
   InfoLogEditor: 1
   InfoLogBuild: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
   CustomDimensions03: []
   ResourceItemTypes: []
   ResourceCurrencies: []
-  LastCreatedGamePlatform: 0
+  LastCreatedGamePlatform: -1
   Platforms: 0b000000
   CurrentInspectorState: 1
   ClosedHints: 
