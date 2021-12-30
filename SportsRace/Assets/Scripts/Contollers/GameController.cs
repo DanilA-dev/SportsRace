@@ -157,6 +157,7 @@ public class GameController : MonoBehaviour
     private void OnCoreState()
     {
         UIController.TurnOnPanel(UIPanelType.Core);
+        GameAnalyticsManager.Instance.OnLevelStart(data.CurrentLevel);
         OnCoreEnter?.Invoke();
 
         foreach (var r in runners)
@@ -193,6 +194,11 @@ public class GameController : MonoBehaviour
     {
         Instance._sessionScore += value;
         OnSessionScoreChange?.Invoke(Instance._sessionScore);
+    }
+
+    public void OnNextLevel()
+    {
+        data.CurrentLevel++;
     }
     
 }

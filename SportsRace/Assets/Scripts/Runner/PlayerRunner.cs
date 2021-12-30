@@ -123,9 +123,13 @@ public class PlayerRunner : ARunner, IPlayer
         {
             GameController.Data.WinsToNextRank++;
             GameController.CurrentState = GameState.Win;
+            GameAnalyticsManager.Instance.OnLevelComplete(GameController.Data.CurrentLevel);
         }
         else
+        {
             GameController.CurrentState = GameState.Lose;
+            GameAnalyticsManager.Instance.OnLevelFail(GameController.Data.CurrentLevel);
+        }
     }
 
     public override void CheckTrack(bool canCheck, float time = 0)
