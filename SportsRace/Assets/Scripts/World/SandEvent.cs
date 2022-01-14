@@ -22,15 +22,24 @@ public class SandEvent : ATrackEvent
     private bool _isJumpingNow;
 
     private Vector3 _jumpDir;
-
+    private float _initForce;
 
     public float JumpForce { get => jumpForce; set => jumpForce = value; }
 
     private void Awake()
     {
         _coll = GetComponent<Collider>();
+        _initForce = JumpForce;
+
+        GameController.OnRestartLevel += Init;
     }
 
+    public override void Init()
+    {
+        StopAllCoroutines();
+        jumpForce = _initForce;
+        _isJumpingNow = false;
+    }
 
     private IEnumerator ReEnableTrigger()
     {
@@ -131,6 +140,7 @@ public class SandEvent : ATrackEvent
     public override void Unsubscribe()
     {
         base.Unsubscribe();
+        GameController.OnRestartLevel -= Init;
         StopAllCoroutines();
         _subbed = false;
     }

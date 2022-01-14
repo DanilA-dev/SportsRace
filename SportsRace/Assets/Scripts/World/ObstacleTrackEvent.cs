@@ -14,6 +14,9 @@ public class ObstacleTrackEvent : ATrackEvent
 
     [SerializeField] private UnityEvent OnSwitchRunner;
 
+    private Vector3[] _propInitPos = new Vector3[2];
+    private Quaternion[] _propRotations = new Quaternion[2];
+
 
     private Collider _coll;
     private ARunner _currentRunner;
@@ -23,6 +26,31 @@ public class ObstacleTrackEvent : ATrackEvent
     private void Awake()
     {
         _coll = GetComponent<Collider>();
+
+        for (int i = 0; i < obstacleProp.Count; i++)
+        {
+            _propInitPos[i] = obstacleProp[i].transform.localPosition;
+            _propRotations[i] = obstacleProp[i].transform.localRotation;
+        }
+
+        GameController.OnRestartLevel += OnRestart;
+    }
+
+    private void OnRestart()
+    {
+        Init();
+    }
+
+    public override void Init()
+    {
+        for (int i = 0; i < obstacleProp.Count; i++)
+        {
+            obstacleProp[i].transform.localPosition = _propInitPos[i];
+            obstacleProp[i].transform.localRotation = _propRotations[i];
+            obstacleProp[i].isKinematic = true;
+        }
+        StopAllCoroutines();
+
     }
 
     public override void OnTriggerEnter(Collider other)
@@ -113,6 +141,7 @@ public class ObstacleTrackEvent : ATrackEvent
     public override void Unsubscribe()
     {
         base.Unsubscribe();
+        GameController.OnRestartLevel -= OnRestart;
         StopAllCoroutines();
         _subbed = false;
     }

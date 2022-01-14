@@ -741,7 +741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  jumpForce: 10
+  jumpForce: 5
   yOffset: 2
   minimumDistanceToPoint: 5
   jumpPoint1: {fileID: 1630791731350481871}

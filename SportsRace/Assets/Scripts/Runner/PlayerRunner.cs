@@ -38,8 +38,8 @@ public class PlayerRunner : ARunner, IPlayer
         base.Start();
         _playerCollider = GetComponent<Collider>();
         _canMove = true;
-
     }
+
 
     private void FixedUpdate()
     {
@@ -107,9 +107,15 @@ public class PlayerRunner : ARunner, IPlayer
              return;
         
          if (_finishIndex > 1)
-             _runnerAnimator.Play("Defeated");
+         {
+            GameAnalyticsManager.Instance.OnLevelFail(GameController.Data.CurrentLevel);
+            _runnerAnimator.Play("Defeated");
+         }
          else if (_finishIndex == 1)
-             _runnerAnimator.Play("Victory");
+         {
+            GameAnalyticsManager.Instance.OnLevelComplete(GameController.Data.CurrentLevel);
+            _runnerAnimator.Play("Victory");
+         }
         
         GameController.CurrentState = GameState.Finish;
     }
@@ -123,12 +129,10 @@ public class PlayerRunner : ARunner, IPlayer
         {
             GameController.Data.WinsToNextRank++;
             GameController.CurrentState = GameState.Win;
-            GameAnalyticsManager.Instance.OnLevelComplete(GameController.Data.CurrentLevel);
         }
         else
         {
             GameController.CurrentState = GameState.Lose;
-            GameAnalyticsManager.Instance.OnLevelFail(GameController.Data.CurrentLevel);
         }
     }
 
@@ -195,6 +199,7 @@ public class PlayerRunner : ARunner, IPlayer
 
     public override void OnMenu()
     {
+        RunnerAnimator.Play("Idle");
         base.OnMenu();
         _canCheckTrack = false;
         TurnOffFinishCamera();

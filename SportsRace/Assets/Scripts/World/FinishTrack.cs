@@ -30,6 +30,27 @@ public class FinishTrack : ATrackEvent
     private int _positionIndex = 0;
     private bool _isColliding;
 
+    private Vector3 _initPedestalPos;
+
+    private void Awake()
+    {
+        _initPedestalPos = risingPedestal.transform.localPosition;
+        GameController.OnRestartLevel += OnRestart;
+    }
+
+    private void OnRestart()
+    {
+        Init();
+    }
+
+    public override void Init()
+    {
+        risingPedestal.transform.localPosition = _initPedestalPos;
+        _coinsMultiplier = 1;
+        _positionIndex = 0;
+        StopAllCoroutines();
+    }
+
 
     public override void OnTriggerEnter(Collider other)
     {
@@ -169,5 +190,10 @@ public class FinishTrack : ATrackEvent
         _positionIndex = 0;
         _coinsMultiplier = 1;
         StopAllCoroutines();
+    }
+
+    private void OnDestroy()
+    {
+        GameController.OnRestartLevel -= OnRestart;
     }
 }

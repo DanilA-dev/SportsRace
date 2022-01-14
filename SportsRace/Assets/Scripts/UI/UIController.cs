@@ -58,7 +58,7 @@ public class UIController : MonoBehaviour
         GameController.CurrentState = GameState.Menu;
     }
 
-    public void OnClickSameLevel()
+    public void OnClickRestartMenu()
     {
         GameController.CurrentState = GameState.RestartLevel;
     }

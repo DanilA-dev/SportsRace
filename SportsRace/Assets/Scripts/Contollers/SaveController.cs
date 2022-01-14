@@ -40,7 +40,7 @@ public class SaveController : MonoBehaviour
         data.Cups = PlayerPrefs.GetInt("Cups");
         data.Rank = (LeagueRank)PlayerPrefs.GetInt("Rank");
         data.WinsToNextRank = PlayerPrefs.GetInt("Wins");
-        data.CurrentLevel = PlayerPrefs.GetInt("Level");
+        data.CurrentLevel = PlayerPrefs.GetInt("Level", 1);
 
        // foreach (var skin in Instance.data.skins.Skins)
        // {

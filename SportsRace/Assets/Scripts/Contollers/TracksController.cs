@@ -63,9 +63,9 @@ public class TracksController : MonoBehaviour
                                              .EndPoint.position - createdTrack.BeginPoint.localPosition).z + offset);
            createdTrack.transform.rotation = trackRotation;
            createdTrack.transform.position = nextPos;
-          
+        
            createdLevelTracks.Add(createdTrack);
-          
+        
            if (trackIndexList.Count == levelTracks.Count)
            {
                _lastIndexFromThree = trackIndexList[trackIndexList.Count - 1];
@@ -78,17 +78,29 @@ public class TracksController : MonoBehaviour
         _finishTrack.transform.position = new Vector3(0 + finishOffset.x, 0 + finishOffset.y, (createdLevelTracks[createdLevelTracks.Count - 1]
                                               .EndPoint.position - finishPrefab.BeginPoint.localPosition).z + finishOffset.z);
 
-        var finishCup = _finishTrack.GetComponentInChildren<FinishCup>();
-        finishCup.SetNexCup(GameController.CupController.ShelfCups);
+       var finishCup = _finishTrack.GetComponentInChildren<FinishCup>();
+       finishCup.SetNexCup(GameController.CupController.ShelfCups);
     }
 
 
     public void CheckFullTrack()
     {
-        for (int j = 0; j < createdLevelTracks.Count - 1; j++)
+        
+
+        for (int j = 1; j < createdLevelTracks.Count - 1; j++)
         {
              if (createdLevelTracks[j].TrackType == createdLevelTracks[j + 1].TrackType)
-                 GameController.CurrentState = GameState.Menu;
+             {
+                var curTransform = createdLevelTracks[j].transform.position;
+                createdLevelTracks[j].transform.position = new Vector3(createdLevelTracks[j].transform.position.x,
+                                                                       createdLevelTracks[j].transform.position.y,
+                                                                       createdLevelTracks[j - 1].transform.position.z);
+
+
+                createdLevelTracks[j - 1].transform.position = new Vector3(createdLevelTracks[j - 1].transform.position.x,
+                                                                       createdLevelTracks[j - 1].transform.position.y,
+                                                                       curTransform.z);
+             }
         }
     }
 

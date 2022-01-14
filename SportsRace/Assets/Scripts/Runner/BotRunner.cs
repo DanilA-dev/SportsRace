@@ -157,6 +157,7 @@ public class BotRunner : ARunner
 
     public override void OnMenu()
     {
+        RunnerAnimator.Play("Idle");
         _canCheckTrack = false;
         base.OnMenu();
     }

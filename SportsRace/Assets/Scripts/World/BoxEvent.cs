@@ -13,19 +13,53 @@ public class BoxEvent : ATrackEvent
     [SerializeField] private List<Rigidbody> boxPropParts = new List<Rigidbody>();
     [SerializeField] private UnityEvent OnSwitchRunner;
 
+    private Vector3[] _boxPropPositions = new Vector3[2];
+    private Quaternion[] _boxPropRotations = new Quaternion[2];
+
 
     private Collider _coll;
     private ARunner _currentRunner;
     private bool _propDestroyed;
     private bool _subbed;
 
+    private bool _initTapToDestroy;
+
     public bool IsTapToDestroy { get => isTapToDestroy; set => isTapToDestroy = value; }
 
     private void Awake()
     {
         _coll = GetComponent<Collider>();
-       
+        _initTapToDestroy = isTapToDestroy;
+
+        for (int i = 0; i < boxPropParts.Count; i++)
+        {
+            _boxPropPositions[i] = boxPropParts[i].transform.localPosition;
+            _boxPropRotations[i] = boxPropParts[i].transform.localRotation;
+        }
+
+        GameController.OnRestartLevel += OnRestartLevel;
+
     }
+
+    private void OnRestartLevel()
+    {
+        Init();
+    }
+
+    public override void Init()
+    {
+        for (int i = 0; i < boxPropParts.Count; i++)
+        {
+            boxPropParts[i].transform.localPosition = _boxPropPositions[i];
+            boxPropParts[i].transform.localRotation = _boxPropRotations[i];
+            boxPropParts[i].isKinematic = true;
+        }
+
+        StopAllCoroutines();
+        _propDestroyed = false;
+        IsTapToDestroy = _initTapToDestroy;
+    }
+
 
     private IEnumerator ReEnableTrigger()
     {
@@ -82,7 +116,7 @@ public class BoxEvent : ATrackEvent
             r.AddForce(forceToPoint.localPosition * destroyForce,ForceMode.Impulse);
         }
         _propDestroyed = true;
-        Unsubscribe();
+       // Unsubscribe();
     }
 
     public override void OnRunnerChanged(ARunner r)
@@ -105,6 +139,7 @@ public class BoxEvent : ATrackEvent
     public override void Unsubscribe()
     {
         _subbed = false;
+        GameController.OnRestartLevel -= OnRestartLevel;
         base.Unsubscribe();
         StopAllCoroutines();
     }

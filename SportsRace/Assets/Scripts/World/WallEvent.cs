@@ -20,13 +20,30 @@ public class WallEvent : ATrackEvent
     private bool _subbed;
     private ARunner _currentRunner;
 
+    private float _startClimbSpeed;
+
     public float ClimbSpeed { get => climbSpeed; set => climbSpeed = value; }
 
     private void Awake()
     {
         _coll = GetComponent<Collider>();
+        _startClimbSpeed = climbSpeed;
+
+        GameController.OnRestartLevel += OnRestart;
+
     }
 
+    private void OnRestart()
+    {
+        Init();
+    }
+
+    public override void Init()
+    {
+        climbSpeed = _startClimbSpeed;
+        StopAllCoroutines();
+
+    }
 
 
     private IEnumerator ReEnableTrigger()
@@ -42,6 +59,7 @@ public class WallEvent : ATrackEvent
         if (other.TryGetComponent(out ARunner r))
         {
             _subbed = true;
+            CheckType(r);
         }
     }
 
@@ -116,20 +134,14 @@ public class WallEvent : ATrackEvent
     {
         StartCoroutine(ReEnableTrigger());
     }
-
-
-    private void OnTop(ARunner r)
-    {
-        r.State = RunnerState.ClimbTop;
-        _isRunnerUp = true;
-        _coll.enabled = false;
-    }
+    
 
 
     public override void Unsubscribe()
     {
         base.Unsubscribe();
         StopAllCoroutines();
+        GameController.OnRestartLevel -= OnRestart;
         _subbed = false;
     }
 }

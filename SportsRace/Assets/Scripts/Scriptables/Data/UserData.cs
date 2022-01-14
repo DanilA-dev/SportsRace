@@ -19,7 +19,7 @@ public class UserData : ScriptableObject
         Coins = 150;
         Cups = 0;
         WinsToNextRank = 0;
-        CurrentLevel = 0;
+        CurrentLevel = 1;
         PlayerPrefs.DeleteAll();
     }
 }

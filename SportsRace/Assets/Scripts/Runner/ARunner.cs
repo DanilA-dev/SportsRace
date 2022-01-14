@@ -45,6 +45,7 @@ public abstract class ARunner : MonoBehaviour
     protected int _finishIndex;
     protected bool _isFinished;
     protected bool _canMove;
+    protected bool _checkTrack;
 
     #region Properties
 
@@ -160,6 +161,8 @@ public abstract class ARunner : MonoBehaviour
     {
         OnStateChange -= SetState;
     }
+
+       
 
     public void SetState(RunnerState newState)
     {
@@ -373,14 +376,13 @@ public abstract class ARunner : MonoBehaviour
 
     public virtual void OnMenu()
     {
-        PlayAnimation("Idle");
         particleController.StopTrackTypeParticles();
         body.constraints = defaultDodyConstrain;
         _canMove = false;
         _isFinished = false;
         _finishIndex = 0;
         body.useGravity = true;
-        body.isKinematic = false;
+        body.isKinematic = true;
         body.velocity = Vector3.zero;
         transform.position = startPoint.position;
         transform.rotation = Quaternion.Euler(Vector3.zero);
@@ -391,6 +393,7 @@ public abstract class ARunner : MonoBehaviour
     public virtual void OnStart()
     {
         State = RunnerState.Default;
+        body.isKinematic = false;
         _canMove = true;
     }
 

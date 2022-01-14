@@ -117,11 +117,34 @@ public class GameController : MonoBehaviour
             case GameState.UnPause:
                 OnUnPauseState();
                 break;
+
+            case GameState.RestartLevel:
+                OnRestart();
+                break;
         }
     }
 
 
+
     #region GameState Methods
+    private void OnRestart()
+    {
+        Time.timeScale = 1;
+        UIController.TurnOnPanel(UIPanelType.Menu);
+        SaveController.SaveData();
+        OnRestartLevel?.Invoke();
+        _sessionScore = 0;
+
+        foreach (var r in runners)
+        {
+            r.transform.rotation = Quaternion.Euler(Vector3.zero);
+            r.Body.isKinematic = true;
+            r.StopAllCoroutines();
+            r.OnMenu();
+        }
+
+
+    }
     private void OnUnPauseState()
     {
         Time.timeScale = 1;
@@ -185,6 +208,9 @@ public class GameController : MonoBehaviour
             r.OnMenu();
         }
         TracksController.Instance.CheckFullTrack();
+
+        yield return new WaitForEndOfFrame();
+        OnRestart();
     }
 
     #endregion

@@ -18,6 +18,8 @@ public abstract class ATrackEvent : MonoBehaviour
 
     public virtual void OnRunnerChanged(ARunner arg2) { }
 
+    public virtual void Init() { }
+
     public virtual void Unsubscribe()
     {
         StopAllCoroutines();

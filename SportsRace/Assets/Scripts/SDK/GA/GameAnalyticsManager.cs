@@ -32,7 +32,7 @@ public class GameAnalyticsManager : MonoBehaviour
     public void OnLevelFail(int level)
     {
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, "Level " + level);
-        Debug.Log("LevelPassed " + level);
+        Debug.Log("LevelFail " + level);
     }
 
 
