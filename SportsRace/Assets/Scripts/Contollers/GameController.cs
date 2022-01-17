@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -131,8 +132,9 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = 1;
         UIController.TurnOnPanel(UIPanelType.Menu);
-        SaveController.SaveData();
         OnRestartLevel?.Invoke();
+        TracksController.Instance.UnSubFromTracks();
+        SaveController.SaveData();
         _sessionScore = 0;
 
         foreach (var r in runners)
@@ -164,6 +166,7 @@ public class GameController : MonoBehaviour
 
     private void OnFinishState()
     {
+        OnNextLevel();
         UIController.TurnOffPanel(UIPanelType.Core);
     }
 
@@ -225,6 +228,11 @@ public class GameController : MonoBehaviour
     public void OnNextLevel()
     {
         data.CurrentLevel++;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
 }

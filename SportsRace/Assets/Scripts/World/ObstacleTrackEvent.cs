@@ -50,6 +50,7 @@ public class ObstacleTrackEvent : ATrackEvent
             obstacleProp[i].isKinematic = true;
         }
         StopAllCoroutines();
+        _coll.enabled = true;
 
     }
 
@@ -137,11 +138,14 @@ public class ObstacleTrackEvent : ATrackEvent
         StartCoroutine(ReEnableTrigger());
     }
 
+    private void OnDestroy()
+    {
+        GameController.OnRestartLevel -= OnRestart;
+    }
 
     public override void Unsubscribe()
     {
         base.Unsubscribe();
-        GameController.OnRestartLevel -= OnRestart;
         StopAllCoroutines();
         _subbed = false;
     }

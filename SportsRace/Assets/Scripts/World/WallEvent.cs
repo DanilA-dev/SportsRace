@@ -41,6 +41,7 @@ public class WallEvent : ATrackEvent
     public override void Init()
     {
         climbSpeed = _startClimbSpeed;
+        _coll.enabled = true;
         StopAllCoroutines();
 
     }
@@ -134,14 +135,16 @@ public class WallEvent : ATrackEvent
     {
         StartCoroutine(ReEnableTrigger());
     }
-    
 
+    private void OnDestroy()
+    {
+        GameController.OnRestartLevel -= OnRestart;
+    }
 
     public override void Unsubscribe()
     {
         base.Unsubscribe();
         StopAllCoroutines();
-        GameController.OnRestartLevel -= OnRestart;
         _subbed = false;
     }
 }

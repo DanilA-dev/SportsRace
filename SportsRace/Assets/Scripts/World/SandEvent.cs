@@ -137,10 +137,14 @@ public class SandEvent : ATrackEvent
         StartCoroutine(ReEnableTrigger());
     }
 
+    private void OnDestroy()
+    {
+        GameController.OnRestartLevel -= Init;
+    }
+
     public override void Unsubscribe()
     {
         base.Unsubscribe();
-        GameController.OnRestartLevel -= Init;
         StopAllCoroutines();
         _subbed = false;
     }

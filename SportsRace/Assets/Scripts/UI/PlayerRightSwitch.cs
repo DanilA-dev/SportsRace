@@ -9,14 +9,14 @@ public class PlayerRightSwitch : MonoBehaviour
     [SerializeField] private Image awesomeIcon;
     [SerializeField] private float appearTime;
     [SerializeField] private float disappearTime;
-    [SerializeField] Sprite[] sprites;
+    [SerializeField] private Sprite[] sprites;
 
-    private void OnEnable()
+    private void Start()
     {
         TrackEntity.OnRightSwitchPlayer += RightSwitch;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         TrackEntity.OnRightSwitchPlayer -= RightSwitch;
     }

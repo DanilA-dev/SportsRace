@@ -57,6 +57,7 @@ public class BoxEvent : ATrackEvent
 
         StopAllCoroutines();
         _propDestroyed = false;
+        _coll.enabled = true;
         IsTapToDestroy = _initTapToDestroy;
     }
 
@@ -136,10 +137,15 @@ public class BoxEvent : ATrackEvent
     }
 
 
+    private void OnDestroy()
+    {
+        GameController.OnRestartLevel -= OnRestartLevel;
+
+    }
+
     public override void Unsubscribe()
     {
         _subbed = false;
-        GameController.OnRestartLevel -= OnRestartLevel;
         base.Unsubscribe();
         StopAllCoroutines();
     }

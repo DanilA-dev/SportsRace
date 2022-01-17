@@ -155,9 +155,6 @@ public class TracksController : MonoBehaviour
             levelTracks.Add(tracksPrefab[Random.Range(0, tracksPrefab.Count)]);
             yield return null;
         }
-
-        for (int i = 0; i < levelTracks.Count; i++)
-            Debug.Log(levelTracks.ToList()[i] + "is in Level Tracks!!!");
     }
 
 

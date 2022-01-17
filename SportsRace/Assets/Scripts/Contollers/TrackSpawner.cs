@@ -24,10 +24,7 @@ public class TrackSpawner : MonoBehaviour
         foreach (Transform t in transform)
         {
             if (t.TryGetComponent(out TrackEntity track))
-            {
                 createdTracks.Add(track);
-                t.parent = null;
-            }
         }
 
         

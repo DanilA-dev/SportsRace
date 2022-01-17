@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class CupsController : MonoBehaviour
 {
+    [SerializeField] private UserData data;
     [SerializeField] private List<Cup> shelfCups = new List<Cup>();
 
     public List<Cup> ShelfCups => shelfCups;
+    public Cup NextCup { get; private set; }
 
-
-    private void Start()
+    private void Awake()
     {
-        GameController.OnMenuEnter += OnMenuEnter;
+        UpdateCups();
     }
+   
 
-    private void OnDestroy()
+    private void UpdateCups()
     {
-        GameController.OnMenuEnter -= OnMenuEnter;
-    }
 
-    private void OnMenuEnter()
-    {
-        for (int i = 0; i < GameController.Data.Cups; i++)
+        for (int i = 0; i < data.Cups; i++)
         {
-            shelfCups[i].UnLock();
+            if(data.Cups < shelfCups.Count)
+                shelfCups[i].UnLock();
         }
     }
 
