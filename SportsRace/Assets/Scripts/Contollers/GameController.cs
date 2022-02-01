@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
         OnGameStateChanged += SetGameState;
     }
 
+
     private void OnEnable()
     {
         CurrentState = GameState.Menu;
